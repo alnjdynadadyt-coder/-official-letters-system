@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام إدارة المخاطبات والكتب الرسمية</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #f4f6f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+        p {
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+        .menu-btn {
+            background-color: #ffffff;
+            color: #2c3e50;
+            border: 2px solid #e0e6ed;
+            padding: 15px 20px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: right;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .menu-btn:hover {
+            background-color: #3498db;
+            color: #ffffff;
+            border-color: #3498db;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.2);
+        }
+        .menu-btn::after {
+            content: "‹";
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>نظام إصدار الكتب والمخاطبات الرسمية</h1>
+        <p>يرجى اختيار نوع الطلب أو النموذج المطلوب للإصدار</p>
+
+        <div class="menu-grid">
+            <button class="menu-btn" onclick="openPage('mubashara_ مدرس')">مباشرة و انفكاك مدرس</button>
+            <button class="menu-btn" onclick="openPage('mubashara_موظف')">مباشرة و انفكاك موظف</button>
+            <button class="menu-btn" onclick="openPage('taiyid_مدرس_موظف')">تأييد مدرس و موظف</button>
+            <button class="menu-btn" onclick="openPage('taiyid_طالب_بدون')">تأييد طالب بدون درجات</button>
+            <button class="menu-btn" onclick="openPage('taiyid_طالب_بالدرجات')">تأييد طالب بالدرجات</button>
+            <button class="menu-btn" onclick="openPage('نماذج_مخاطبة')">نماذج مخاطبة</button>
+            <button class="menu-btn" onclick="openPage('أخرى')">أخرى</button>
+        </div>
+    </div>
+
+    <script>
+        function openPage(type) {
+            // سيتم توجيه المستخدم لاحقاً للنموذج المخصص حسب الخيار
+            alert("تم اختيار: "  + type);
+            // مثال للربط المستقبلي: window.location.href = type + '.html';
+        }
+    </script>
+
+</body>
+</html>
