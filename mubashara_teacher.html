@@ -62,7 +62,7 @@
             text-decoration: none;
         }
 
-        /* تنسيق معاينة الكتاب الرسمي عند الطباعة */
+        /* تنسيق معاينة وطباعة الكتاب الرسمي بصيغة PDF */
         #printArea {
             display: none;
         }
@@ -81,9 +81,10 @@
                 right: 0;
                 width: 100%;
                 padding: 40px;
-                font-family: 'Amiri', 'Traditional Arabic', serif;
+                font-family: 'Traditional Arabic', 'Amiri', serif;
                 background: white;
                 color: black;
+                font-size: 16px;
             }
             .no-print {
                 display: none !important;
@@ -106,12 +107,12 @@
 
             <div class="form-group">
                 <label>اسم المدرس الرباعي واللقب:</label>
-                <input type="text" id="teacherName" required placeholder="مثال: أحمد محمد علي حسن">
+                <input type="text" id="teacherName" required placeholder="مثال: علي علي علي علي">
             </div>
 
             <div class="form-group">
                 <label>الاختصاص:</label>
-                <input type="text" id="subject" required placeholder="مثال: رياضيات">
+                <input type="text" id="subject" required placeholder="مثال: الإسلامية">
             </div>
 
             <div class="form-group">
@@ -120,8 +121,8 @@
             </div>
 
             <div class="form-group">
-                <label>رقم الكتاب الإداري:</label>
-                <input type="text" id="bookNumber" required placeholder="مثال: 123">
+                <label>رقم العدد:</label>
+                <input type="text" id="bookNumber" required placeholder="مثال: 144">
             </div>
 
             <button type="submit" class="btn-submit">عرض وطباعة الكتاب (PDF)</button>
@@ -129,31 +130,35 @@
         <a href="index.html" class="back-link">← العودة للرئيسية</a>
     </div>
 
-    <!-- قالب الكتاب الرسمي للطباعة -->
+    <!-- قالب الكتاب الرسمي المطابق للمخطط -->
     <div id="printArea">
-        <div style="text-align: center; font-weight: bold; font-size: 16px; line-height: 1.6;">
+        <div style="text-align: center; font-weight: bold; font-size: 16px; line-height: 1.8;">
             جمهورية العراق<br>
             وزارة التربية<br>
             مديرية التربية / إدارة المدرسة
         </div>
-        <hr style="border: 1px solid black; margin: 20px 0;">
-        <div style="display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 30px;">
+        
+        <hr style="border: 1px solid black; margin: 25px 0;">
+        
+        <div style="display: flex; justify-content: space-between; font-size: 15px; margin-bottom: 35px; font-weight: bold;">
             <div>العدد: <span id="resBookNum"></span></div>
             <div>التاريخ: <span id="resDate"></span></div>
         </div>
 
-        <div style="text-align: center; font-size: 18px; font-weight: bold; margin: 40px 0;">
-            إلى / الـحـسـابـات والـتـعـلـيـم الـمـدرسـي
-            <br><br>
+        <div style="font-size: 16px; font-weight: bold; margin-bottom: 20px;">
+            إلى / الحسابات والتعليم المدرسي
+        </div>
+
+        <div style="font-size: 16px; font-weight: bold; margin-bottom: 40px;">
             م/ <span id="resSubjectTitle"></span>
         </div>
 
-        <div style="font-size: 16px; line-height: 2.2; text-align: justify; margin-bottom: 50px;">
-            نود اعلامكم بأن المدرس (<b><span id="resName"></span></b>) ذو الاختصاص (<span id="resSubj"></span>) قد قام بـ (<span id="resType"></span>) في دبيتنا اعتباراً من تاريخ تنظيم هذا الكتاب. للتوثيق واتخاذ ما يلزم لغرض التسجيل والرواتب.
+        <div style="font-size: 16px; line-height: 2.5; text-align: justify; margin-bottom: 80px;">
+            نود اعلامكم بأن المدرس (<span id="resName" style="font-weight: bold;"></span>) ذو الاختصاص (<span id="resSubj"></span>) قد قام بـ (<span id="resType"></span>) في بيتنا اعتباراً من تنظيم هذا الكتاب. للتوثيق واتخاذ ما يلزم لغرض التسجيل والرواتب.
         </div>
 
-        <div style="float: left; text-align: center; font-size: 16px; margin-top: 50px; width: 200px;">
-            مدير المدرسة<br><br><br>
+        <div style="float: left; text-align: center; font-size: 16px; width: 200px; line-height: 1.8;">
+            مدير المدرسة<br><br>
             التوقيع والختم
         </div>
     </div>
@@ -162,7 +167,7 @@
         function generatePDF(e) {
             e.preventDefault();
             
-            // جلب البيانات من النموذج
+            // سحب البيانات وإسقاطها في أماكنها الثابتة داخل السياق
             document.getElementById('resBookNum').innerText = document.getElementById('bookNumber').value;
             document.getElementById('resDate').innerText = document.getElementById('orderDate').value;
             document.getElementById('resName').innerText = document.getElementById('teacherName').value;
@@ -172,7 +177,7 @@
             document.getElementById('resType').innerText = type;
             document.getElementById('resSubjectTitle').innerText = type + ' مدرس';
 
-            // فتح نافذة الطباعة التلقائية (تتيح الحفظ بصيغة PDF مباشرة)
+            // فتح نافذة الطباعة التطورية للحفظ بصيغة PDF فوراً
             window.print();
         }
     </script>
