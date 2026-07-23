@@ -10,7 +10,8 @@
             transition: all 0.3s ease;
         }
         body {
-            background: radial-gradient(circle at 50% 10%, #1e1b4b 0%, #312e81 40%, #0f172a 100%);
+            /* اللون الافتراضي: البصلي الفاخر */
+            background: radial-gradient(circle at 50% 10%, #4a2832 0%, #2c161d 40%, #150a0e 100%);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 20px;
@@ -33,23 +34,62 @@
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 
                         inset 0 1px 1px rgba(255, 255, 255, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.12);
+            position: relative;
         }
+
+        /* زر تغيير الألوان العائم */
+        .theme-selector {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            gap: 6px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 6px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .theme-btn {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.6);
+            cursor: pointer;
+            outline: none;
+            transition: transform 0.2s;
+        }
+        .theme-btn:hover {
+            transform: scale(1.2);
+        }
+
         .dashboard-header {
             text-align: center;
             margin-bottom: 30px;
+            margin-top: 10px;
         }
         h1 {
             color: #ffffff;
             margin: 0 0 10px 0;
-            font-size: 26px;
+            font-size: 25px;
             font-weight: 800;
             letter-spacing: -0.5px;
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
-        p.subtitle {
-            color: #94a3b8;
+        
+        /* التعديل الجديد: سطر مستقل، لون مختلف، حجم أصغر */
+        .sub-designer {
+            display: block;
             font-size: 14.5px;
-            margin: 0;
+            color: #f6ad55; /* لون بصلي/ذهبي هادئ يكسر اللون بجمال */
+            font-weight: 600;
+            margin-top: 6px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+        }
+
+        p.subtitle {
+            color: #cbd5e1;
+            font-size: 13.5px;
+            margin: 12px 0 0 0;
             font-weight: 500;
         }
         .menu-list {
@@ -88,7 +128,7 @@
             box-shadow: inset 0 1px 1px rgba(255,255,255,0.2);
         }
         .menu-item .arrow {
-            color: #94a3b8;
+            color: #cbd5e1;
             font-size: 16px;
             background: rgba(255, 255, 255, 0.05);
             width: 32px;
@@ -103,17 +143,17 @@
         .menu-item:hover {
             transform: translateY(-4px);
             background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(56, 189, 248, 0.4);
-            box-shadow: 0 12px 25px -5px rgba(56, 189, 248, 0.2);
+            border-color: rgba(246, 173, 85, 0.4);
+            box-shadow: 0 12px 25px -5px rgba(246, 173, 85, 0.2);
             color: #ffffff;
         }
         .menu-item:hover .arrow {
             transform: translateX(-5px);
-            color: #38bdf8;
-            background: rgba(56, 189, 248, 0.15);
+            color: #f6ad55;
+            background: rgba(246, 173, 85, 0.15);
         }
         .menu-item:hover .emoji {
-            background: rgba(56, 189, 248, 0.2);
+            background: rgba(246, 173, 85, 0.2);
             transform: scale(1.05);
         }
 
@@ -137,8 +177,19 @@
 <body>
 
     <div class="dashboard-container">
+        <!-- زر تغيير الألوان السريع -->
+        <div class="theme-selector">
+            <button class="theme-btn" style="background: #2c161d;" onclick="changeTheme('peach')" title="بصلي فاخر"></button>
+            <button class="theme-btn" style="background: #312e81;" onclick="changeTheme('purple')" title="ليلي عميق"></button>
+            <button class="theme-btn" style="background: #0f172a;" onclick="changeTheme('dark')" title="داكن فخم"></button>
+            <button class="theme-btn" style="background: #064e3b;" onclick="changeTheme('emerald')" title="زمردي هادئ"></button>
+        </div>
+
         <div class="dashboard-header">
-            <h1>نظام إصدار الكتب والمخاطبات الرسمية - تصميم عصام جاسم الأسدي - مدير اعدادية النجدين </h1>
+            <h1>
+                نظام إصدار الكتب والمخاطبات الرسمية
+                <span class="sub-designer">تصميم عصام جاسم الأسدي - مدير اعدادية النجدين</span>
+            </h1>
             <p class="subtitle">يرجى اختيار نوع الطلب أو النموذج المطلوب للإصدار</p>
         </div>
 
@@ -200,6 +251,21 @@
             </a>
         </div>
     </div>
+
+    <script>
+        function changeTheme(theme) {
+            const body = document.body;
+            if (theme === 'peach') {
+                body.style.background = 'radial-gradient(circle at 50% 10%, #4a2832 0%, #2c161d 40%, #150a0e 100%)';
+            } else if (theme === 'purple') {
+                body.style.background = 'radial-gradient(circle at 50% 10%, #3b3069 0%, #1e1b4b 40%, #0f0c1b 100%)';
+            } else if (theme === 'dark') {
+                body.style.background = 'radial-gradient(circle at 50% 10%, #334155 0%, #1e293b 40%, #0f172a 100%)';
+            } else if (theme === 'emerald') {
+                body.style.background = 'radial-gradient(circle at 50% 10%, #065f46 0%, #064e3b 40%, #022c22 100%)';
+            }
+        }
+    </script>
 
 </body>
 </html>
