@@ -156,18 +156,18 @@
 
             <div class="form-group">
                 <label>الترويسة العليا:</label>
-                <input type="text" id="headerTitleInput" required placeholder="مثال: جمهورية العراق&#10;وزارة التربية - مديرية تربية...">
+                <input type="text" id="headerTitleInput" required placeholder="مثال: المديرية العامة لتربية القادسية - قسم تربية الحمزة&#10;إعدادية النجدين للبنين">
             </div>
 
             <div class="form-group">
                 <label>اسم المؤسسة / المدرسة:</label>
-                <input type="text" id="schoolNameInput" required placeholder="مثال: إعدادية ... للبنين">
+                <input type="text" id="schoolNameInput" required placeholder="مثال: إعدادية النجدين للبنين">
             </div>
 
             <div style="display: flex; gap: 10px;">
                 <div class="form-group" style="flex: 1;">
                     <label>رقم العدد:</label>
-                    <input type="text" id="bookNumberInput" required placeholder="مثال: 125">
+                    <input type="text" id="bookNumberInput" required placeholder="مثال: 333">
                 </div>
                 <div class="form-group" style="flex: 1;">
                     <label>تاريخ الكتاب:</label>
@@ -177,7 +177,7 @@
 
             <div class="form-group">
                 <label>إلى / (الجهة المطلوبة):</label>
-                <input type="text" id="targetEntity" required placeholder="مثال: دائرة التقاعد / وحدة الموظفين">
+                <input type="text" id="targetEntity" required placeholder="مثال: دائرة التقاعد">
             </div>
 
             <div style="display: flex; gap: 10px;">
@@ -277,21 +277,28 @@
             const manager = document.getElementById('managerName').value;
             const layoutMode = document.getElementById('copiesLayout').value;
 
-            let bodyText = "";
+            let line1 = "";
+            let line2 = "";
+            let line3 = "";
+
             if (gender === 'male') {
-                bodyText = `نؤيد لكم أن الطالب (<b>${name}</b>) أحد طلاب الصف (<b>${studentClass}</b>) مستمر بالدوام للعام الدراسي (<b>${year}</b>)، وبناءً على طلبه زود بهذا التأييد لعلم مع التقدير.`;
+                line1 = `نؤيد لكم أن الطالب (<b>${name}</b>) أحد طلاب الصف (<b>${studentClass}</b>) مستمر بالدوام للعام الدراسي (<b>${year}</b>).`;
+                line2 = `وبناءً على طلبه زود بهذا التأييد.`;
+                line3 = `للعلم مع التقدير`;
             } else {
-                bodyText = `نؤيد لكم أن الطالبة (<b>${name}</b>) إحدى طالبات الصف (<b>${studentClass}</b>) مستمرة بالدوام للعام الدراسي (<b>${year}</b>)، وبناءً على طلبها زودت بهذا التأييد لعلم مع التقدير.`;
+                line1 = `نؤيد لكم أن الطالبة (<b>${name}</b>) إحدى طالبات الصف (<b>${studentClass}</b>) مستمرة بالدوام للعام الدراسي (<b>${year}</b>).`;
+                line2 = `وبناءً على طلبها زودت بهذا التأييد.`;
+                line3 = `للعلم مع التقدير`;
             }
 
             const createCardHTML = (isTwoCopies) => `
-                <div style="border: 2px solid #1a202c; padding: ${isTwoCopies ? '3mm 5mm' : '8mm 14mm'}; border-radius: 6px; background: #fff; height: ${isTwoCopies ? '143mm' : '293mm'}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
+                <div style="border: 2px solid #1a202c; padding: ${isTwoCopies ? '2mm 4mm' : '6mm 12mm'}; border-radius: 6px; background: #fff; height: ${isTwoCopies ? '143mm' : '292mm'}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
                     <div>
-                        <div style="text-align: center; font-weight: bold; font-size: ${isTwoCopies ? '13px' : '17px'}; margin-bottom: ${isTwoCopies ? '1mm' : '4mm'}; line-height: 1.35;">
+                        <div style="text-align: center; font-weight: bold; font-size: ${isTwoCopies ? '12.5px' : '16px'}; margin-bottom: ${isTwoCopies ? '1mm' : '3mm'}; line-height: 1.35;">
                             ${headerTitle}<br>${schoolName}
                         </div>
 
-                        <table style="width: 100%; border-collapse: collapse; margin-bottom: ${isTwoCopies ? '2mm' : '6mm'}; font-weight: bold; font-size: ${isTwoCopies ? '11.5px' : '14px'};">
+                        <table style="width: 100%; border-collapse: collapse; margin-bottom: ${isTwoCopies ? '1.5mm' : '5mm'}; font-weight: bold; font-size: ${isTwoCopies ? '11px' : '13.5px'};">
                             <tr>
                                 <td style="width: 50%; text-align: right;"></td>
                                 <td style="width: 50%; text-align: left;">
@@ -301,24 +308,26 @@
                             </tr>
                         </table>
 
-                        <div style="text-align: center; font-size: ${isTwoCopies ? '12px' : '15px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '2mm' : '5mm'};">
+                        <div style="text-align: center; font-size: ${isTwoCopies ? '11.5px' : '14.5px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '1.5mm' : '4mm'};">
                             إلى / ${target}
                         </div>
 
-                        <div style="text-align: center; font-size: ${isTwoCopies ? '12px' : '15px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '3.5mm' : '8mm'};">
+                        <div style="text-align: center; font-size: ${isTwoCopies ? '11.5px' : '14.5px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '2.5mm' : '6mm'};">
                             م / تأييد طالب
                         </div>
 
-                        <div style="font-size: ${isTwoCopies ? '12px' : '15px'}; line-height: ${isTwoCopies ? '1.7' : '2.3'}; text-align: justify; padding: 0 2mm;">
-                            ${bodyText}
+                        <div style="font-size: ${isTwoCopies ? '11.5px' : '14.5px'}; line-height: ${isTwoCopies ? '1.6' : '2.1'}; text-align: justify; padding: 0 2mm;">
+                            <div style="margin-bottom: ${isTwoCopies ? '1.5mm' : '3mm'};">${line1}</div>
+                            <div style="margin-bottom: ${isTwoCopies ? '2mm' : '5mm'};">${line2}</div>
+                            <div style="text-align: center; font-weight: bold; margin-top: ${isTwoCopies ? '3mm' : '8mm'};">${line3}</div>
                         </div>
                     </div>
 
-                    <div style="margin-bottom: ${isTwoCopies ? '1mm' : '4mm'};">
+                    <div style="margin-bottom: ${isTwoCopies ? '6mm' : '16mm'};">
                         <table style="width: 100%; border-collapse: collapse;">
                             <tr>
-                                <td style="width: 78%;"></td>
-                                <td style="width: 22%; text-align: right; font-size: ${isTwoCopies ? '11.5px' : '14px'}; line-height: 1.3; padding-right: 5px;">
+                                <td style="width: 76%;"></td>
+                                <td style="width: 24%; text-align: right; font-size: ${isTwoCopies ? '11px' : '13.5px'}; line-height: 1.3; padding-right: 5px;">
                                     <b>${manager}</b><br>
                                     مدير المدرسة
                                 </td>
@@ -332,15 +341,15 @@
 
             if (layoutMode === 'two') {
                 wrapper.innerHTML = `
-                    <div style="height: 148.5mm; padding: 2mm 4mm; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box;">
+                    <div style="height: 148.5mm; padding: 1mm 3mm; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box;">
                         ${createCardHTML(true)}
                     </div>
-                    <div style="height: 148.5mm; padding: 2mm 4mm; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box;">
+                    <div style="height: 148.5mm; padding: 1mm 3mm; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box;">
                         ${createCardHTML(true)}
                     </div>
                 `;
             } else {
-                wrapper.innerHTML = `<div style="height: 297mm; padding: 2mm 4mm; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box;">${createCardHTML(false)}</div>`;
+                wrapper.innerHTML = `<div style="height: 297mm; padding: 1.5mm 3mm; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box;">${createCardHTML(false)}</div>`;
             }
 
             window.print();
@@ -348,4 +357,3 @@
     </script>
 </body>
 </html>
- 
