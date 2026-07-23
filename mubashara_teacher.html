@@ -69,11 +69,11 @@
             display: none;
         }
 
-        /* تنسيق الطباعة الاحترافي لصفحة A4 بدون اقتطاع */
+        /* تنسيق الطباعة لضمان عدم خروج أي جزء لصفحة ثانية */
         @media print {
             @page {
                 size: A4;
-                margin: 10mm;
+                margin: 5mm;
             }
             body * {
                 visibility: hidden;
@@ -87,13 +87,21 @@
                 top: 0;
                 right: 0;
                 width: 100%;
-                height: 100vh;
-                padding: 25px;
                 font-family: 'Traditional Arabic', 'Amiri', serif;
                 background: white;
                 color: black;
-                font-size: 15px;
+                font-size: 14.5px;
                 box-sizing: border-box;
+            }
+            .page-break {
+                page-break-after: always;
+                height: 50vh;
+                box-sizing: border-box;
+                overflow: hidden;
+            }
+            .single-page {
+                height: 98vh;
+                overflow: hidden;
             }
             .no-print {
                 display: none !important;
@@ -106,6 +114,20 @@
     <div class="form-container no-print">
         <h2>إدخال بيانات أمر المباشرة / الانفكاك</h2>
         <form id="teacherForm" onsubmit="generatePDF(event)">
+            
+            <div class="form-group">
+                <label>نظام النسخ في الورقة:</label>
+                <select id="copiesLayout">
+                    <option value="one">نسخة واحدة في الصفحة</option>
+                    <option value="two">نسختان متطابقتان في نفس الورقة (نصفين)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>الترويسة العليا (مثال: وزارة التربية / أو جهة أخرى):</label>
+                <input type="text" id="headerTitleInput" required value="وزارة التربية">
+            </div>
+
             <div class="form-group">
                 <label>اسم المدرسة:</label>
                 <input type="text" id="schoolNameInput" required placeholder="مثال: اعدادية النجدين للبنين">
@@ -142,7 +164,7 @@
             </div>
 
             <div class="form-group">
-                <label>المتضمن (عنوان الطلب/القرار مثل: نقل، تنسيب، مباشرة):</label>
+                <label>المتضمن (مثل: نقل، تنسيب، مباشرة):</label>
                 <input type="text" id="contentNatureInput" required placeholder="مثال: نقل مدرسين">
             </div>
 
@@ -157,7 +179,7 @@
             </div>
 
             <div class="form-group">
-                <label>تاريخ المباشرة الفعلي (اليوم):</label>
+                <label>تاريخ المباشرة الفعلي:</label>
                 <input type="date" id="actionDateInput" required>
             </div>
 
@@ -171,74 +193,109 @@
         <a href="index.html" class="back-link">← العودة للرئيسية</a>
     </div>
 
-    <!-- قالب الكتاب الرسمي ضمن إطار هندسي متناسق وغير مقتطع -->
-    <div id="printArea" style="border: 2px solid #2c3e50; padding: 30px; border-radius: 6px;">
-        
-        <!-- الترويسة: وزارة التربية - المديرية العامة لتربية القادسية في المنتصف تماماً -->
-        <div style="text-align: center; font-weight: bold; font-size: 18px; margin-bottom: 12px;">
-            وزارة التربية
+    <!-- قالب الطباعة -->
+    <div id="printArea">
+        <div id="documentWrapper">
+            <!-- سيتم توليد المحتوى هنا برمجياً (نسخة واحدة أو نسختين) -->
         </div>
-
-        <!-- اسم المدرسة يمين، والعدد والتاريخ يسار -->
-        <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px; font-weight: bold; font-size: 15px;">
-            <tr>
-                <td style="width: 50%; text-align: right;">إدارة / <span id="resSchoolName"></span></td>
-                <td style="width: 50%; text-align: left;">
-                    العدد: <span id="resBookNum"></span><br>
-                    التاريخ: <span id="resDate"></span>
-                </td>
-            </tr>
-        </table>
-
-        <!-- إلى / بتوسيط الصفحة -->
-        <div style="text-align: center; font-size: 16px; font-weight: bold; margin-bottom: 18px;">
-            إلى / <span id="resTo"></span>
-        </div>
-
-        <!-- م / بتوسيط الصفحة -->
-        <div style="text-align: center; font-size: 16px; font-weight: bold; margin-bottom: 30px;">
-            م/ <span id="resSubjectTitle"></span>
-        </div>
-
-        <!-- متن الكتاب بتنسيق مريح وواضح -->
-        <div style="font-size: 16px; line-height: 2.3; text-align: justify; margin-bottom: 40px; padding: 0 10px;">
-            كتابكم المرقم (<span id="resRefBookNum" style="font-weight: bold;"></span>) في (<span id="resRefBookDate"></span>) والمتضمن (<span id="resContentNature" style="font-weight: bold;"></span>). باشر السيد (<span id="resTeacherName" style="font-weight: bold;"></span>) بعنوان مدرس اختصاص (<span id="resSubject"></span>) في مدرستنا يوم (<span id="resActionDate"></span>) راجين تفضلكم باعتياره.
-        </div>
-
-        <!-- للعلم مع التقدير في منتصف الصفحة -->
-        <div style="text-align: center; font-size: 16px; font-weight: bold; margin-bottom: 40px;">
-            للعلـم مع التقـدير
-        </div>
-
-        <!-- مدير المدرسة وتوقيعه في جهة اليسار -->
-        <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
-            <tr>
-                <td style="width: 60%;"></td>
-                <td style="width: 40%; text-align: center; font-size: 16px; line-height: 1.8;">
-                    مدير المدرسة<br>
-                    <span id="resManagerName" style="font-weight: bold;"></span><br>
-                    التوقيع والختم
-                </td>
-            </tr>
-        </table>
     </div>
 
     <script>
+        // دالة لتحويل التاريخ إلى صيغة (يوم - شهر - سنة) مع اسم اليوم
+        function formatDateToDMY(dateString, includeDayName = false) {
+            if (!dateString) return '';
+            const parts = dateString.split('-');
+            if (parts.length !== 3) return dateString;
+            const year = parts[0];
+            const month = parts[1];
+            const day = parts[2];
+            
+            const dateObj = new Date(year, month - 1, day);
+            let dayName = '';
+            if (includeDayName) {
+                const daysOfWeek = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+                dayName = daysOfWeek[dateObj.getDay()] + ' ';
+            }
+            return dayName + `${day}-${month}-${year}`;
+        }
+
         function generatePDF(e) {
             e.preventDefault();
             
-            document.getElementById('resSchoolName').innerText = document.getElementById('schoolNameInput').value;
-            document.getElementById('resBookNum').innerText = document.getElementById('bookNumberInput').value;
-            document.getElementById('resDate').innerText = document.getElementById('dateInput').value;
-            document.getElementById('resTo').innerText = document.getElementById('toInput').value;
-            document.getElementById('resSubjectTitle').innerText = document.getElementById('subjectTitleInput').value;
-            document.getElementById('resRefBookNum').innerText = document.getElementById('refBookNumInput').value;
-            document.getElementById('resRefBookDate').innerText = document.getElementById('refBookDateInput').value;
-            document.getElementById('resContentNature').innerText = document.getElementById('contentNatureInput').value;
-            document.getElementById('resTeacherName').innerText = document.getElementById('teacherNameInput').value;
-            document.getElementById('resSubject').innerText = document.getElementById('subjectInput').value;
-            document.getElementById('resActionDate').innerText = document.getElementById('actionDateInput').value;
-            document.getElementById('resManagerName').innerText = document.getElementById('managerNameInput').value;
+            const headerTitle = document.getElementById('headerTitleInput').value;
+            const schoolName = document.getElementById('schoolNameInput').value;
+            const bookNum = document.getElementById('bookNumberInput').value;
+            const dateVal = formatDateToDMY(document.getElementById('dateInput').value);
+            const toVal = document.getElementById('toInput').value;
+            const subjectTitle = document.getElementById('subjectTitleInput').value;
+            const refBookNum = document.getElementById('refBookNumInput').value;
+            const refBookDate = formatDateToDMY(document.getElementById('refBookDateInput').value);
+            const contentNature = document.getElementById('contentNatureInput').value;
+            const teacherName = document.getElementById('teacherNameInput').value;
+            const subject = document.getElementById('subjectInput').value;
+            const actionDate = formatDateToDMY(document.getElementById('actionDateInput').value, true);
+            const managerName = document.getElementById('managerNameInput').value;
+            const layoutMode = document.getElementById('copiesLayout').value;
+
+            // بناء محتوى الكتاب المنفرد
+            const singleTemplate = `
+                <div style="border: 2px solid #2c3e50; padding: 20px; border-radius: 6px;">
+                    <div style="text-align: center; font-weight: bold; font-size: 17px; margin-bottom: 8px;">
+                        ${headerTitle}
+                    </div>
+
+                    <table style="width: 100%; border-collapse: collapse; margin-bottom: 15px; font-weight: bold; font-size: 14.5px;">
+                        <tr>
+                            <td style="width: 50%; text-align: right;">إدارة / ${schoolName}</td>
+                            <td style="width: 50%; text-align: left;">
+                                العدد: ${bookNum}<br>
+                                التاريخ: ${dateVal}
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div style="text-align: center; font-size: 15px; font-weight: bold; margin-bottom: 12px;">
+                        إلى / ${toVal}
+                    </div>
+
+                    <div style="text-align: center; font-size: 15px; font-weight: bold; margin-bottom: 20px;">
+                        م/ ${subjectTitle}
+                    </div>
+
+                    <div style="font-size: 15px; line-height: 2.1; text-align: justify; margin-bottom: 25px; padding: 0 5px;">
+                        كتابكم المرقم (${refBookNum}) في (${refBookDate}) والمتضمن (${contentNature}).
+                        <br>
+                        باشر السيد (<b>${teacherName}</b>) مدرس اختصاص (${subject}) في مدرستنا يوم (${actionDate}) راجين تفضلكم باعتياره.
+                    </div>
+
+                    <div style="text-align: center; font-size: 15px; font-weight: bold; margin-bottom: 25px;">
+                        للعلـم مع التقـدير
+                    </div>
+
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                        <tr>
+                            <td style="width: 60%;"></td>
+                            <td style="width: 40%; text-align: center; font-size: 15px; line-height: 1.6;">
+                                مدير المدرسة<br>
+                                <b>${managerName}</b>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            `;
+
+            const wrapper = document.getElementById('documentWrapper');
+
+            if (layoutMode === 'two') {
+                // نسختان متطابقتان في ورقة واحدة مقسمة لنصفين
+                wrapper.innerHTML = `
+                    <div class="page-break">${singleTemplate}</div>
+                    <div class="single-page">${singleTemplate}</div>
+                `;
+            } else {
+                // نسخة واحدة ملء الصفحة تماماً بدون صفحة ثانية فارغة
+                wrapper.innerHTML = `<div class="single-page">${singleTemplate}</div>`;
+            }
 
             window.print();
         }
