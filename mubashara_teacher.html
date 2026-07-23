@@ -19,10 +19,18 @@
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
         }
+        .form-header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 15px;
+        }
         h2 {
             color: #2c3e50;
-            text-align: center;
-            margin-bottom: 25px;
+            margin: 0;
+            font-size: 22px;
         }
         .form-group {
             margin-bottom: 15px;
@@ -40,6 +48,7 @@
             border: 1px solid #ccd1d9;
             border-radius: 6px;
             font-size: 14px;
+            box-sizing: border-box;
         }
         .btn-submit {
             background-color: #27ae60;
@@ -57,23 +66,34 @@
             background-color: #219653;
         }
         .back-link {
+            display: inline-block;
+            background-color: #ecf0f1;
+            color: #2c3e50;
+            text-decoration: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        .back-link:hover {
+            background-color: #bdc3c7;
+        }
+        .back-link-bottom {
             display: block;
             text-align: center;
-            margin-top: 15px;
-            color: #7f8c8d;
-            text-decoration: none;
-            font-size: 14px;
+            margin-top: 20px;
         }
 
         #printArea {
             display: none;
         }
 
-        /* تنسيق الطباعة لضمان عدم خروج أي جزء لصفحة ثانية */
+        /* تنسيق الطباعة لضمان احتواء الورقة بالكامل بدون صفحات إضافية */
         @media print {
             @page {
                 size: A4;
-                margin: 5mm;
+                margin: 4mm;
             }
             body * {
                 visibility: hidden;
@@ -90,18 +110,7 @@
                 font-family: 'Traditional Arabic', 'Amiri', serif;
                 background: white;
                 color: black;
-                font-size: 14.5px;
                 box-sizing: border-box;
-            }
-            .page-break {
-                page-break-after: always;
-                height: 50vh;
-                box-sizing: border-box;
-                overflow: hidden;
-            }
-            .single-page {
-                height: 98vh;
-                overflow: hidden;
             }
             .no-print {
                 display: none !important;
@@ -112,19 +121,24 @@
 <body>
 
     <div class="form-container no-print">
-        <h2>إدخال بيانات أمر المباشرة / الانفكاك</h2>
+        <!-- زر العودة العلوي بجانب العنوان لسهولة الوصول الفوري -->
+        <div class="form-header-flex">
+            <h2>إدخال بيانات أمر المباشرة / الانفكاك</h2>
+            <a href="index.html" class="back-link">← العودة للرئيسية</a>
+        </div>
+
         <form id="teacherForm" onsubmit="generatePDF(event)">
             
             <div class="form-group">
                 <label>نظام النسخ في الورقة:</label>
                 <select id="copiesLayout">
                     <option value="one">نسخة واحدة في الصفحة</option>
-                    <option value="two">نسختان متطابقتان في نفس الورقة (نصفين)</option>
+                    <option value="two">نسختان متطابقتان في نفس الورقة (نصف علوي ونصف سفلي)</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <label>الترويسة العليا (مثال: وزارة التربية / أو جهة أخرى):</label>
+                <label>الترويسة العليا:</label>
                 <input type="text" id="headerTitleInput" required value="وزارة التربية">
             </div>
 
@@ -190,18 +204,19 @@
 
             <button type="submit" class="btn-submit">عرض وطباعة الكتاب (PDF)</button>
         </form>
-        <a href="index.html" class="back-link">← العودة للرئيسية</a>
+
+        <!-- زر العودة السفلي الاحتياطي -->
+        <div class="back-link-bottom">
+            <a href="index.html" class="back-link">← العودة للرئيسية</a>
+        </div>
     </div>
 
     <!-- قالب الطباعة -->
     <div id="printArea">
-        <div id="documentWrapper">
-            <!-- سيتم توليد المحتوى هنا برمجياً (نسخة واحدة أو نسختين) -->
-        </div>
+        <div id="documentWrapper"></div>
     </div>
 
     <script>
-        // دالة لتحويل التاريخ إلى صيغة (يوم - شهر - سنة) مع اسم اليوم
         function formatDateToDMY(dateString, includeDayName = false) {
             if (!dateString) return '';
             const parts = dateString.split('-');
@@ -237,14 +252,13 @@
             const managerName = document.getElementById('managerNameInput').value;
             const layoutMode = document.getElementById('copiesLayout').value;
 
-            // بناء محتوى الكتاب المنفرد
-            const singleTemplate = `
-                <div style="border: 2px solid #2c3e50; padding: 20px; border-radius: 6px;">
-                    <div style="text-align: center; font-weight: bold; font-size: 17px; margin-bottom: 8px;">
+            const createSingleCard = (isCompact = false) => `
+                <div style="border: 2px solid #2c3e50; padding: ${isCompact ? '12px 18px' : '25px'}; border-radius: 6px; ${isCompact ? 'margin-bottom: 8px;' : ''}">
+                    <div style="text-align: center; font-weight: bold; font-size: ${isCompact ? '15px' : '17px'}; margin-bottom: 6px;">
                         ${headerTitle}
                     </div>
 
-                    <table style="width: 100%; border-collapse: collapse; margin-bottom: 15px; font-weight: bold; font-size: 14.5px;">
+                    <table style="width: 100%; border-collapse: collapse; margin-bottom: 10px; font-weight: bold; font-size: ${isCompact ? '13.5px' : '15px'};">
                         <tr>
                             <td style="width: 50%; text-align: right;">إدارة / ${schoolName}</td>
                             <td style="width: 50%; text-align: left;">
@@ -254,28 +268,28 @@
                         </tr>
                     </table>
 
-                    <div style="text-align: center; font-size: 15px; font-weight: bold; margin-bottom: 12px;">
+                    <div style="text-align: center; font-size: ${isCompact ? '14px' : '15.5px'}; font-weight: bold; margin-bottom: 8px;">
                         إلى / ${toVal}
                     </div>
 
-                    <div style="text-align: center; font-size: 15px; font-weight: bold; margin-bottom: 20px;">
+                    <div style="text-align: center; font-size: ${isCompact ? '14px' : '15.5px'}; font-weight: bold; margin-bottom: 14px;">
                         م/ ${subjectTitle}
                     </div>
 
-                    <div style="font-size: 15px; line-height: 2.1; text-align: justify; margin-bottom: 25px; padding: 0 5px;">
+                    <div style="font-size: ${isCompact ? '13.5px' : '15px'}; line-height: 1.9; text-align: justify; margin-bottom: 15px; padding: 0 4px;">
                         كتابكم المرقم (${refBookNum}) في (${refBookDate}) والمتضمن (${contentNature}).
                         <br>
                         باشر السيد (<b>${teacherName}</b>) مدرس اختصاص (${subject}) في مدرستنا يوم (${actionDate}) راجين تفضلكم باعتياره.
                     </div>
 
-                    <div style="text-align: center; font-size: 15px; font-weight: bold; margin-bottom: 25px;">
+                    <div style="text-align: center; font-size: ${isCompact ? '14px' : '15.5px'}; font-weight: bold; margin-bottom: 15px;">
                         للعلـم مع التقـدير
                     </div>
 
-                    <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 5px;">
                         <tr>
                             <td style="width: 60%;"></td>
-                            <td style="width: 40%; text-align: center; font-size: 15px; line-height: 1.6;">
+                            <td style="width: 40%; text-align: center; font-size: ${isCompact ? '13.5px' : '15px'}; line-height: 1.5;">
                                 مدير المدرسة<br>
                                 <b>${managerName}</b>
                             </td>
@@ -287,14 +301,16 @@
             const wrapper = document.getElementById('documentWrapper');
 
             if (layoutMode === 'two') {
-                // نسختان متطابقتان في ورقة واحدة مقسمة لنصفين
                 wrapper.innerHTML = `
-                    <div class="page-break">${singleTemplate}</div>
-                    <div class="single-page">${singleTemplate}</div>
+                    <div style="height: 48vh; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between;">
+                        ${createSingleCard(true)}
+                    </div>
+                    <div style="height: 48vh; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; margin-top: 5px;">
+                        ${createSingleCard(true)}
+                    </div>
                 `;
             } else {
-                // نسخة واحدة ملء الصفحة تماماً بدون صفحة ثانية فارغة
-                wrapper.innerHTML = `<div class="single-page">${singleTemplate}</div>`;
+                wrapper.innerHTML = `<div style="height: 97vh; display: flex; flex-direction: column; justify-content: center;">${createSingleCard(false)}</div>`;
             }
 
             window.print();
