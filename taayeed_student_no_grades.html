@@ -292,42 +292,42 @@
             }
 
             const createCardHTML = (isTwoCopies) => `
-                <div style="border: 2px solid #1a202c; padding: ${isTwoCopies ? '2mm 4mm' : '6mm 12mm'}; border-radius: 6px; background: #fff; height: ${isTwoCopies ? '143mm' : '292mm'}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
+                <div style="border: 1.5px solid #1a202c; padding: ${isTwoCopies ? '2mm 4mm' : '4mm 10mm'}; border-radius: 4px; background: #fff; height: ${isTwoCopies ? '142mm' : '290mm'}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
                     <div>
-                        <div style="text-align: center; font-weight: bold; font-size: ${isTwoCopies ? '12.5px' : '16px'}; margin-bottom: ${isTwoCopies ? '1mm' : '3mm'}; line-height: 1.35;">
+                        <div style="text-align: center; font-weight: bold; font-size: ${isTwoCopies ? '12px' : '15px'}; margin-bottom: ${isTwoCopies ? '1mm' : '2mm'}; line-height: 1.3;">
                             ${headerTitle}<br>${schoolName}
                         </div>
 
-                        <table style="width: 100%; border-collapse: collapse; margin-bottom: ${isTwoCopies ? '1.5mm' : '5mm'}; font-weight: bold; font-size: ${isTwoCopies ? '11px' : '13.5px'};">
+                        <table style="width: 100%; border-collapse: collapse; margin-bottom: ${isTwoCopies ? '1mm' : '3mm'}; font-weight: bold; font-size: ${isTwoCopies ? '11px' : '13px'};">
                             <tr>
                                 <td style="width: 50%; text-align: right;"></td>
-                                <td style="width: 50%; text-align: left;">
+                                <td style="width: 50%; text-align: left; line-height: 1.2;">
                                     العدد: ${bookNum}<br>
                                     التاريخ: ${dateVal}
                                 </td>
                             </tr>
                         </table>
 
-                        <div style="text-align: center; font-size: ${isTwoCopies ? '11.5px' : '14.5px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '1.5mm' : '4mm'};">
+                        <div style="text-align: center; font-size: ${isTwoCopies ? '11px' : '14px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '1mm' : '3mm'};">
                             إلى / ${target}
                         </div>
 
-                        <div style="text-align: center; font-size: ${isTwoCopies ? '11.5px' : '14.5px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '2.5mm' : '6mm'};">
+                        <div style="text-align: center; font-size: ${isTwoCopies ? '11px' : '14px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '2mm' : '4mm'};">
                             م / تأييد طالب
                         </div>
 
-                        <div style="font-size: ${isTwoCopies ? '11.5px' : '14.5px'}; line-height: ${isTwoCopies ? '1.6' : '2.1'}; text-align: justify; padding: 0 2mm;">
-                            <div style="margin-bottom: ${isTwoCopies ? '1.5mm' : '3mm'};">${line1}</div>
-                            <div style="margin-bottom: ${isTwoCopies ? '2mm' : '5mm'};">${line2}</div>
-                            <div style="text-align: center; font-weight: bold; margin-top: ${isTwoCopies ? '3mm' : '8mm'};">${line3}</div>
+                        <div style="font-size: ${isTwoCopies ? '11px' : '14px'}; line-height: ${isTwoCopies ? '1.5' : '1.9'}; text-align: justify; padding: 0 2mm;">
+                            <div style="margin-bottom: ${isTwoCopies ? '1mm' : '2mm'};">${line1}</div>
+                            <div style="margin-bottom: ${isTwoCopies ? '1.5mm' : '3mm'};">${line2}</div>
+                            <div style="text-align: center; font-weight: bold; margin-top: ${isTwoCopies ? '2mm' : '5mm'};">${line3}</div>
                         </div>
                     </div>
 
-                    <div style="margin-bottom: ${isTwoCopies ? '6mm' : '16mm'};">
+                    <div style="margin-bottom: ${isTwoCopies ? '4mm' : '10mm'};">
                         <table style="width: 100%; border-collapse: collapse;">
                             <tr>
                                 <td style="width: 76%;"></td>
-                                <td style="width: 24%; text-align: right; font-size: ${isTwoCopies ? '11px' : '13.5px'}; line-height: 1.3; padding-right: 5px;">
+                                <td style="width: 24%; text-align: right; font-size: ${isTwoCopies ? '10.5px' : '13px'}; line-height: 1.2; padding-right: 5px;">
                                     <b>${manager}</b><br>
                                     مدير المدرسة
                                 </td>
@@ -341,15 +341,15 @@
 
             if (layoutMode === 'two') {
                 wrapper.innerHTML = `
-                    <div style="height: 148.5mm; padding: 1mm 3mm; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box;">
+                    <div style="height: 148.5mm; padding: 1mm 2mm; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box;">
                         ${createCardHTML(true)}
                     </div>
-                    <div style="height: 148.5mm; padding: 1mm 3mm; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box;">
+                    <div style="height: 148.5mm; padding: 1mm 2mm; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box;">
                         ${createCardHTML(true)}
                     </div>
                 `;
             } else {
-                wrapper.innerHTML = `<div style="height: 297mm; padding: 1.5mm 3mm; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box;">${createCardHTML(false)}</div>`;
+                wrapper.innerHTML = `<div style="height: 297mm; padding: 2mm 3mm; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box;">${createCardHTML(false)}</div>`;
             }
 
             window.print();
