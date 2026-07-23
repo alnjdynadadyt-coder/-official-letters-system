@@ -89,11 +89,11 @@
             display: none;
         }
 
-        /* تنسيق الطباعة لضمان احتواء الورقة بالكامل بدون صفحات إضافية */
+        /* تنسيق الطباعة لضمان احتواء ورقة A4 واحدة بالكامل دون صفحات فارغة أو زائدة */
         @media print {
             @page {
                 size: A4;
-                margin: 4mm;
+                margin: 5mm;
             }
             body * {
                 visibility: hidden;
@@ -107,6 +107,7 @@
                 top: 0;
                 right: 0;
                 width: 100%;
+                height: 100vh;
                 font-family: 'Traditional Arabic', 'Amiri', serif;
                 background: white;
                 color: black;
@@ -121,7 +122,7 @@
 <body>
 
     <div class="form-container no-print">
-        <!-- زر العودة العلوي بجانب العنوان لسهولة الوصول الفوري -->
+        <!-- زر العودة العلوي -->
         <div class="form-header-flex">
             <h2>إدخال بيانات أمر المباشرة / الانفكاك</h2>
             <a href="index.html" class="back-link">← العودة للرئيسية</a>
@@ -132,8 +133,8 @@
             <div class="form-group">
                 <label>نظام النسخ في الورقة:</label>
                 <select id="copiesLayout">
-                    <option value="one">نسخة واحدة في الصفحة</option>
-                    <option value="two">نسختان متطابقتان في نفس الورقة (نصف علوي ونصف سفلي)</option>
+                    <option value="one">نسخة واحدة تملأ الصفحة</option>
+                    <option value="two">نسختان متطابقتان في نفس الورقة (استغلال المساحات)</option>
                 </select>
             </div>
 
@@ -205,7 +206,7 @@
             <button type="submit" class="btn-submit">عرض وطباعة الكتاب (PDF)</button>
         </form>
 
-        <!-- زر العودة السفلي الاحتياطي -->
+        <!-- زر العودة السفلي -->
         <div class="back-link-bottom">
             <a href="index.html" class="back-link">← العودة للرئيسية</a>
         </div>
@@ -213,7 +214,7 @@
 
     <!-- قالب الطباعة -->
     <div id="printArea">
-        <div id="documentWrapper"></div>
+        <div id="documentWrapper" style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;"></div>
     </div>
 
     <script>
@@ -252,65 +253,65 @@
             const managerName = document.getElementById('managerNameInput').value;
             const layoutMode = document.getElementById('copiesLayout').value;
 
-            const createSingleCard = (isCompact = false) => `
-                <div style="border: 2px solid #2c3e50; padding: ${isCompact ? '12px 18px' : '25px'}; border-radius: 6px; ${isCompact ? 'margin-bottom: 8px;' : ''}">
-                    <div style="text-align: center; font-weight: bold; font-size: ${isCompact ? '15px' : '17px'}; margin-bottom: 6px;">
-                        ${headerTitle}
+            // تصميم بطاقة الكتاب الفردية (مضبوطة المساحات لتستغل الفراغات بجمالية عالية)
+            const createCardHTML = (isTwoCopies) => `
+                <div style="border: 2px solid #2c3e50; padding: ${isTwoCopies ? '15px 22px' : '35px 45px'}; border-radius: 8px; background: #fff; height: ${isTwoCopies ? '47.5vh' : '96vh'}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div style="text-align: center; font-weight: bold; font-size: ${isTwoCopies ? '16px' : '20px'}; margin-bottom: ${isTwoCopies ? '8px' : '18px'};">
+                            ${headerTitle}
+                        </div>
+
+                        <table style="width: 100%; border-collapse: collapse; margin-bottom: ${isTwoCopies ? '12px' : '25px'}; font-weight: bold; font-size: ${isTwoCopies ? '14px' : '16px'};">
+                            <tr>
+                                <td style="width: 50%; text-align: right;">إدارة / ${schoolName}</td>
+                                <td style="width: 50%; text-align: left;">
+                                    العدد: ${bookNum}<br>
+                                    التاريخ: ${dateVal}
+                                </td>
+                            </tr>
+                        </table>
+
+                        <div style="text-align: center; font-size: ${isTwoCopies ? '14.5px' : '17px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '10px' : '20px'};">
+                            إلى / ${toVal}
+                        </div>
+
+                        <div style="text-align: center; font-size: ${isTwoCopies ? '14.5px' : '17px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '15px' : '30px'};">
+                            م/ ${subjectTitle}
+                        </div>
+
+                        <div style="font-size: ${isTwoCopies ? '14px' : '16.5px'}; line-height: ${isTwoCopies ? '2' : '2.4'}; text-align: justify; padding: 0 5px;">
+                            كتابكم المرقم (${refBookNum}) في (${refBookDate}) والمتضمن (${contentNature}).
+                            <br>
+                            باشر السيد (<b>${teacherName}</b>) مدرس اختصاص (${subject}) في مدرستنا يوم (${actionDate}) راجين تفضلكم باعتياره.
+                        </div>
                     </div>
 
-                    <table style="width: 100%; border-collapse: collapse; margin-bottom: 10px; font-weight: bold; font-size: ${isCompact ? '13.5px' : '15px'};">
-                        <tr>
-                            <td style="width: 50%; text-align: right;">إدارة / ${schoolName}</td>
-                            <td style="width: 50%; text-align: left;">
-                                العدد: ${bookNum}<br>
-                                التاريخ: ${dateVal}
-                            </td>
-                        </tr>
-                    </table>
+                    <div>
+                        <div style="text-align: center; font-size: ${isTwoCopies ? '14.5px' : '17px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '15px' : '30px'};">
+                            للعلـم مع التقـدير
+                        </div>
 
-                    <div style="text-align: center; font-size: ${isCompact ? '14px' : '15.5px'}; font-weight: bold; margin-bottom: 8px;">
-                        إلى / ${toVal}
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <td style="width: 60%;"></td>
+                                <td style="width: 40%; text-align: center; font-size: ${isTwoCopies ? '14px' : '16px'}; line-height: 1.6;">
+                                    مدير المدرسة<br>
+                                    <b>${managerName}</b>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
-
-                    <div style="text-align: center; font-size: ${isCompact ? '14px' : '15.5px'}; font-weight: bold; margin-bottom: 14px;">
-                        م/ ${subjectTitle}
-                    </div>
-
-                    <div style="font-size: ${isCompact ? '13.5px' : '15px'}; line-height: 1.9; text-align: justify; margin-bottom: 15px; padding: 0 4px;">
-                        كتابكم المرقم (${refBookNum}) في (${refBookDate}) والمتضمن (${contentNature}).
-                        <br>
-                        باشر السيد (<b>${teacherName}</b>) مدرس اختصاص (${subject}) في مدرستنا يوم (${actionDate}) .
-                    </div>
-
-                    <div style="text-align: center; font-size: ${isCompact ? '14px' : '15.5px'}; font-weight: bold; margin-bottom: 15px;">
-                        للعلـم مع التقـدير
-                    </div>
-
-                    <table style="width: 100%; border-collapse: collapse; margin-top: 5px;">
-                        <tr>
-                            <td style="width: 60%;"></td>
-                            <td style="width: 40%; text-align: center; font-size: ${isCompact ? '13.5px' : '15px'}; line-height: 1.5;">
-                                مدير المدرسة<br>
-                                <b>${managerName}</b>
-                            </td>
-                        </tr>
-                    </table>
                 </div>
             `;
 
             const wrapper = document.getElementById('documentWrapper');
 
             if (layoutMode === 'two') {
-                wrapper.innerHTML = `
-                    <div style="height: 48vh; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between;">
-                        ${createSingleCard(true)}
-                    </div>
-                    <div style="height: 48vh; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; margin-top: 5px;">
-                        ${createSingleCard(true)}
-                    </div>
-                `;
+                // نسختان متطابقتان تملآن المساحات البيضاء بالكامل داخل ورقة A4 واحدة
+                wrapper.innerHTML = createCardHTML(true) + createCardHTML(true);
             } else {
-                wrapper.innerHTML = `<div style="height: 97vh; display: flex; flex-direction: column; justify-content: center;">${createSingleCard(false)}</div>`;
+                // نسخة واحدة تملأ كامل الصفحة بتركيز وجمالية عالية
+                wrapper.innerHTML = createCardHTML(false);
             }
 
             window.print();
