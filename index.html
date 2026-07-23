@@ -37,35 +37,35 @@
             position: relative;
         }
 
-        /* زر تغيير الألوان العائم */
-        .theme-selector {
+        /* القائمة المنسدلة لاختيار الثيم اللوني */
+        .theme-selector-container {
             position: absolute;
             top: 20px;
             left: 20px;
-            display: flex;
-            gap: 6px;
-            background: rgba(0, 0, 0, 0.2);
-            padding: 6px;
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        .theme-btn {
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            border: 2px solid rgba(255,255,255,0.6);
+        .theme-dropdown {
+            background: rgba(0, 0, 0, 0.3);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 13px;
+            font-weight: 600;
             cursor: pointer;
             outline: none;
-            transition: transform 0.2s;
+            backdrop-filter: blur(5px);
         }
-        .theme-btn:hover {
-            transform: scale(1.2);
+        .theme-dropdown option {
+            background: #1e293b;
+            color: #ffffff;
+            padding: 10px;
         }
 
         .dashboard-header {
             text-align: center;
             margin-bottom: 30px;
-            margin-top: 10px;
+            margin-top: 15px;
         }
         h1 {
             color: #ffffff;
@@ -76,11 +76,10 @@
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
         
-        /* التعديل الجديد: سطر مستقل، لون مختلف، حجم أصغر */
         .sub-designer {
             display: block;
             font-size: 14.5px;
-            color: #f6ad55; /* لون بصلي/ذهبي هادئ يكسر اللون بجمال */
+            color: #f6ad55;
             font-weight: 600;
             margin-top: 6px;
             text-shadow: 0 1px 2px rgba(0,0,0,0.4);
@@ -139,21 +138,20 @@
             justify-content: center;
         }
         
-        /* Hover Effects */
         .menu-item:hover {
             transform: translateY(-4px);
-            background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(246, 173, 85, 0.4);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(246, 173, 85, 0.5);
             box-shadow: 0 12px 25px -5px rgba(246, 173, 85, 0.2);
             color: #ffffff;
         }
         .menu-item:hover .arrow {
             transform: translateX(-5px);
             color: #f6ad55;
-            background: rgba(246, 173, 85, 0.15);
+            background: rgba(246, 173, 85, 0.2);
         }
         .menu-item:hover .emoji {
-            background: rgba(246, 173, 85, 0.2);
+            background: rgba(246, 173, 85, 0.25);
             transform: scale(1.05);
         }
 
@@ -177,12 +175,19 @@
 <body>
 
     <div class="dashboard-container">
-        <!-- زر تغيير الألوان السريع -->
-        <div class="theme-selector">
-            <button class="theme-btn" style="background: #2c161d;" onclick="changeTheme('peach')" title="بصلي فاخر"></button>
-            <button class="theme-btn" style="background: #312e81;" onclick="changeTheme('purple')" title="ليلي عميق"></button>
-            <button class="theme-btn" style="background: #0f172a;" onclick="changeTheme('dark')" title="داكن فخم"></button>
-            <button class="theme-btn" style="background: #064e3b;" onclick="changeTheme('emerald')" title="زمردي هادئ"></button>
+        <!-- قائمة منسدلة لاختيار ألوان الثيمات الجديدة والقديمة -->
+        <div class="theme-selector-container">
+            <select class="theme-dropdown" id="themeSelect" onchange="changeTheme(this.value)">
+                <option value="peach">🎨 اختر لون الخلفية</option>
+                <option value="peach">بصلي فاخر</option>
+                <option value="pistachio">💚 فستقي منعش</option>
+                <option value="pink">🌸 وردي لطيف</option>
+                <option value="red">❤️ أحمر فاخر</option>
+                <option value="white">🤍 أبيض مبرق</option>
+                <option value="purple">💜 ليلي عميق</option>
+                <option value="emerald">🌿 زمردي هادئ</option>
+                <option value="dark">🌙 داكن فخم</option>
+            </select>
         </div>
 
         <div class="dashboard-header">
@@ -257,12 +262,28 @@
             const body = document.body;
             if (theme === 'peach') {
                 body.style.background = 'radial-gradient(circle at 50% 10%, #4a2832 0%, #2c161d 40%, #150a0e 100%)';
+                body.style.color = '#f8fafc';
+            } else if (theme === 'pistachio') {
+                body.style.background = 'radial-gradient(circle at 50% 10%, #386641 0%, #283618 40%, #111d08 100%)';
+                body.style.color = '#fefae0';
+            } else if (theme === 'pink') {
+                body.style.background = 'radial-gradient(circle at 50% 10%, #7b2cbf 0%, #5a189a 40%, #240046 100%)';
+                body.style.color = '#ffccd5';
+            } else if (theme === 'red') {
+                body.style.background = 'radial-gradient(circle at 50% 10%, #800f2f 0%, #590d22 100%, #200109 100%)';
+                body.style.color = '#fff0f3';
+            } else if (theme === 'white') {
+                body.style.background = 'radial-gradient(circle at 50% 10%, #f8fafc 0%, #e2e8f0 40%, #cbd5e1 100%)';
+                body.style.color = '#1e293b';
             } else if (theme === 'purple') {
                 body.style.background = 'radial-gradient(circle at 50% 10%, #3b3069 0%, #1e1b4b 40%, #0f0c1b 100%)';
-            } else if (theme === 'dark') {
-                body.style.background = 'radial-gradient(circle at 50% 10%, #334155 0%, #1e293b 40%, #0f172a 100%)';
+                body.style.color = '#f8fafc';
             } else if (theme === 'emerald') {
                 body.style.background = 'radial-gradient(circle at 50% 10%, #065f46 0%, #064e3b 40%, #022c22 100%)';
+                body.style.color = '#f8fafc';
+            } else if (theme === 'dark') {
+                body.style.background = 'radial-gradient(circle at 50% 10%, #334155 0%, #1e293b 40%, #0f172a 100%)';
+                body.style.color = '#f8fafc';
             }
         }
     </script>
