@@ -126,12 +126,6 @@
             padding-bottom: 15px;
             margin-bottom: 20px;
         }
-        .preview-title {
-            text-align: center;
-            font-size: 20px;
-            font-weight: bold;
-            margin: 20px 0;
-        }
         .preview-body {
             line-height: 2.2;
             font-size: 16px;
@@ -177,8 +171,18 @@
 
         <form id="taayeedForm" onsubmit="generatePreview(event)">
             <div class="form-group">
+                <label>رقم العدد:</label>
+                <input type="text" id="bookNumber" placeholder="مثال: 125" required>
+            </div>
+
+            <div class="form-group">
+                <label>تاريخ الكتاب:</label>
+                <input type="text" id="bookDate" placeholder="مثال: 24 / 7 / 2026م" required>
+            </div>
+
+            <div class="form-group">
                 <label>إلى / (الجهة المطلوبة):</label>
-                <input type="text" id="targetEntity" placeholder="مثال: إلى / دائرة التقاعد " required>
+                <input type="text" id="targetEntity" placeholder="مثال: إلى / دائرة التقاعد / وحدة الموظفين" required>
             </div>
 
             <div class="form-group">
@@ -196,12 +200,17 @@
 
             <div class="form-group">
                 <label>الصف الدراسي:</label>
-                <input type="text" id="studentClass" placeholder="مثال: الرابع الاعدادي / الخامس العلمي" required>
+                <input type="text" id="studentClass" placeholder="مثال: الأول المتوسط / الرابع العلمي" required>
             </div>
 
             <div class="form-group">
                 <label>العام الدراسي:</label>
-                <input type="text" id="academicYear" placeholder="مثال: 2025-2026" required>
+                <input type="text" id="academicYear" placeholder="مثال: 2025 - 2026" required>
+            </div>
+
+            <div class="form-group">
+                <label>اسم المدير:</label>
+                <input type="text" id="managerName" value="عصام جاسم الأسدي" required>
             </div>
 
             <button type="submit" class="btn-submit">معاينة وإصدار الكتاب</button>
@@ -216,17 +225,17 @@
                     <p>إعدادية النجدين للبنين</p>
                 </div>
                 <div>
-                    <p>العدد: .............</p>
-                    <p>التاريخ: .... / .... / 2026م</p>
+                    <p>العدد: <span id="pNumber"></span></p>
+                    <p>التاريخ: <span id="pDate"></span></p>
                 </div>
             </div>
 
-            <div style="margin-top: 20px;">
+            <div style="margin-top: 25px; text-align: center;">
                 <p><strong>إلى / <span id="pTarget"></span></strong></p>
-                <p><strong>م / تأييد طالب</strong></p>
+                <p style="margin-top: 10px;"><strong>م / تأييد طالب</strong></p>
             </div>
 
-            <div class="preview-body" style="margin-top: 20px;">
+            <div class="preview-body" style="margin-top: 25px;">
                 <p id="pContentText"></p>
             </div>
 
@@ -235,7 +244,7 @@
                     <p>المشرف الإداري</p>
                 </div>
                 <div style="text-align: center;">
-                    <p>عصام الأسدي</p>
+                    <p><span id="pManager"></span></p>
                     <p>مدير اعدادية النجدين</p>
                 </div>
             </div>
@@ -245,7 +254,7 @@
     </div>
 
     <script>
-        // تطبيق الثيم المحفوظ مسبقاً لمنع تغير اللون عند التحديث
+        // تطبيق الثيم المحفوظ مسبقاً
         function applyTheme(theme) {
             const body = document.body;
             if (theme === 'peach') {
@@ -282,23 +291,29 @@
             }
         });
 
-        // توليد نص التأييد بناءً على الجنس (ذكر/أنثى)
+        // توليد معاينة الكتاب الرسمي
         function generatePreview(event) {
             event.preventDefault();
 
+            const num = document.getElementById('bookNumber').value;
+            const date = document.getElementById('bookDate').value;
             const target = document.getElementById('targetEntity').value;
             const name = document.getElementById('studentName').value;
             const gender = document.getElementById('studentGender').value;
             const studentClass = document.getElementById('studentClass').value;
             const year = document.getElementById('academicYear').value;
+            const manager = document.getElementById('managerName').value;
 
+            document.getElementById('pNumber').innerText = num;
+            document.getElementById('pDate').innerText = date;
             document.getElementById('pTarget').innerText = target;
+            document.getElementById('pManager').innerText = manager;
 
             let textBlock = "";
             if (gender === 'male') {
-                textBlock = `نؤيد لكم أن الطالب (<strong>${name}</strong>) أحد طلاب الصف (<strong>${studentClass}</strong>) مستمر بالدوام للعام الدراسي (<strong>${year}</strong>)، وبناءً على طلبه زود بهذا التأييد لعلـم مع التقدير.`;
+                textBlock = `نؤيد لكم أن الطالب (<strong>${name}</strong>) أحد طلاب الصف (<strong>${studentClass}</strong>) مستمر بالدوام للعام الدراسي (<strong>${year}</strong>)، وبناءً على طلبه زود بهذا التأييد لعلم مع التقدير.`;
             } else {
-                textBlock = `نؤيد لكم أن الطالبة (<strong>${name}</strong>) إحدى طالبات الصف (<strong>${studentClass}</strong>) مستمرة بالدوام للعام الدراسي (<strong>${year}</strong>)، وبناءً على طلبها زودت بهذا التأييد لعلـم مع التقدير.`;
+                textBlock = `نؤيد لكم أن الطالبة (<strong>${name}</strong>) إحدى طالبات الصف (<strong>${studentClass}</strong>) مستمرة بالدوام للعام الدراسي (<strong>${year}</strong>)، وبناءً على طلبها زودت بهذا التأييد لعلم مع التقدير.`;
             }
 
             document.getElementById('pContentText').innerHTML = textBlock;
