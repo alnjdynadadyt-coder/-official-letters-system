@@ -175,13 +175,13 @@
 <body>
 
     <div class="dashboard-container">
-        <!-- قائمة منسدلة لاختيار ألوان الثيمات الجديدة والقديمة -->
+        <!-- قائمة منسدلة لاختيار ألوان الثيمات -->
         <div class="theme-selector-container">
             <select class="theme-dropdown" id="themeSelect" onchange="changeTheme(this.value)">
                 <option value="peach">🎨 اختر لون الخلفية</option>
                 <option value="peach">بصلي فاخر</option>
+                <option value="pink">🌸 وردي فاخر</option>
                 <option value="pistachio">💚 فستقي منعش</option>
-                <option value="pink">🌸 وردي لطيف</option>
                 <option value="red">❤️ أحمر فاخر</option>
                 <option value="white">🤍 أبيض مبرق</option>
                 <option value="purple">💜 ليلي عميق</option>
@@ -263,18 +263,18 @@
             if (theme === 'peach') {
                 body.style.background = 'radial-gradient(circle at 50% 10%, #4a2832 0%, #2c161d 40%, #150a0e 100%)';
                 body.style.color = '#f8fafc';
+            } else if (theme === 'pink') {
+                body.style.background = 'radial-gradient(circle at 50% 10%, #d946ef 0%, #a21caf 40%, #701a75 100%)';
+                body.style.color = '#fae8ff';
             } else if (theme === 'pistachio') {
                 body.style.background = 'radial-gradient(circle at 50% 10%, #386641 0%, #283618 40%, #111d08 100%)';
                 body.style.color = '#fefae0';
-            } else if (theme === 'pink') {
-                body.style.background = 'radial-gradient(circle at 50% 10%, #7b2cbf 0%, #5a189a 40%, #240046 100%)';
-                body.style.color = '#ffccd5';
             } else if (theme === 'red') {
-                body.style.background = 'radial-gradient(circle at 50% 10%, #800f2f 0%, #590d22 100%, #200109 100%)';
-                body.style.color = '#fff0f3';
+                body.style.background = 'radial-gradient(circle at 50% 10%, #e11d48 0%, #9f1239 40%, #4c0519 100%)';
+                body.style.color = '#fff1f2';
             } else if (theme === 'white') {
-                body.style.background = 'radial-gradient(circle at 50% 10%, #f8fafc 0%, #e2e8f0 40%, #cbd5e1 100%)';
-                body.style.color = '#1e293b';
+                body.style.background = 'radial-gradient(circle at 50% 10%, #f8fafc 0%, #cbd5e1 40%, #94a3b8 100%)';
+                body.style.color = '#0f172a';
             } else if (theme === 'purple') {
                 body.style.background = 'radial-gradient(circle at 50% 10%, #3b3069 0%, #1e1b4b 40%, #0f0c1b 100%)';
                 body.style.color = '#f8fafc';
