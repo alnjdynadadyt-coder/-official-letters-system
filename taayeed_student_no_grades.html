@@ -10,12 +10,10 @@
             transition: all 0.3s ease;
         }
         body {
-            background: radial-gradient(circle at 50% 10%, #4a2832 0%, #2c161d 40%, #150a0e 100%);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 20px;
             direction: rtl;
-            color: #f8fafc;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -61,7 +59,7 @@
             font-weight: 800;
         }
         .form-group {
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
         label {
             display: block;
@@ -70,7 +68,7 @@
             color: #f6ad55;
             font-weight: 600;
         }
-        input, select, textarea {
+        input, select {
             width: 100%;
             padding: 12px 15px;
             background: rgba(0, 0, 0, 0.2);
@@ -107,154 +105,121 @@
             opacity: 0.95;
         }
 
-        /* تنسيق معاينة وثيقة التأييد للطباعة الرسمية */
-        .preview-box {
-            background: #ffffff;
-            color: #000000;
-            padding: 40px;
-            border-radius: 12px;
-            margin-top: 25px;
+        #printArea {
             display: none;
-            direction: rtl;
-            font-family: 'Times New Roman', Times, serif;
-        }
-        .preview-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #333;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-        }
-        .preview-body {
-            line-height: 2.2;
-            font-size: 16px;
-            text-align: justify;
-        }
-        .preview-footer {
-            margin-top: 50px;
-            display: flex;
-            justify-content: space-between;
-            font-weight: bold;
-        }
-        .print-btn {
-            background: #2b6cb0;
-            margin-top: 15px;
         }
 
         @media print {
-            body {
-                background: #ffffff !important;
-                color: #000000 !important;
-                padding: 0;
+            @page {
+                size: A4;
+                margin: 0mm;
             }
-            .container > *:not(.preview-box) {
-                display: none !important;
+            body * {
+                visibility: hidden;
             }
-            .preview-box {
-                display: block !important;
-                box-shadow: none;
-                width: 100%;
-                padding: 0;
+            #printArea, #printArea * {
+                visibility: visible;
             }
-            .print-btn {
+            #printArea {
+                display: block;
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 210mm;
+                height: 297mm;
+                overflow: hidden;
+                font-family: 'Traditional Arabic', 'Amiri', serif;
+                background: white;
+                color: black;
+                box-sizing: border-box;
+            }
+            .no-print {
                 display: none !important;
             }
         }
     </style>
 </head>
-<body>
+<body style="background: radial-gradient(circle at 50% 10%, #4a2832 0%, #2c161d 40%, #150a0e 100%); color: #f8fafc;">
 
-    <div class="container">
+    <div class="container no-print">
         <a href="index.html" class="back-btn">العودة للرئيسية ←</a>
         <h2>تأييد طالب بدون درجات</h2>
 
-        <form id="taayeedForm" onsubmit="generatePreview(event)">
+        <form id="taayeedForm" onsubmit="generatePDF(event)">
             <div class="form-group">
-                <label>رقم العدد:</label>
-                <input type="text" id="bookNumber" placeholder="مثال: 125" required>
-            </div>
-
-            <div class="form-group">
-                <label>تاريخ الكتاب:</label>
-                <input type="text" id="bookDate" placeholder="مثال: 24 / 7 / 2026م" required>
-            </div>
-
-            <div class="form-group">
-                <label>إلى / (الجهة المطلوبة):</label>
-                <input type="text" id="targetEntity" placeholder="مثال: إلى / دائرة التقاعد / وحدة الموظفين" required>
-            </div>
-
-            <div class="form-group">
-                <label>اسم الطالب / الطالبة الثلاثي:</label>
-                <input type="text" id="studentName" placeholder="أدخل اسم الطالب أو الطالبة كاملاً" required>
-            </div>
-
-            <div class="form-group">
-                <label>جنس الطالب:</label>
-                <select id="studentGender" required>
-                    <option value="male">ذكر (طالب)</option>
-                    <option value="female">أنثى (طالبة)</option>
+                <label>نظام النسخ:</label>
+                <select id="copiesLayout">
+                    <option value="one">نسخة واحدة (تملأ الصفحة)</option>
+                    <option value="two">نسختان (نفس الورقة)</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <label>الصف الدراسي:</label>
-                <input type="text" id="studentClass" placeholder="مثال: الأول المتوسط / الرابع العلمي" required>
+                <label>الترويسة العليا:</label>
+                <input type="text" id="headerTitleInput" required value="جمهورية العراق&#10;وزارة التربية - مديرية تربية القادسية">
             </div>
 
             <div class="form-group">
-                <label>العام الدراسي:</label>
-                <input type="text" id="academicYear" placeholder="مثال: 2025 - 2026" required>
+                <label>اسم المؤسسة / المدرسة:</label>
+                <input type="text" id="schoolNameInput" required value="إعدادية النجدين للبنين">
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+                <div class="form-group" style="flex: 1;">
+                    <label>رقم العدد:</label>
+                    <input type="text" id="bookNumberInput" required placeholder="مثال: 125">
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label>تاريخ الكتاب:</label>
+                    <input type="date" id="dateInput" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>إلى / (الجهة المطلوبة):</label>
+                <input type="text" id="targetEntity" required placeholder="مثال: دائرة التقاعد / وحدة الموظفين">
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+                <div class="form-group" style="flex: 2;">
+                    <label>اسم الطالب / الطالبة الثلاثي:</label>
+                    <input type="text" id="studentName" required placeholder="أدخل اسم الطالب أو الطالبة كاملاً">
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label>جنس الطالب:</label>
+                    <select id="studentGender" required>
+                        <option value="male">ذكر (طالب)</option>
+                        <option value="female">أنثى (طالبة)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+                <div class="form-group" style="flex: 1;">
+                    <label>الصف الدراسي:</label>
+                    <input type="text" id="studentClass" required placeholder="مثال: الأول المتوسط">
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label>العام الدراسي:</label>
+                    <input type="text" id="academicYear" required value="2025 - 2026">
+                </div>
             </div>
 
             <div class="form-group">
                 <label>اسم المدير:</label>
-                <input type="text" id="managerName" value="عصام جاسم الأسدي" required>
+                <input type="text" id="managerName" required placeholder="أدخل اسم مدير المدرسة الجديد">
             </div>
 
-            <button type="submit" class="btn-submit">معاينة وإصدار الكتاب</button>
+            <button type="submit" class="btn-submit">عرض وطباعة كتاب التأييد (PDF)</button>
         </form>
+    </div>
 
-        <!-- منطقة معاينة الكتاب الرسمي -->
-        <div class="preview-box" id="previewBox">
-            <div class="preview-header">
-                <div>
-                    <p>جمهورية العراق</p>
-                    <p>وزارة التربية - مديرية تربية القادسية</p>
-                    <p>إعدادية النجدين للبنين</p>
-                </div>
-                <div>
-                    <p>العدد: <span id="pNumber"></span></p>
-                    <p>التاريخ: <span id="pDate"></span></p>
-                </div>
-            </div>
-
-            <div style="margin-top: 25px; text-align: center;">
-                <p><strong>إلى / <span id="pTarget"></span></strong></p>
-                <p style="margin-top: 10px;"><strong>م / تأييد طالب</strong></p>
-            </div>
-
-            <div class="preview-body" style="margin-top: 25px;">
-                <p id="pContentText"></p>
-            </div>
-
-            <div class="preview-footer">
-                <div>
-                    <p>المشرف الإداري</p>
-                </div>
-                <div style="text-align: center;">
-                    <p><span id="pManager"></span></p>
-                    <p>مدير اعدادية النجدين</p>
-                </div>
-            </div>
-
-            <button type="button" class="btn-submit print-btn" onclick="window.print()">طباعة الكتاب الرسمي</button>
-        </div>
+    <div id="printArea">
+        <div id="documentWrapper" style="width: 100%; height: 100%; box-sizing: border-box;"></div>
     </div>
 
     <script>
-        // تطبيق الثيم المحفوظ مسبقاً
+        // تطبيق الثيم المحفوظ مسبقاً لمنع تغير لون الخلفية
         function applyTheme(theme) {
             const body = document.body;
             if (theme === 'peach') {
@@ -291,35 +256,97 @@
             }
         });
 
-        // توليد معاينة الكتاب الرسمي
-        function generatePreview(event) {
-            event.preventDefault();
+        function formatDateToDMY(dateString) {
+            if (!dateString) return '';
+            const parts = dateString.split('-');
+            if (parts.length !== 3) return dateString;
+            return `${parts[2]} / ${parts[1]} / ${parts[0]}م`;
+        }
 
-            const num = document.getElementById('bookNumber').value;
-            const date = document.getElementById('bookDate').value;
+        function generatePDF(e) {
+            e.preventDefault();
+
+            const headerTitle = document.getElementById('headerTitleInput').value.replace(/\n/g, '<br>');
+            const schoolName = document.getElementById('schoolNameInput').value;
+            const bookNum = document.getElementById('bookNumberInput').value;
+            const dateVal = formatDateToDMY(document.getElementById('dateInput').value);
             const target = document.getElementById('targetEntity').value;
             const name = document.getElementById('studentName').value;
             const gender = document.getElementById('studentGender').value;
             const studentClass = document.getElementById('studentClass').value;
             const year = document.getElementById('academicYear').value;
             const manager = document.getElementById('managerName').value;
+            const layoutMode = document.getElementById('copiesLayout').value;
 
-            document.getElementById('pNumber').innerText = num;
-            document.getElementById('pDate').innerText = date;
-            document.getElementById('pTarget').innerText = target;
-            document.getElementById('pManager').innerText = manager;
-
-            let textBlock = "";
+            let bodyText = "";
             if (gender === 'male') {
-                textBlock = `نؤيد لكم أن الطالب (<strong>${name}</strong>) أحد طلاب الصف (<strong>${studentClass}</strong>) مستمر بالدوام للعام الدراسي (<strong>${year}</strong>)، وبناءً على طلبه زود بهذا التأييد لعلم مع التقدير.`;
+                bodyText = `نؤيد لكم أن الطالب (<b>${name}</b>) أحد طلاب الصف (<b>${studentClass}</b>) مستمر بالدوام للعام الدراسي (<b>${year}</b>)، وبناءً على طلبه زود بهذا التأييد لعلم مع التقدير.`;
             } else {
-                textBlock = `نؤيد لكم أن الطالبة (<strong>${name}</strong>) إحدى طالبات الصف (<strong>${studentClass}</strong>) مستمرة بالدوام للعام الدراسي (<strong>${year}</strong>)، وبناءً على طلبها زودت بهذا التأييد لعلم مع التقدير.`;
+                bodyText = `نؤيد لكم أن الطالبة (<b>${name}</b>) إحدى طالبات الصف (<b>${studentClass}</b>) مستمرة بالدوام للعام الدراسي (<b>${year}</b>)، وبناءً على طلبها زودت بهذا التأييد لعلم مع التقدير.`;
             }
 
-            document.getElementById('pContentText').innerHTML = textBlock;
-            document.getElementById('previewBox').style.display = 'block';
-            document.getElementById('previewBox').scrollIntoView({ behavior: 'smooth' });
+            const createCardHTML = (isTwoCopies) => `
+                <div style="margin: ${isTwoCopies ? '2mm 6mm' : '5mm 8mm'}; border: 2.5px solid #1a202c; padding: ${isTwoCopies ? '4mm 6mm' : '8mm 14mm'}; border-radius: 8px; background: #fff; height: ${isTwoCopies ? '135mm' : '287mm'}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div style="text-align: center; font-weight: bold; font-size: ${isTwoCopies ? '13.5px' : '17.5px'}; margin-bottom: ${isTwoCopies ? '1.5mm' : '4mm'}; line-height: 1.4;">
+                            ${headerTitle}<br>${schoolName}
+                        </div>
+
+                        <table style="width: 100%; border-collapse: collapse; margin-bottom: ${isTwoCopies ? '2.5mm' : '6mm'}; font-weight: bold; font-size: ${isTwoCopies ? '12px' : '14.5px'};">
+                            <tr>
+                                <td style="width: 50%; text-align: right;"></td>
+                                <td style="width: 50%; text-align: left;">
+                                    العدد: ${bookNum}<br>
+                                    التاريخ: ${dateVal}
+                                </td>
+                            </tr>
+                        </table>
+
+                        <div style="text-align: center; font-size: ${isTwoCopies ? '12.5px' : '15px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '2.5mm' : '5mm'};">
+                            إلى / ${target}
+                        </div>
+
+                        <div style="text-align: center; font-size: ${isTwoCopies ? '12.5px' : '15px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '4mm' : '8mm'};">
+                            م / تأييد طالب
+                        </div>
+
+                        <div style="font-size: ${isTwoCopies ? '12.5px' : '15px'}; line-height: ${isTwoCopies ? '1.8' : '2.3'}; text-align: justify; padding: 0 2mm;">
+                            ${bodyText}
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: ${isTwoCopies ? '1.5mm' : '4mm'};">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <td style="width: 78%;"></td>
+                                <td style="width: 22%; text-align: right; font-size: ${isTwoCopies ? '12px' : '14px'}; line-height: 1.3; padding-right: 5px;">
+                                    <b>${manager}</b><br>
+                                    مدير المدرسة
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            `;
+
+            const wrapper = document.getElementById('documentWrapper');
+
+            if (layoutMode === 'two') {
+                wrapper.innerHTML = `
+                    <div style="height: 148.5mm; display: flex; flex-direction: column; justify-content: flex-start;">
+                        ${createCardHTML(true)}
+                    </div>
+                    <div style="height: 148.5mm; display: flex; flex-direction: column; justify-content: flex-end;">
+                        ${createCardHTML(true)}
+                    </div>
+                `;
+            } else {
+                wrapper.innerHTML = `<div style="height: 297mm; display: flex; flex-direction: column; justify-content: center;">${createCardHTML(false)}</div>`;
+            }
+
+            window.print();
         }
     </script>
 </body>
 </html>
+ 
