@@ -8,7 +8,7 @@
         body {
             background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            padding: 15px;
+            padding: 10px;
             direction: rtl;
             color: #2d3748;
         }
@@ -16,35 +16,32 @@
             max-width: 750px;
             background: #ffffff;
             margin: 0 auto;
-            padding: 25px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+            padding: 18px 20px;
+            border-radius: 14px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
             border-top: 5px solid #3182ce;
         }
         .form-header-flex {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
             border-bottom: 2px solid #edf2f7;
-            padding-bottom: 12px;
+            padding-bottom: 8px;
         }
         h2 {
             color: #1a202c;
             margin: 0;
-            font-size: 21px;
+            font-size: 19px;
             font-weight: 700;
         }
         
         .section-box {
             border: 1px solid rgba(0,0,0,0.07);
-            border-radius: 10px;
-            padding: 15px 18px;
-            margin-bottom: 12px;
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin-bottom: 10px;
             transition: all 0.3s ease;
-        }
-        .section-box:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
         }
 
         .sec-print { background: #f0f9ff; border-color: #bae6fd; }
@@ -53,14 +50,14 @@
         .sec-person { background: #f0fdf4; border-color: #bbf7d0; }
 
         .section-title {
-            font-size: 14.5px;
+            font-size: 13.5px;
             font-weight: bold;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             border-bottom: 1px dashed rgba(0,0,0,0.1);
-            padding-bottom: 6px;
+            padding-bottom: 4px;
         }
         .sec-print .section-title { color: #0284c7; }
         .sec-admin .section-title { color: #c084fc; }
@@ -68,24 +65,24 @@
         .sec-person .section-title { color: #16a34a; }
 
         .form-group {
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
         .form-group:last-child {
             margin-bottom: 0;
         }
         label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
             font-weight: 600;
             color: #4a5568;
-            font-size: 13px;
+            font-size: 12.5px;
         }
         input, select {
             width: 100%;
-            padding: 10px 12px;
+            padding: 8px 10px;
             border: 1px solid #cbd5e0;
-            border-radius: 8px;
-            font-size: 13.5px;
+            border-radius: 6px;
+            font-size: 13px;
             box-sizing: border-box;
             background-color: #fff;
             transition: all 0.2s;
@@ -99,13 +96,13 @@
             background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
             color: white;
             border: none;
-            padding: 13px 20px;
-            font-size: 15px;
+            padding: 11px 20px;
+            font-size: 14.5px;
             border-radius: 8px;
             cursor: pointer;
             width: 100%;
             font-weight: bold;
-            margin-top: 5px;
+            margin-top: 4px;
             box-shadow: 0 4px 12px rgba(49, 130, 206, 0.25);
             transition: all 0.2s;
         }
@@ -118,9 +115,9 @@
             background-color: #edf2f7;
             color: #4a5568;
             text-decoration: none;
-            padding: 7px 12px;
+            padding: 5px 10px;
             border-radius: 6px;
-            font-size: 12.5px;
+            font-size: 12px;
             font-weight: bold;
             transition: background 0.2s;
         }
@@ -131,7 +128,7 @@
         .back-link-bottom {
             display: block;
             text-align: center;
-            margin-top: 20px;
+            margin-top: 12px;
         }
 
         #printArea {
@@ -172,100 +169,106 @@
 
     <div class="form-container no-print">
         <div class="form-header-flex">
-            <h2>إدخال بيانات أمر المباشرة / الانفكاك</h2>
+            <h2>إدخال أمر المباشرة / الانفكاك</h2>
             <a href="index.html" class="back-link">← العودة للرئيسية</a>
         </div>
 
         <form id="teacherForm" onsubmit="generatePDF(event)">
             
             <div class="section-box sec-print">
-                <div class="section-title">⚙️ إعدادات تخطيط الطباعة ونوع الأمر</div>
-                <div class="form-group" style="margin-bottom: 10px;">
-                    <label>نوع الكتاب الرسمي:</label>
-                    <select id="orderTypeInput">
-                        <option value="mubashara">أمر مباشرة مدرس / مدرسة</option>
-                        <option value="infikak">أمر انفكاك مدرس / مدرسة</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>نظام النسخ في الورقة:</label>
-                    <select id="copiesLayout">
-                        <option value="one">نسخة واحدة تملأ الصفحة</option>
-                        <option value="two">نسختان متطابقتان في نفس الورقة (استغلال المساحات)</option>
-                    </select>
+                <div class="section-title">⚙️ الخيارات وطريقة الطباعة</div>
+                <div style="display: flex; gap: 10px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>نوع الكتاب:</label>
+                        <select id="orderTypeInput">
+                            <option value="mubashara">مباشرة مدرس / مدرسة</option>
+                            <option value="infikak">انفكاك مدرس / مدرسة</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>نظام النسخ:</label>
+                        <select id="copiesLayout">
+                            <option value="one">نسخة واحدة (تفل الصفحة)</option>
+                            <option value="two">نسختان (نفس الورقة)</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
             <div class="section-box sec-admin">
                 <div class="section-title">📋 المعلومات الإدارية للكتاب</div>
-                <div class="form-group">
-                    <label>الترويسة العليا:</label>
-                    <input type="text" id="headerTitleInput" required value="وزارة التربية">
-                </div>
-                <div class="form-group">
-                    <label>اسم المدرسة:</label>
-                    <input type="text" id="schoolNameInput" required placeholder="مثال: اعدادية النجدين للبنين">
-                </div>
-                <div class="form-group" style="display: flex; gap: 12px;">
-                    <div style="flex: 1;">
-                        <label>رقم العدد:</label>
-                        <input type="text" id="bookNumberInput" required placeholder="مثال: 135">
+                <div style="display: flex; gap: 10px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>الترويسة العليا:</label>
+                        <input type="text" id="headerTitleInput" required value="وزارة التربية">
                     </div>
-                    <div style="flex: 1;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>اسم المدرسة:</label>
+                        <input type="text" id="schoolNameInput" required placeholder="اعدادية النجدين للبنين">
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 8px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>رقم العدد:</label>
+                        <input type="text" id="bookNumberInput" required placeholder="135">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
                         <label>التاريخ:</label>
                         <input type="date" id="dateInput" required>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label>إلى (الجهة الموجه لها الكتاب):</label>
-                    <input type="text" id="toInput" required placeholder="مثال: المديرية العامة لتربية القادسية">
+                <div class="form-group" style="margin-top: 8px;">
+                    <label>إلى (الجهة الموجه لها):</label>
+                    <input type="text" id="toInput" required placeholder="المديرية العامة لتربية القادسية - قسم الملاك الثانوي">
                 </div>
             </div>
 
             <div class="section-box sec-ref">
                 <div class="section-title">📂 الكتاب ذي العلاقة والمرجع</div>
-                <div class="form-group" style="display: flex; gap: 12px;">
-                    <div style="flex: 1;">
+                <div style="display: flex; gap: 10px;">
+                    <div class="form-group" style="flex: 1;">
                         <label>رقم الكتاب ذي العلاقة:</label>
-                        <input type="text" id="refBookNumInput" required placeholder="مثال: 1200">
+                        <input type="text" id="refBookNumInput" required placeholder="1200">
                     </div>
-                    <div style="flex: 1;">
+                    <div class="form-group" style="flex: 1;">
                         <label>تاريخ الكتاب ذي العلاقة:</label>
                         <input type="date" id="refBookDateInput" required>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label>المتضمن (مثل: نقل، تنسيب، مباشرة):</label>
-                    <input type="text" id="contentNatureInput" required placeholder="مثال: نقل مدرسين">
+                <div class="form-group" style="margin-top: 8px;">
+                    <label>المتضمن (مثل: نقل مدرسين):</label>
+                    <input type="text" id="contentNatureInput" required placeholder="نقل مدرسين">
                 </div>
             </div>
 
             <div class="section-box sec-person">
                 <div class="section-title">👤 بيانات المعني بالأمر</div>
-                <div class="form-group">
-                    <label>الجنس:</label>
-                    <select id="genderInput">
-                        <option value="male">ذكر (مدرس)</option>
-                        <option value="female">أنثى (مدرسة)</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>اسم المدرس / المدرسة:</label>
-                    <input type="text" id="teacherNameInput" required placeholder="مثال: علي علي علي أو فاطمة أحمد">
-                </div>
-                <div class="form-group" style="display: flex; gap: 12px;">
-                    <div style="flex: 1;">
-                        <label>الاختصاص:</label>
-                        <input type="text" id="subjectInput" required placeholder="مثال: الإسلامية">
+                <div style="display: flex; gap: 10px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>الجنس:</label>
+                        <select id="genderInput">
+                            <option value="male">ذكر (مدرس)</option>
+                            <option value="female">أنثى (مدرسة)</option>
+                        </select>
                     </div>
-                    <div style="flex: 1;">
-                        <label>تاريخ التنفيذ (المباشرة / الانفكاك):</label>
+                    <div class="form-group" style="flex: 2;">
+                        <label>اسم المدرس / المدرسة:</label>
+                        <input type="text" id="teacherNameInput" required placeholder="علي علي علي">
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 8px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>الاختصاص:</label>
+                        <input type="text" id="subjectInput" required placeholder="التربية الاسلامية">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>تاريخ التنفيذ الفعلي:</label>
                         <input type="date" id="actionDateInput" required>
                     </div>
                 </div>
-                <div class="form-group" style="margin-top: 10px;">
+                <div class="form-group" style="margin-top: 8px;">
                     <label>اسم مدير المدرسة:</label>
-                    <input type="text" id="managerNameInput" required placeholder="مثال: عصام الاسدي">
+                    <input type="text" id="managerNameInput" required placeholder="عصام الاسدي">
                 </div>
             </div>
 
@@ -319,7 +322,6 @@
             const managerName = document.getElementById('managerNameInput').value;
             const layoutMode = document.getElementById('copiesLayout').value;
 
-            // تحديد العنوان والنص بناءً على نوع الأمر (مباشرة أو انفكاك)
             let subjectTitle = "";
             let actionText = "";
 
@@ -335,15 +337,14 @@
                     `باشر السيد (<b>${teacherName}</b>) مدرس اختصاص (${subject}) في مدرستنا يوم (${actionDate}) استناداً لأمركم الاداري اعلاه.`;
             }
 
-            // قالب الكتاب مع إطار خارجي واضح ومزاح للداخل قليلاً لضمان الأمان أثناء الطباعة
             const createCardHTML = (isTwoCopies) => `
-                <div style="margin: ${isTwoCopies ? '3mm 8mm' : '6mm 10mm'}; border: 2.5px solid #1a202c; padding: ${isTwoCopies ? '5mm 8mm' : '10mm 16mm'}; border-radius: 8px; background: #fff; height: ${isTwoCopies ? '133mm' : '285mm'}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
+                <div style="margin: ${isTwoCopies ? '2mm 6mm' : '5mm 8mm'}; border: 2.5px solid #1a202c; padding: ${isTwoCopies ? '4mm 6mm' : '8mm 14mm'}; border-radius: 8px; background: #fff; height: ${isTwoCopies ? '135mm' : '287mm'}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
                     <div>
-                        <div style="text-align: center; font-weight: bold; font-size: ${isTwoCopies ? '14px' : '18px'}; margin-bottom: ${isTwoCopies ? '2mm' : '5mm'};">
+                        <div style="text-align: center; font-weight: bold; font-size: ${isTwoCopies ? '13.5px' : '17.5px'}; margin-bottom: ${isTwoCopies ? '1.5mm' : '4mm'};">
                             ${headerTitle}
                         </div>
 
-                        <table style="width: 100%; border-collapse: collapse; margin-bottom: ${isTwoCopies ? '3mm' : '8mm'}; font-weight: bold; font-size: ${isTwoCopies ? '12.5px' : '15px'};">
+                        <table style="width: 100%; border-collapse: collapse; margin-bottom: ${isTwoCopies ? '2.5mm' : '6mm'}; font-weight: bold; font-size: ${isTwoCopies ? '12px' : '14.5px'};">
                             <tr>
                                 <td style="width: 50%; text-align: right;">إدارة / ${schoolName}</td>
                                 <td style="width: 50%; text-align: left;">
@@ -353,30 +354,30 @@
                             </tr>
                         </table>
 
-                        <div style="text-align: center; font-size: ${isTwoCopies ? '13px' : '15.5px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '3mm' : '6mm'};">
+                        <div style="text-align: center; font-size: ${isTwoCopies ? '12.5px' : '15px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '2.5mm' : '5mm'};">
                             إلى / ${toVal}
                         </div>
 
-                        <div style="text-align: center; font-size: ${isTwoCopies ? '13px' : '15.5px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '5mm' : '10mm'};">
+                        <div style="text-align: center; font-size: ${isTwoCopies ? '12.5px' : '15px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '4mm' : '8mm'};">
                             م/ ${subjectTitle}
                         </div>
 
-                        <div style="font-size: ${isTwoCopies ? '12.5px' : '15px'}; line-height: ${isTwoCopies ? '1.6' : '2.0'}; text-align: justify; padding: 0 2mm;">
+                        <div style="font-size: ${isTwoCopies ? '12px' : '14.5px'}; line-height: ${isTwoCopies ? '1.5' : '1.9'}; text-align: justify; padding: 0 2mm;">
                             كتابكم المرقم (${refBookNum}) في (${refBookDate}) والمتضمن (${contentNature}).
                             <br>
                             ${actionText}
                         </div>
                     </div>
 
-                    <div style="margin-bottom: ${isTwoCopies ? '2mm' : '5mm'};">
-                        <div style="text-align: center; font-size: ${isTwoCopies ? '13px' : '15.5px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '4mm' : '8mm'};">
+                    <div style="margin-bottom: ${isTwoCopies ? '1.5mm' : '4mm'};">
+                        <div style="text-align: center; font-size: ${isTwoCopies ? '12.5px' : '15px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '3mm' : '6mm'};">
                             للعلـم مع التقـدير
                         </div>
 
                         <table style="width: 100%; border-collapse: collapse;">
                             <tr>
-                                <td style="width: 80%;"></td>
-                                <td style="width: 20%; text-align: right; font-size: ${isTwoCopies ? '12.5px' : '14.5px'}; line-height: 1.4; padding-right: 5px;">
+                                <td style="width: 78%;"></td>
+                                <td style="width: 22%; text-align: right; font-size: ${isTwoCopies ? '12px' : '14px'}; line-height: 1.3; padding-right: 5px;">
                                     مدير المدرسة<br>
                                     <b>${managerName}</b>
                                 </td>
@@ -407,3 +408,4 @@
 
 </body>
 </html>
+ 
