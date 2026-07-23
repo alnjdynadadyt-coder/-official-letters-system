@@ -61,13 +61,41 @@
             color: #7f8c8d;
             text-decoration: none;
         }
+
+        /* تنسيق معاينة الكتاب الرسمي عند الطباعة */
+        #printArea {
+            display: none;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printArea, #printArea * {
+                visibility: visible;
+            }
+            #printArea {
+                display: block;
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 100%;
+                padding: 40px;
+                font-family: 'Amiri', 'Traditional Arabic', serif;
+                background: white;
+                color: black;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <div class="form-container">
+    <div class="form-container no-print">
         <h2>إصدار كتاب مباشرة / انفكاك (مدرس)</h2>
-        <form id="teacherForm" onsubmit="generateLetter(event)">
+        <form id="teacherForm" onsubmit="generatePDF(event)">
             <div class="form-group">
                 <label>نوع الأمر:</label>
                 <select id="orderType" required>
@@ -96,22 +124,56 @@
                 <input type="text" id="bookNumber" required placeholder="مثال: 123">
             </div>
 
-            <button type="submit" class="btn-submit">معاينة وطباعة الكتاب</button>
+            <button type="submit" class="btn-submit">عرض وطباعة الكتاب (PDF)</button>
         </form>
         <a href="index.html" class="back-link">← العودة للرئيسية</a>
     </div>
 
-    <script>
-        function generateLetter(e) {
-            e.preventDefault();
-            const type = document.getElementById('orderType').value;
-            const name = document.getElementById('teacherName').value;
-            const subj = document.getElementById('subject').value;
-            const date = document.getElementById('orderDate').value;
-            const num = document.getElementById('bookNumber').value;
+    <!-- قالب الكتاب الرسمي للطباعة -->
+    <div id="printArea">
+        <div style="text-align: center; font-weight: bold; font-size: 16px; line-height: 1.6;">
+            جمهورية العراق<br>
+            وزارة التربية<br>
+            مديرية التربية / إدارة المدرسة
+        </div>
+        <hr style="border: 1px solid black; margin: 20px 0;">
+        <div style="display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 30px;">
+            <div>العدد: <span id="resBookNum"></span></div>
+            <div>التاريخ: <span id="resDate"></span></div>
+        </div>
 
-            // سيتم فتح نافذة المعاينة والطباعة المباشرة هنا
-            alert(`جاري إصدار (${type}) للمدرس: ${name} باختصاص (${subj})`);
+        <div style="text-align: center; font-size: 18px; font-weight: bold; margin: 40px 0;">
+            إلى / الـحـسـابـات والـتـعـلـيـم الـمـدرسـي
+            <br><br>
+            م/ <span id="resSubjectTitle"></span>
+        </div>
+
+        <div style="font-size: 16px; line-height: 2.2; text-align: justify; margin-bottom: 50px;">
+            نود اعلامكم بأن المدرس (<b><span id="resName"></span></b>) ذو الاختصاص (<span id="resSubj"></span>) قد قام بـ (<span id="resType"></span>) في دبيتنا اعتباراً من تاريخ تنظيم هذا الكتاب. للتوثيق واتخاذ ما يلزم لغرض التسجيل والرواتب.
+        </div>
+
+        <div style="float: left; text-align: center; font-size: 16px; margin-top: 50px; width: 200px;">
+            مدير المدرسة<br><br><br>
+            التوقيع والختم
+        </div>
+    </div>
+
+    <script>
+        function generatePDF(e) {
+            e.preventDefault();
+            
+            // جلب البيانات من النموذج
+            document.getElementById('resBookNum').innerText = document.getElementById('bookNumber').value;
+            document.getElementById('resDate').innerText = document.getElementById('orderDate').value;
+            document.getElementById('resName').innerText = document.getElementById('teacherName').value;
+            document.getElementById('resSubj').innerText = document.getElementById('subject').value;
+            
+            const type = document.getElementById('orderType').value;
+            document.getElementById('resType').innerText = type;
+            document.getElementById('resSubjectTitle').innerText = type + ' مدرس';
+
+            // فتح نافذة الطباعة التلقائية (تتيح الحفظ بصيغة PDF مباشرة)
+            window.print();
         }
     </script>
 
