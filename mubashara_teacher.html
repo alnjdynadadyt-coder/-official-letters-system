@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أمر مباشرة والانفكاك - مدرس</title>
+    <style>
+        body {
+            background-color: #f4f6f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            direction: rtl;
+        }
+        .form-container {
+            max-width: 700px;
+            background: #ffffff;
+            margin: 0 auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        h2 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #34495e;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccd1d9;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+        .btn-submit {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+        }
+        .btn-submit:hover {
+            background-color: #219653;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #7f8c8d;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>إصدار كتاب مباشرة / انفكاك (مدرس)</h2>
+        <form id="teacherForm" onsubmit="generateLetter(event)">
+            <div class="form-group">
+                <label>نوع الأمر:</label>
+                <select id="orderType" required>
+                    <option value="مباشرة">أمر مباشرة</option>
+                    <option value="انفكاك">أمر انفكاك</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>اسم المدرس الرباعي واللقب:</label>
+                <input type="text" id="teacherName" required placeholder="مثال: أحمد محمد علي حسن">
+            </div>
+
+            <div class="form-group">
+                <label>الاختصاص:</label>
+                <input type="text" id="subject" required placeholder="مثال: رياضيات">
+            </div>
+
+            <div class="form-group">
+                <label>التاريخ:</label>
+                <input type="date" id="orderDate" required>
+            </div>
+
+            <div class="form-group">
+                <label>رقم الكتاب الإداري:</label>
+                <input type="text" id="bookNumber" required placeholder="مثال: 123">
+            </div>
+
+            <button type="submit" class="btn-submit">معاينة وطباعة الكتاب</button>
+        </form>
+        <a href="index.html" class="back-link">← العودة للرئيسية</a>
+    </div>
+
+    <script>
+        function generateLetter(e) {
+            e.preventDefault();
+            const type = document.getElementById('orderType').value;
+            const name = document.getElementById('teacherName').value;
+            const subj = document.getElementById('subject').value;
+            const date = document.getElementById('orderDate').value;
+            const num = document.getElementById('bookNumber').value;
+
+            // سيتم فتح نافذة المعاينة والطباعة المباشرة هنا
+            alert(`جاري إصدار (${type}) للمدرس: ${name} باختصاص (${subj})`);
+        }
+    </script>
+
+</body>
+</html>
