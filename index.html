@@ -180,7 +180,7 @@
 <body>
 
     <div class="dashboard-container">
-        <!-- القائمة المنسدلة مقسمة حسب عجلة الألوان (ألوان دافئة وألوان باردة) -->
+        <!-- القائمة المنسدلة مقسمة حسب عجلة الألوان -->
         <div class="theme-selector-container">
             <select class="theme-dropdown" id="themeSelect" onchange="changeTheme(this.value)">
                 <option value="peach">🎨 عجلة الألوان</option>
@@ -272,7 +272,7 @@
     </div>
 
     <script>
-        function changeTheme(theme) {
+        function applyTheme(theme) {
             const body = document.body;
             if (theme === 'peach') {
                 body.style.background = 'radial-gradient(circle at 50% 10%, #4a2832 0%, #2c161d 40%, #150a0e 100%)';
@@ -300,6 +300,24 @@
                 body.style.color = '#f8fafc';
             }
         }
+
+        function changeTheme(theme) {
+            applyTheme(theme);
+            // حفظ اللون المختار في ذاكرة المتصفح ليثبت بشكل دائم
+            localStorage.setItem('userSelectedTheme', theme);
+        }
+
+        // استرجاع وثبات اللون المختار تلقائياً عند فتح أو تحديث الصفحة
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('userSelectedTheme');
+            if (savedTheme) {
+                applyTheme(savedTheme);
+                const themeSelect = document.getElementById('themeSelect');
+                if (themeSelect) {
+                    themeSelect.value = savedTheme;
+                }
+            }
+        });
     </script>
 
 </body>
