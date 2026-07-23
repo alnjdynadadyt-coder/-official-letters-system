@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تأييد طالب بدون درجات - نظام إصدار الكتب والمخاطبات الرسمية</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+        body {
+            background: radial-gradient(circle at 50% 10%, #4a2832 0%, #2c161d 40%, #150a0e 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            direction: rtl;
+            color: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 750px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            margin: auto;
+            padding: 35px 25px;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 
+                        inset 0 1px 1px rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            position: relative;
+        }
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            backdrop-filter: blur(5px);
+        }
+        .back-btn:hover {
+            background: rgba(246, 173, 85, 0.3);
+            border-color: #f6ad55;
+        }
+        h2 {
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 25px;
+            font-size: 22px;
+            font-weight: 800;
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+            color: #f6ad55;
+            font-weight: 600;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 14.5px;
+            font-family: inherit;
+            outline: none;
+        }
+        input:focus, select:focus {
+            border-color: #f6ad55;
+            box-shadow: 0 0 10px rgba(246, 173, 85, 0.2);
+        }
+        option {
+            background: #1e293b;
+            color: #ffffff;
+        }
+        .btn-submit {
+            width: 100%;
+            background: linear-gradient(135deg, #f6ad55, #dd6b20);
+            color: #fff;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 4px 12px rgba(221, 107, 32, 0.4);
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            opacity: 0.95;
+        }
+
+        /* تنسيق معاينة وثيقة التأييد للطباعة الرسمية */
+        .preview-box {
+            background: #ffffff;
+            color: #000000;
+            padding: 40px;
+            border-radius: 12px;
+            margin-top: 25px;
+            display: none;
+            direction: rtl;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .preview-title {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .preview-body {
+            line-height: 2.2;
+            font-size: 16px;
+            text-align: justify;
+        }
+        .preview-footer {
+            margin-top: 50px;
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+        }
+        .print-btn {
+            background: #2b6cb0;
+            margin-top: 15px;
+        }
+
+        @media print {
+            body {
+                background: #ffffff !important;
+                color: #000000 !important;
+                padding: 0;
+            }
+            .container > *:not(.preview-box) {
+                display: none !important;
+            }
+            .preview-box {
+                display: block !important;
+                box-shadow: none;
+                width: 100%;
+                padding: 0;
+            }
+            .print-btn {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <a href="index.html" class="back-btn">العودة للرئيسية ←</a>
+        <h2>تأييد طالب بدون درجات</h2>
+
+        <form id="taayeedForm" onsubmit="generatePreview(event)">
+            <div class="form-group">
+                <label>إلى / (الجهة المطلوبة):</label>
+                <input type="text" id="targetEntity" placeholder="مثال: إلى / دائرة التقاعد " required>
+            </div>
+
+            <div class="form-group">
+                <label>اسم الطالب / الطالبة الثلاثي:</label>
+                <input type="text" id="studentName" placeholder="أدخل اسم الطالب أو الطالبة كاملاً" required>
+            </div>
+
+            <div class="form-group">
+                <label>جنس الطالب:</label>
+                <select id="studentGender" required>
+                    <option value="male">ذكر (طالب)</option>
+                    <option value="female">أنثى (طالبة)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>الصف الدراسي:</label>
+                <input type="text" id="studentClass" placeholder="مثال: الرابع الاعدادي / الخامس العلمي" required>
+            </div>
+
+            <div class="form-group">
+                <label>العام الدراسي:</label>
+                <input type="text" id="academicYear" placeholder="مثال: 2025-2026" required>
+            </div>
+
+            <button type="submit" class="btn-submit">معاينة وإصدار الكتاب</button>
+        </form>
+
+        <!-- منطقة معاينة الكتاب الرسمي -->
+        <div class="preview-box" id="previewBox">
+            <div class="preview-header">
+                <div>
+                    <p>جمهورية العراق</p>
+                    <p>وزارة التربية - مديرية تربية القادسية</p>
+                    <p>إعدادية النجدين للبنين</p>
+                </div>
+                <div>
+                    <p>العدد: .............</p>
+                    <p>التاريخ: .... / .... / 2026م</p>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <p><strong>إلى / <span id="pTarget"></span></strong></p>
+                <p><strong>م / تأييد طالب</strong></p>
+            </div>
+
+            <div class="preview-body" style="margin-top: 20px;">
+                <p id="pContentText"></p>
+            </div>
+
+            <div class="preview-footer">
+                <div>
+                    <p>المشرف الإداري</p>
+                </div>
+                <div style="text-align: center;">
+                    <p>عصام الأسدي</p>
+                    <p>مدير اعدادية النجدين</p>
+                </div>
+            </div>
+
+            <button type="button" class="btn-submit print-btn" onclick="window.print()">طباعة الكتاب الرسمي</button>
+        </div>
+    </div>
+
+    <script>
+        // تطبيق الثيم المحفوظ مسبقاً لمنع تغير اللون عند التحديث
+        function applyTheme(theme) {
+            const body = document.body;
+            if (theme === 'peach') {
+                body.style.background = 'radial-gradient(circle at 50% 10%, #4a2832 0%, #2c161d 40%, #150a0e 100%)';
+                body.style.color = '#f8fafc';
+            } else if (theme === 'pink') {
+                body.style.background = 'radial-gradient(circle at 50% 10%, #f472b6 0%, #db2777 40%, #831843 100%)';
+                body.style.color = '#fff1f2';
+            } else if (theme === 'pistachio') {
+                body.style.background = 'radial-gradient(circle at 50% 10%, #386641 0%, #283618 40%, #111d08 100%)';
+                body.style.color = '#fefae0';
+            } else if (theme === 'red') {
+                body.style.background = 'radial-gradient(circle at 50% 10%, #e11d48 0%, #9f1239 40%, #4c0519 100%)';
+                body.style.color = '#fff1f2';
+            } else if (theme === 'white') {
+                body.style.background = 'radial-gradient(circle at 50% 10%, #f8fafc 0%, #cbd5e1 40%, #94a3b8 100%)';
+                body.style.color = '#0f172a';
+            } else if (theme === 'purple') {
+                body.style.background = 'radial-gradient(circle at 50% 10%, #3b3069 0%, #1e1b4b 40%, #0f0c1b 100%)';
+                body.style.color = '#f8fafc';
+            } else if (theme === 'emerald') {
+                body.style.background = 'radial-gradient(circle at 50% 10%, #065f46 0%, #064e3b 40%, #022c22 100%)';
+                body.style.color = '#f8fafc';
+            } else if (theme === 'dark') {
+                body.style.background = 'radial-gradient(circle at 50% 10%, #334155 0%, #1e293b 40%, #0f172a 100%)';
+                body.style.color = '#f8fafc';
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('userSelectedTheme');
+            if (savedTheme) {
+                applyTheme(savedTheme);
+            }
+        });
+
+        // توليد نص التأييد بناءً على الجنس (ذكر/أنثى)
+        function generatePreview(event) {
+            event.preventDefault();
+
+            const target = document.getElementById('targetEntity').value;
+            const name = document.getElementById('studentName').value;
+            const gender = document.getElementById('studentGender').value;
+            const studentClass = document.getElementById('studentClass').value;
+            const year = document.getElementById('academicYear').value;
+
+            document.getElementById('pTarget').innerText = target;
+
+            let textBlock = "";
+            if (gender === 'male') {
+                textBlock = `نؤيد لكم أن الطالب (<strong>${name}</strong>) أحد طلاب الصف (<strong>${studentClass}</strong>) مستمر بالدوام للعام الدراسي (<strong>${year}</strong>)، وبناءً على طلبه زود بهذا التأييد لعلـم مع التقدير.`;
+            } else {
+                textBlock = `نؤيد لكم أن الطالبة (<strong>${name}</strong>) إحدى طالبات الصف (<strong>${studentClass}</strong>) مستمرة بالدوام للعام الدراسي (<strong>${year}</strong>)، وبناءً على طلبها زودت بهذا التأييد لعلـم مع التقدير.`;
+            }
+
+            document.getElementById('pContentText').innerHTML = textBlock;
+            document.getElementById('previewBox').style.display = 'block';
+            document.getElementById('previewBox').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
