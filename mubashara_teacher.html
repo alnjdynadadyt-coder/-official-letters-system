@@ -89,11 +89,11 @@
             display: none;
         }
 
-        /* تنسيق الطباعة لضمان احتواء ورقة A4 واحدة بالكامل دون صفحات فارغة أو زائدة */
+        /* تثبيت أبعاد ورقة A4 بدقة مطلقة لمنع أي خروج لصفحة ثانية */
         @media print {
             @page {
                 size: A4;
-                margin: 5mm;
+                margin: 0mm;
             }
             body * {
                 visibility: hidden;
@@ -106,8 +106,9 @@
                 position: absolute;
                 top: 0;
                 right: 0;
-                width: 100%;
-                height: 100vh;
+                width: 210mm;
+                height: 297mm;
+                overflow: hidden;
                 font-family: 'Traditional Arabic', 'Amiri', serif;
                 background: white;
                 color: black;
@@ -214,7 +215,7 @@
 
     <!-- قالب الطباعة -->
     <div id="printArea">
-        <div id="documentWrapper" style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;"></div>
+        <div id="documentWrapper" style="width: 100%; height: 100%; box-sizing: border-box;"></div>
     </div>
 
     <script>
@@ -253,15 +254,15 @@
             const managerName = document.getElementById('managerNameInput').value;
             const layoutMode = document.getElementById('copiesLayout').value;
 
-            // تصميم بطاقة الكتاب الفردية (مضبوطة المساحات لتستغل الفراغات بجمالية عالية)
+            // تصميم البطاقة بدقة مليمترية تمنع أي تجاوز للصفحة
             const createCardHTML = (isTwoCopies) => `
-                <div style="border: 2px solid #2c3e50; padding: ${isTwoCopies ? '15px 22px' : '35px 45px'}; border-radius: 8px; background: #fff; height: ${isTwoCopies ? '47.5vh' : '96vh'}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
+                <div style="border: 2px solid #2c3e50; padding: ${isTwoCopies ? '10mm 15mm' : '18mm 22mm'}; border-radius: 6px; background: #fff; height: ${isTwoCopies ? '138mm' : '285mm'}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
                     <div>
-                        <div style="text-align: center; font-weight: bold; font-size: ${isTwoCopies ? '16px' : '20px'}; margin-bottom: ${isTwoCopies ? '8px' : '18px'};">
+                        <div style="text-align: center; font-weight: bold; font-size: ${isTwoCopies ? '15px' : '19px'}; margin-bottom: ${isTwoCopies ? '4mm' : '8mm'};">
                             ${headerTitle}
                         </div>
 
-                        <table style="width: 100%; border-collapse: collapse; margin-bottom: ${isTwoCopies ? '12px' : '25px'}; font-weight: bold; font-size: ${isTwoCopies ? '14px' : '16px'};">
+                        <table style="width: 100%; border-collapse: collapse; margin-bottom: ${isTwoCopies ? '6mm' : '12mm'}; font-weight: bold; font-size: ${isTwoCopies ? '13.5px' : '15.5px'};">
                             <tr>
                                 <td style="width: 50%; text-align: right;">إدارة / ${schoolName}</td>
                                 <td style="width: 50%; text-align: left;">
@@ -271,30 +272,30 @@
                             </tr>
                         </table>
 
-                        <div style="text-align: center; font-size: ${isTwoCopies ? '14.5px' : '17px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '10px' : '20px'};">
+                        <div style="text-align: center; font-size: ${isTwoCopies ? '14px' : '16.5px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '5mm' : '10mm'};">
                             إلى / ${toVal}
                         </div>
 
-                        <div style="text-align: center; font-size: ${isTwoCopies ? '14.5px' : '17px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '15px' : '30px'};">
+                        <div style="text-align: center; font-size: ${isTwoCopies ? '14px' : '16.5px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '8mm' : '15mm'};">
                             م/ ${subjectTitle}
                         </div>
 
-                        <div style="font-size: ${isTwoCopies ? '14px' : '16.5px'}; line-height: ${isTwoCopies ? '2' : '2.4'}; text-align: justify; padding: 0 5px;">
+                        <div style="font-size: ${isTwoCopies ? '13.5px' : '16px'}; line-height: ${isTwoCopies ? '1.8' : '2.2'}; text-align: justify; padding: 0 2mm;">
                             كتابكم المرقم (${refBookNum}) في (${refBookDate}) والمتضمن (${contentNature}).
                             <br>
-                            باشر السيد (<b>${teacherName}</b>) مدرس اختصاص (${subject}) في مدرستنا يوم (${actionDate}) راجين تفضلكم باعتياره.
+                            باشر السيد (<b>${teacherName}</b>) مدرس اختصاص (${subject}) في مدرستنا يوم (${actionDate}) استناداً لأمركم الاداري اعلاه.
                         </div>
                     </div>
 
                     <div>
-                        <div style="text-align: center; font-size: ${isTwoCopies ? '14.5px' : '17px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '15px' : '30px'};">
+                        <div style="text-align: center; font-size: ${isTwoCopies ? '14px' : '16.5px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '8mm' : '15mm'};">
                             للعلـم مع التقـدير
                         </div>
 
                         <table style="width: 100%; border-collapse: collapse;">
                             <tr>
                                 <td style="width: 60%;"></td>
-                                <td style="width: 40%; text-align: center; font-size: ${isTwoCopies ? '14px' : '16px'}; line-height: 1.6;">
+                                <td style="width: 40%; text-align: center; font-size: ${isTwoCopies ? '13.5px' : '15.5px'}; line-height: 1.5;">
                                     مدير المدرسة<br>
                                     <b>${managerName}</b>
                                 </td>
@@ -307,11 +308,18 @@
             const wrapper = document.getElementById('documentWrapper');
 
             if (layoutMode === 'two') {
-                // نسختان متطابقتان تملآن المساحات البيضاء بالكامل داخل ورقة A4 واحدة
-                wrapper.innerHTML = createCardHTML(true) + createCardHTML(true);
+                // نسختان مضبوطتان تماماً بمقياس مليمتر متساوٍ وبينهما فاصل صغير جداً وآمن لكي تظهرا في ورقة واحدة تماماً
+                wrapper.innerHTML = `
+                    <div style="height: 141mm; display: flex; flex-direction: column; justify-content: flex-start;">
+                        ${createCardHTML(true)}
+                    </div>
+                    <div style="height: 141mm; display: flex; flex-direction: column; justify-content: flex-end;">
+                        ${createCardHTML(true)}
+                    </div>
+                `;
             } else {
-                // نسخة واحدة تملأ كامل الصفحة بتركيز وجمالية عالية
-                wrapper.innerHTML = createCardHTML(false);
+                // نسخة واحدة تملأ الصفحة بدقة مطلقة
+                wrapper.innerHTML = `<div style="height: 297mm; display: flex; flex-direction: column; justify-content: center;">${createCardHTML(false)}</div>`;
             }
 
             window.print();
