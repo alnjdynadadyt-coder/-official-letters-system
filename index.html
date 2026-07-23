@@ -3,102 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام إدارة المخاطبات والكتب الرسمية</title>
+    <title>نظام إصدار الكتب والمخاطبات الرسمية</title>
     <style>
-        * {
-            box-sizing: border-box;
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            padding: 0;
-        }
-        body {
-            background-color: #f4f6f9;
-            color: #333;
+            padding: 20px;
+            direction: rtl;
+            color: #2d3748;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            padding: 20px;
         }
-        .container {
+        .dashboard-container {
             width: 100%;
-            max-width: 600px;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            max-width: 650px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            margin: auto;
+            padding: 30px 25px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .dashboard-header {
             text-align: center;
+            margin-bottom: 25px;
         }
         h1 {
-            color: #2c3e50;
-            margin-bottom: 10px;
+            color: #1a202c;
+            margin: 0 0 8px 0;
             font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
         }
-        p {
-            color: #7f8c8d;
-            margin-bottom: 30px;
+        p.subtitle {
+            color: #718096;
             font-size: 14px;
+            margin: 0;
         }
-        .menu-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
+        .menu-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
-        .menu-btn {
-            background-color: #ffffff;
-            color: #2c3e50;
-            border: 2px solid #e0e6ed;
-            padding: 15px 20px;
-            font-size: 16px;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: right;
+        .menu-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 14px 18px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #2d3748;
+            font-weight: 600;
+            font-size: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .menu-btn:hover {
-            background-color: #3498db;
-            color: #ffffff;
-            border-color: #3498db;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.2);
+        .menu-item span.icon-text {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
-        .menu-btn::after {
-            content: "‹";
+        .menu-item .emoji {
             font-size: 20px;
-            font-weight: bold;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f7fafc;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+        .menu-item .arrow {
+            color: #a0aec0;
+            font-size: 16px;
+            transition: transform 0.3s, color 0.3s;
+        }
+        .menu-item:hover {
+            transform: translateY(-3px);
+            border-color: #3182ce;
+            box-shadow: 0 8px 20px rgba(49, 130, 206, 0.15);
+            color: #2b6cb0;
+        }
+        .menu-item:hover .arrow {
+            transform: translateX(-5px);
+            color: #3182ce;
+        }
+        .menu-item:hover .emoji {
+            background: #ebf8ff;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            .dashboard-container {
+                padding: 20px 15px;
+            }
+            h1 {
+                font-size: 20px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>نظام إصدار الكتب والمخاطبات الرسمية</h1>
-        <p>يرجى اختيار نوع الطلب أو النموذج المطلوب للإصدار</p>
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h1>نظام إصدار الكتب والمخاطبات الرسمية</h1>
+            <p class="subtitle">يرجى اختيار نوع الطلب أو النموذج المطلوب للإصدار</p>
+        </div>
 
-        <div class="menu-grid">
-            <button class="menu-btn" onclick="openPage('mubashara_ مدرس')">مباشرة و انفكاك مدرس</button>
-            <button class="menu-btn" onclick="openPage('مباشرة و انفكاك موظف')">مباشرة و انفكاك موظف</button>
-            <button class="menu-btn" onclick="openPage('تأييد مدرس و موظف')">تأييد مدرس و موظف</button>
-            <button class="menu-btn" onclick="openPage('تأييد طالب بدون درجات')">تأييد طالب بدون درجات</button>
-            <button class="menu-btn" onclick="openPage('تأييد طالب بالدرجات')">تأييد طالب بالدرجات</button>
-            <button class="menu-btn" onclick="openPage('نماذج مخاطبة')">نماذج مخاطبة</button>
-            <button class="menu-btn" onclick="openPage('أخرى')">أخرى</button>
+        <div class="menu-list">
+            <a href="mubashara_teacher.html" class="menu-item">
+                <span class="icon-text">
+                    <span class="emoji">👨‍🏫</span>
+                    مباشرة و انفكاك مدرس
+                </span>
+                <span class="arrow">←</span>
+            </a>
+
+            <a href="mubashara_employee.html" class="menu-item">
+                <span class="icon-text">
+                    <span class="emoji">👤</span>
+                    مباشرة و انفكاك موظف
+                </span>
+                <span class="arrow">←</span>
+            </a>
+
+            <a href="taayeed_teacher_employee.html" class="menu-item">
+                <span class="icon-text">
+                    <span class="emoji">📜</span>
+                    تأييد مدرس و موظف
+                </span>
+                <span class="arrow">←</span>
+            </a>
+
+            <a href="taayeed_student_no_grades.html" class="menu-item">
+                <span class="icon-text">
+                    <span class="emoji">🎓</span>
+                    تأييد طالب بدون درجات
+                </span>
+                <span class="arrow">←</span>
+            </a>
+
+            <a href="taayeed_student_with_grades.html" class="menu-item">
+                <span class="icon-text">
+                    <span class="emoji">📊</span>
+                    تأييد طالب بالدرجات
+                </span>
+                <span class="arrow">←</span>
+            </a>
+
+            <a href="namatj_mukhataba.html" class="menu-item">
+                <span class="icon-text">
+                    <span class="emoji">📁</span>
+                    نماذج مخاطبة
+                </span>
+                <span class="arrow">←</span>
+            </a>
+
+            <a href="other.html" class="menu-item">
+                <span class="icon-text">
+                    <span class="emoji">⚙️</span>
+                    أخرى
+                </span>
+                <span class="arrow">←</span>
+            </a>
         </div>
     </div>
-
-    <script>
-        function openPage(type) {
-            if (type === 'mubashara_ مدرس') {
-                window.location.href = 'mubashara_teacher.html';
-            } else {
-                alert("سيتم تفعيل هذا النموذج قريباً: " + type);
-            }
-        }
-    </script>
 
 </body>
 </html>
