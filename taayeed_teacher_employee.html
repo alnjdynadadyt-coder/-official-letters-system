@@ -46,7 +46,6 @@
 
         .sec-print { background: #f0f9ff; border-color: #bae6fd; }
         .sec-admin { background: #fdf4ff; border-color: #f5d0fe; }
-        .sec-ref { background: #fefce8; border-color: #fef08a; }
         .sec-person { background: #f0fdf4; border-color: #bbf7d0; }
 
         .section-title {
@@ -61,7 +60,6 @@
         }
         .sec-print .section-title { color: #0284c7; }
         .sec-admin .section-title { color: #c084fc; }
-        .sec-ref .section-title { color: #ca8a04; }
         .sec-person .section-title { color: #16a34a; }
 
         .form-group {
@@ -203,7 +201,7 @@
                         <input type="text" id="headerTitleInput" required value="وزارة التربية">
                     </div>
                     <div class="form-group" style="flex: 1;">
-                        <label>اسم المدرسة:</label>
+                        <label>اسم المؤسسة (اعداديتنا / متوسطتنا / ثانويتنا...):</label>
                         <input type="text" id="schoolNameInput" required placeholder="اعدادية النجدين للبنين">
                     </div>
                 </div>
@@ -217,9 +215,15 @@
                         <input type="date" id="dateInput" required>
                     </div>
                 </div>
-                <div class="form-group" style="margin-top: 8px;">
-                    <label>إلى (الجهة الموجه لها الكتاب):</label>
-                    <input type="text" id="toInput" required placeholder="مثال إلى من يهمه الأمر / التقاعد / الرعاية الاجتماعية...">
+                <div style="display: flex; gap: 10px; margin-top: 8px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>إلى (الجهة الموجه لها الكتاب):</label>
+                        <input type="text" id="toInput" required placeholder="إلى من يهمه الأمر">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>العام الدراسي:</label>
+                        <input type="text" id="academicYearInput" required value="2025 - 2026">
+                    </div>
                 </div>
             </div>
 
@@ -239,26 +243,14 @@
                     </div>
                 </div>
                 
-                <div style="display: flex; gap: 10px; margin-top: 8px;" id="teacherFields">
-                    <div class="form-group" style="flex: 1;">
-                        <label>الاختصاص:</label>
-                        <input type="text" id="subjectInput" placeholder="التربية الإسلامية">
-                    </div>
-                    <div class="form-group" style="flex: 1;">
-                        <label>تاريخ التعيين:</label>
-                        <input type="date" id="hireDateInput">
-                    </div>
+                <div class="form-group" style="margin-top: 8px;" id="teacherFields">
+                    <label>الاختصاص:</label>
+                    <input type="text" id="subjectInput" placeholder="التربية الإسلامية">
                 </div>
 
-                <div style="display: flex; gap: 10px; margin-top: 8px; display: none;" id="employeeFields">
-                    <div class="form-group" style="flex: 1;">
-                        <label>العنوان الوظيفي:</label>
-                        <input type="text" id="jobTitleInput" placeholder="كاتب، ملاحظ، حارس، فني...">
-                    </div>
-                    <div class="form-group" style="flex: 1;">
-                        <label>تاريخ التعيين:</label>
-                        <input type="date" id="hireDateEmpInput">
-                    </div>
+                <div class="form-group" style="margin-top: 8px; display: none;" id="employeeFields">
+                    <label>العنوان الوظيفي:</label>
+                    <input type="text" id="jobTitleInput" placeholder="كاتب، ملاحظ، حارس...">
                 </div>
 
                 <div class="form-group" style="margin-top: 8px;">
@@ -286,19 +278,15 @@
             const employeeFields = document.getElementById('employeeFields');
             
             if (category === 'teacher') {
-                teacherFields.style.display = 'flex';
+                teacherFields.style.display = 'block';
                 employeeFields.style.display = 'none';
                 document.getElementById('subjectInput').required = true;
-                document.getElementById('hireDateInput').required = true;
                 document.getElementById('jobTitleInput').required = false;
-                document.getElementById('hireDateEmpInput').required = false;
             } else {
                 teacherFields.style.display = 'none';
-                employeeFields.style.display = 'flex';
+                employeeFields.style.display = 'block';
                 document.getElementById('subjectInput').required = false;
-                document.getElementById('hireDateInput').required = false;
                 document.getElementById('jobTitleInput').required = true;
-                document.getElementById('hireDateEmpInput').required = true;
             }
         }
 
@@ -322,34 +310,28 @@
             const bookNum = document.getElementById('bookNumberInput').value;
             const dateVal = formatDateToDMY(document.getElementById('dateInput').value);
             const toVal = document.getElementById('toInput').value;
+            const academicYear = document.getElementById('academicYearInput').value;
             
             const gender = document.getElementById('genderInput').value;
             const personName = document.getElementById('personNameInput').value;
             const managerName = document.getElementById('managerNameInput').value;
             const layoutMode = document.getElementById('copiesLayout').value;
 
-            let subjectTitle = "";
             let bodyText = "";
 
             if (category === 'teacher') {
                 const subject = document.getElementById('subjectInput').value;
-                const hireDate = formatDateToDMY(document.getElementById('hireDateInput').value);
-                
-                subjectTitle = "تأييد استمرار مدرس";
                 if (gender === 'female') {
-                    bodyText = `تؤكد إدارة (${schoolName}) بأن السيدة (<b>${personName}</b>) المدرّسة اختصاص (${subject}) مستمرة بالدوام الرسمي في مدرستنا ولغاية تاريخ تنظيم هذا الكتاب، وتاريخ تعيينها الأصلي في (${hireDate})، وقد أعطي لها هذا التأييد بناءً على طلبها دون أدنى مسؤولية على إدارتنا تجاه الغير.`;
+                    bodyText = `نؤيد لكم ان السيدة (<b>${personName}</b>) مدرسة اختصاص (${subject}) في (${schoolName}) مستمرة بالدوام للعام الدراسي (${academicYear}) وبناءً على طلبها زود بهذا التأييد..`;
                 } else {
-                    bodyText = `تؤكد إدارة (${schoolName}) بأن السيد (<b>${personName}</b>) المدرس اختصاص (${subject}) مستمر بالدوام الرسمي في مدرستنا ولغاية تاريخ تنظيم هذا الكتاب، وتاريخ تعيينه الأصلي في (${hireDate})، وقد أعطي له هذا التأييد بناءً على طلبه دون أدنى مسؤولية على إدارتنا تجاه الغير.`;
+                    bodyText = `نؤيد لكم ان السيد (<b>${personName}</b>) مدرس اختصاص (${subject}) في (${schoolName}) مستمر بالدوام للعام الدراسي (${academicYear}) وبناءً على طلبه زود بهذا التأييد..`;
                 }
             } else {
                 const jobTitle = document.getElementById('jobTitleInput').value;
-                const hireDateEmp = formatDateToDMY(document.getElementById('hireDateEmpInput').value);
-                
-                subjectTitle = "تأييد استمرار موظف";
                 if (gender === 'female') {
-                    bodyText = `تؤكد إدارة (${schoolName}) بأن السيدة (<b>${personName}</b>) الموظفة ذات العنوان الوظيفي (${jobTitle}) مستمرة بالدوام الرسمي في مدرستنا ولغاية تاريخ تنظيم هذا الكتاب، وتاريخ تعيينها الأصلي في (${hireDateEmp})، وقد أعطي لها هذا التأييد بناءً على طلبها دون أدنى مسؤولية على إدارتنا تجاه الغير.`;
+                    bodyText = `نؤيد لكم ان السيدة موظفة بعنوان (${jobTitle}) (<b>${personName}</b>) في (${schoolName}) مستمرة بالدوام للعام الدراسي (${academicYear}) وبناءً على طلبها زود بهذا التأييد..`;
                 } else {
-                    bodyText = `تؤكد إدارة (${schoolName}) بأن السيد (<b>${personName}</b>) الموظف ذي العنوان الوظيفي (${jobTitle}) مستمر بالدوام الرسمي في مدرستنا ولغاية تاريخ تنظيم هذا الكتاب، وتاريخ تعيينه الأصلي في (${hireDateEmp})، وقد أعطي له هذا التأييد بناءً على طلبه دون أدنى مسؤولية على إدارتنا تجاه الغير.`;
+                    bodyText = `نؤيد لكم ان السيد موظف بعنوان (${jobTitle}) (<b>${personName}</b>) في (${schoolName}) مستمر بالدوام للعام الدراسي (${academicYear}) وبناءً على طلبه زود بهذا التأييد..`;
                 }
             }
 
@@ -375,10 +357,10 @@
                         </div>
 
                         <div style="text-align: center; font-size: ${isTwoCopies ? '12.5px' : '15px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '4mm' : '8mm'};">
-                            م/ ${subjectTitle}
+                            م/ تأييد استمرارية
                         </div>
 
-                        <div style="font-size: ${isTwoCopies ? '12px' : '14.5px'}; line-height: ${isTwoCopies ? '1.6' : '2.1'}; text-align: justify; padding: 0 2mm;">
+                        <div style="font-size: ${isTwoCopies ? '12.5px' : '15px'}; line-height: ${isTwoCopies ? '1.8' : '2.3'}; text-align: justify; padding: 0 2mm;">
                             ${bodyText}
                         </div>
                     </div>
