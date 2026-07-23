@@ -309,7 +309,7 @@
             const refBookDate = formatDateToDMY(document.getElementById('refBookDateInput').value);
             const contentNature = document.getElementById('contentNatureInput').value;
             
-            const gender = document.getElementById('genderInput'.value);
+            const gender = document.getElementById('genderInput').value;
             const teacherName = document.getElementById('teacherNameInput').value;
             const subject = document.getElementById('subjectInput').value;
             const actionDate = formatDateToDMY(document.getElementById('actionDateInput').value, true);
@@ -320,7 +320,7 @@
                 `باشرت السيدة (<b>${teacherName}</b>) مدرسة اختصاص (${subject}) في مدرستنا يوم (${actionDate}) استناداً لأمركم الاداري اعلاه.` : 
                 `باشر السيد (<b>${teacherName}</b>) مدرس اختصاص (${subject}) في مدرستنا يوم (${actionDate}) استناداً لأمركم الاداري اعلاه.`;
 
-            // قالب الكتاب مع تمرير "للعلـم مع التقـدير" في المنتصف وتوقيع مدير المدرسة في أقصى اليسار
+            // قالب الكتاب مع دفع توقيع المدير أطراف أقصى اليسار ليبتعد عن عبارة "للعلم مع التقدير" في المنتصف
             const createCardHTML = (isTwoCopies) => `
                 <div style="border: 2px solid #2c3e50; padding: ${isTwoCopies ? '6mm 10mm' : '12mm 18mm'}; border-radius: 6px; background: #fff; height: ${isTwoCopies ? '138mm' : '287mm'}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
                     <div>
@@ -360,8 +360,8 @@
 
                         <table style="width: 100%; border-collapse: collapse;">
                             <tr>
-                                <td style="width: 65%;"></td>
-                                <td style="width: 35%; text-align: right; font-size: ${isTwoCopies ? '12.5px' : '14.5px'}; line-height: 1.4; padding-right: 5px;">
+                                <td style="width: 80%;"></td>
+                                <td style="width: 20%; text-align: right; font-size: ${isTwoCopies ? '12.5px' : '14.5px'}; line-height: 1.4; padding-right: 5px;">
                                     مدير المدرسة<br>
                                     <b>${managerName}</b>
                                 </td>
