@@ -65,7 +65,6 @@
             font-size: 14px;
         }
 
-        /* تنسيق الكتاب الرسمي المطابق للمخطط عند الطباعة */
         #printArea {
             display: none;
         }
@@ -101,13 +100,13 @@
         <h2>إدخال بيانات أمر المباشرة / الانفكاك</h2>
         <form id="teacherForm" onsubmit="generatePDF(event)">
             <div class="form-group">
-                <label>اسم المدرسة (متغير أعلى الصفحة):</label>
-                <input type="text" id="schoolNameInput" required placeholder="مثال: متوسطة الفراهيدي للبنين">
+                <label>اسم المدرسة:</label>
+                <input type="text" id="schoolNameInput" required placeholder="مثال: اعدادية النجدين للبنين">
             </div>
 
             <div class="form-group">
                 <label>رقم العدد:</label>
-                <input type="text" id="bookNumberInput" required placeholder="مثال: 123">
+                <input type="text" id="bookNumberInput" required placeholder="مثال: 135">
             </div>
 
             <div class="form-group">
@@ -117,20 +116,17 @@
 
             <div class="form-group">
                 <label>إلى (الجهة الموجه لها الكتاب):</label>
-                <input type="text" id="toInput" required placeholder="مثال: الحسابات والتعليم المدرسي">
+                <input type="text" id="toInput" required placeholder="مثال: المديرية العامة لتربية القادسية">
             </div>
 
             <div class="form-group">
-                <label>نوع الأمر (مباشرة / انفكاك):</label>
-                <select id="orderTypeInput" required>
-                    <option value="مباشرة">مباشرة مدرس</option>
-                    <option value="انفكاك">انفكاك مدرس</option>
-                </select>
+                <label>موضوع الكتاب (العنوان الرئيس):</label>
+                <input type="text" id="subjectTitleInput" required placeholder="مثال: مباشرة مدرس / انفكاك مدرس">
             </div>
 
             <div class="form-group">
                 <label>رقم الكتاب ذي العلاقة:</label>
-                <input type="text" id="refBookNumInput" required placeholder="مثال: 456">
+                <input type="text" id="refBookNumInput" required placeholder="مثال: 1200">
             </div>
 
             <div class="form-group">
@@ -139,23 +135,28 @@
             </div>
 
             <div class="form-group">
-                <label>اسم المدرس الثلاثي أو الرباعي:</label>
-                <input type="text" id="teacherNameInput" required placeholder="مثال: أحمد علي حسن">
+                <label>المتضمن (عنوان الطلب/القرار مثل: نقل، تنسيب، مباشرة):</label>
+                <input type="text" id="contentNatureInput" required placeholder="مثال: نقل / تنسيب / مباشرة">
+            </div>
+
+            <div class="form-group">
+                <label>اسم المدرس:</label>
+                <input type="text" id="teacherNameInput" required placeholder="مثال: علي علي علي">
             </div>
 
             <div class="form-group">
                 <label>الاختصاص:</label>
-                <input type="text" id="subjectInput" required placeholder="مثال: رياضيات">
+                <input type="text" id="subjectInput" required placeholder="مثال: الإسلامية">
             </div>
 
             <div class="form-group">
-                <label>تاريخ المباشرة/الانفكاك الفعلي (اليوم):</label>
+                <label>تاريخ المباشرة الفعلي (اليوم):</label>
                 <input type="date" id="actionDateInput" required>
             </div>
 
             <div class="form-group">
-                <label>اسم مدير المدرسة (التوقيع):</label>
-                <input type="text" id="managerNameInput" required placeholder="مثال: محمد عبد الله">
+                <label>اسم مدير المدرسة:</label>
+                <input type="text" id="managerNameInput" required placeholder="مثال: محمد الأحمدي">
             </div>
 
             <button type="submit" class="btn-submit">عرض وطباعة الكتاب (PDF)</button>
@@ -163,45 +164,52 @@
         <a href="index.html" class="back-link">← العودة للرئيسية</a>
     </div>
 
-    <!-- قالب الكتاب الرسمي المطابق تماماً للمخطط -->
-    <div id="printArea">
-        <!-- أعلى الصفحة: إدارة المدرسة يمين، وزارة التربية في المنتصف -->
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; font-weight: bold; font-size: 16px; margin-bottom: 20px;">
-            <div>إدارة / <span id="resSchoolName"></span></div>
-            <div style="text-align: center; flex-grow: 1;">وزارة التربية</div>
-            <div></div>
+    <!-- قالب الكتاب الرسمي مع إطار جمالي أنيق -->
+    <div id="printArea" style="border: 3px double #2c3e50; padding: 40px; border-radius: 8px; position: relative;">
+        
+        <!-- الترويسة: وزارة التربية في المنتصف تماماً -->
+        <div style="text-align: center; font-weight: bold; font-size: 18px; margin-bottom: 10px;">
+            وزارة التربية
         </div>
 
-        <!-- العدد والتاريخ في أعلى اليمين واليسار -->
-        <div style="display: flex; justify-content: space-between; font-size: 15px; margin-bottom: 30px; font-weight: bold;">
-            <div>العدد: <span id="resBookNum"></span></div>
-            <div>التاريخ: <span id="resDate"></span></div>
-        </div>
+        <!-- اسم المدرسة على اليمين، والعدد والتاريخ في اليسار -->
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px; font-weight: bold; font-size: 15px;">
+            <tr>
+                <td style="width: 50%; text-align: right;">إدارة / <span id="resSchoolName"></span></td>
+                <td style="width: 50%; text-align: left;">
+                    العدد: <span id="resBookNum"></span><br>
+                    التاريخ: <span id="resDate"></span>
+                </td>
+            </tr>
+        </table>
 
-        <!-- إلى / -->
-        <div style="font-size: 16px; font-weight: bold; margin-bottom: 20px;">
+        <!-- إلى / بتوسيط الصفحة -->
+        <div style="text-align: center; font-size: 16px; font-weight: bold; margin-bottom: 20px;">
             إلى / <span id="resTo"></span>
         </div>
 
-        <!-- م / الموضوع -->
-        <div style="font-size: 16px; font-weight: bold; margin-bottom: 40px;">
+        <!-- م / بتوسيط الصفحة -->
+        <div style="text-align: center; font-size: 16px; font-weight: bold; margin-bottom: 40px;">
             م/ <span id="resSubjectTitle"></span>
         </div>
 
-        <!-- متن الكتاب الثابت مع دمج المتغيرات في مكانها الصحيح -->
-        <div style="font-size: 16px; line-height: 2.5; text-align: justify; margin-bottom: 60px;">
-            كتابكم المرقم (<span id="resRefBookNum" style="font-weight: bold;"></span>) في (<span id="resRefBookDate"></span>) والمتضمن (<span id="resOrderTypeMain"></span>). باشـر السيد (<span id="resTeacherName" style="font-weight: bold;"></span>) بعنوان مدرس اختصاص (<span id="resSubject"></span>) في مدرستنا يوم (<span id="resActionDate"></span>) راجين تفضلكم باعتياره.
+        <!-- متن الكتاب -->
+        <div style="font-size: 16px; line-height: 2.5; text-align: justify; margin-bottom: 50px; padding: 0 20px;">
+            كتابكم المرقم (<span id="resRefBookNum" style="font-weight: bold;"></span>) في (<span id="resRefBookDate"></span>) والمتضمن (<span id="resContentNature" style="font-weight: bold;"></span>). باشر السيد (<span id="resTeacherName" style="font-weight: bold;"></span>) بعنوان مدرس اختصاص (<span id="resSubject"></span>) في مدرستنا يوم (<span id="resActionDate"></span>) راجين تفضلكم باعتياره.
         </div>
 
+        <!-- للعلم مع التقدير في منتصف الصفحة -->
         <div style="text-align: center; font-size: 16px; font-weight: bold; margin-bottom: 60px;">
             للعلـم مع التقـدير
         </div>
 
-        <!-- توقيع مدير المدرسة في اليسار -->
-        <div style="float: left; text-align: center; font-size: 16px; width: 220px; line-height: 1.8;">
-            مدير المدرسة<br>
-            <span id="resManagerName" style="font-weight: bold;"></span><br>
-            التوقيع والختم
+        <!-- مدير المدرسة في جهة اليسار وتحتها التوقيع والختم -->
+        <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
+            <div style="text-align: center; font-size: 16px; width: 220px; line-height: 1.8;">
+                مدير المدرسة<br>
+                <span id="resManagerName" style="font-weight: bold;"></span><br>
+                التوقيع والختم
+            </div>
         </div>
     </div>
 
@@ -209,24 +217,19 @@
         function generatePDF(e) {
             e.preventDefault();
             
-            // سحب القيم من الحقول وإسقاطها بدقة في قالب الطباعة
             document.getElementById('resSchoolName').innerText = document.getElementById('schoolNameInput').value;
             document.getElementById('resBookNum').innerText = document.getElementById('bookNumberInput').value;
             document.getElementById('resDate').innerText = document.getElementById('dateInput').value;
             document.getElementById('resTo').innerText = document.getElementById('toInput').value;
-            
-            const orderType = document.getElementById('orderTypeInput').value;
-            document.getElementById('resSubjectTitle').innerText = orderType + ' مدرس';
-            document.getElementById('resOrderTypeMain').innerText = orderType + ' مدرس';
-            
+            document.getElementById('resSubjectTitle').innerText = document.getElementById('subjectTitleInput').value;
             document.getElementById('resRefBookNum').innerText = document.getElementById('refBookNumInput').value;
-            document.getElementById('resRefBookDate').innerText = document.getElementById('refBookBookDateInput') ? document.getElementById('refBookBookDateInput').value : document.getElementById('refBookDateInput').value;
+            document.getElementById('resRefBookDate').innerText = document.getElementById('refBookDateInput').value;
+            document.getElementById('resContentNature').innerText = document.getElementById('contentNatureInput').value;
             document.getElementById('resTeacherName').innerText = document.getElementById('teacherNameInput').value;
             document.getElementById('resSubject').innerText = document.getElementById('subjectInput').value;
             document.getElementById('resActionDate').innerText = document.getElementById('actionDateInput').value;
             document.getElementById('resManagerName').innerText = document.getElementById('managerNameInput').value;
 
-            // فتح نافذة طباعة المتصفح لحفظ الملف بصيغة PDF فوراً
             window.print();
         }
     </script>
