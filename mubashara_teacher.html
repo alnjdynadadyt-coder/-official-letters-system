@@ -179,7 +179,14 @@
         <form id="teacherForm" onsubmit="generatePDF(event)">
             
             <div class="section-box sec-print">
-                <div class="section-title">⚙️ إعدادات تخطيط الطباعة</div>
+                <div class="section-title">⚙️ إعدادات تخطيط الطباعة ونوع الأمر</div>
+                <div class="form-group" style="margin-bottom: 10px;">
+                    <label>نوع الكتاب الرسمي:</label>
+                    <select id="orderTypeInput">
+                        <option value="mubashara">أمر مباشرة مدرس / مدرسة</option>
+                        <option value="infikak">أمر انفكاك مدرس / مدرسة</option>
+                    </select>
+                </div>
                 <div class="form-group">
                     <label>نظام النسخ في الورقة:</label>
                     <select id="copiesLayout">
@@ -212,10 +219,6 @@
                 <div class="form-group">
                     <label>إلى (الجهة الموجه لها الكتاب):</label>
                     <input type="text" id="toInput" required placeholder="مثال: المديرية العامة لتربية القادسية">
-                </div>
-                <div class="form-group">
-                    <label>موضوع الكتاب (العنوان الرئيس):</label>
-                    <input type="text" id="subjectTitleInput" required placeholder="مثال: مباشرة مدرس / انفكاك مدرس">
                 </div>
             </div>
 
@@ -256,7 +259,7 @@
                         <input type="text" id="subjectInput" required placeholder="مثال: الإسلامية">
                     </div>
                     <div style="flex: 1;">
-                        <label>تاريخ المباشرة الفعلي:</label>
+                        <label>تاريخ التنفيذ (المباشرة / الانفكاك):</label>
                         <input type="date" id="actionDateInput" required>
                     </div>
                 </div>
@@ -299,12 +302,12 @@
         function generatePDF(e) {
             e.preventDefault();
             
+            const orderType = document.getElementById('orderTypeInput').value;
             const headerTitle = document.getElementById('headerTitleInput').value;
             const schoolName = document.getElementById('schoolNameInput').value;
             const bookNum = document.getElementById('bookNumberInput').value;
             const dateVal = formatDateToDMY(document.getElementById('dateInput').value);
             const toVal = document.getElementById('toInput').value;
-            const subjectTitle = document.getElementById('subjectTitleInput').value;
             const refBookNum = document.getElementById('refBookNumInput').value;
             const refBookDate = formatDateToDMY(document.getElementById('refBookDateInput').value);
             const contentNature = document.getElementById('contentNatureInput').value;
@@ -316,13 +319,25 @@
             const managerName = document.getElementById('managerNameInput').value;
             const layoutMode = document.getElementById('copiesLayout').value;
 
-            const actionText = gender === 'female' ? 
-                `باشرت السيدة (<b>${teacherName}</b>) مدرسة اختصاص (${subject}) في مدرستنا يوم (${actionDate}) استناداً لأمركم الاداري اعلاه.` : 
-                `باشر السيد (<b>${teacherName}</b>) مدرس اختصاص (${subject}) في مدرستنا يوم (${actionDate}) استناداً لأمركم الاداري اعلاه.`;
+            // تحديد العنوان والنص بناءً على نوع الأمر (مباشرة أو انفكاك)
+            let subjectTitle = "";
+            let actionText = "";
 
-            // قالب الكتاب مع دفع توقيع المدير أطراف أقصى اليسار ليبتعد عن عبارة "للعلم مع التقدير" في المنتصف
+            if (orderType === 'infikak') {
+                subjectTitle = "انفكاك مدرس";
+                actionText = gender === 'female' ? 
+                    `انفكت السيدة (<b>${teacherName}</b>) مدرسة اختصاص (${subject}) من مدرستنا يوم (${actionDate}) استناداً لأمركم الاداري اعلاه.` : 
+                    `انفك السيد (<b>${teacherName}</b>) مدرس اختصاص (${subject}) من مدرستنا يوم (${actionDate}) استناداً لأمركم الاداري اعلاه.`;
+            } else {
+                subjectTitle = "مباشرة مدرس";
+                actionText = gender === 'female' ? 
+                    `باشرت السيدة (<b>${teacherName}</b>) مدرسة اختصاص (${subject}) في مدرستنا يوم (${actionDate}) استناداً لأمركم الاداري اعلاه.` : 
+                    `باشر السيد (<b>${teacherName}</b>) مدرس اختصاص (${subject}) في مدرستنا يوم (${actionDate}) استناداً لأمركم الاداري اعلاه.`;
+            }
+
+            // قالب الكتاب مع إطار خارجي واضح ومزاح للداخل قليلاً لضمان الأمان أثناء الطباعة
             const createCardHTML = (isTwoCopies) => `
-                <div style="border: 2px solid #2c3e50; padding: ${isTwoCopies ? '6mm 10mm' : '12mm 18mm'}; border-radius: 6px; background: #fff; height: ${isTwoCopies ? '138mm' : '287mm'}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
+                <div style="margin: ${isTwoCopies ? '3mm 8mm' : '6mm 10mm'}; border: 2.5px solid #1a202c; padding: ${isTwoCopies ? '5mm 8mm' : '10mm 16mm'}; border-radius: 8px; background: #fff; height: ${isTwoCopies ? '133mm' : '285mm'}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
                     <div>
                         <div style="text-align: center; font-weight: bold; font-size: ${isTwoCopies ? '14px' : '18px'}; margin-bottom: ${isTwoCopies ? '2mm' : '5mm'};">
                             ${headerTitle}
@@ -375,10 +390,10 @@
 
             if (layoutMode === 'two') {
                 wrapper.innerHTML = `
-                    <div style="height: 141mm; display: flex; flex-direction: column; justify-content: flex-start;">
+                    <div style="height: 148.5mm; display: flex; flex-direction: column; justify-content: flex-start;">
                         ${createCardHTML(true)}
                     </div>
-                    <div style="height: 141mm; display: flex; flex-direction: column; justify-content: flex-end;">
+                    <div style="height: 148.5mm; display: flex; flex-direction: column; justify-content: flex-end;">
                         ${createCardHTML(true)}
                     </div>
                 `;
