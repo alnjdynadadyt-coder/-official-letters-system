@@ -10,7 +10,7 @@
             transition: all 0.3s ease;
         }
         body {
-            /* اللون الافتراضي: البصلي الفاخر */
+            /* اللون الافتراضي: البصلي الفاخر (دافئ) */
             background: radial-gradient(circle at 50% 10%, #4a2832 0%, #2c161d 40%, #150a0e 100%);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
@@ -55,6 +55,11 @@
             cursor: pointer;
             outline: none;
             backdrop-filter: blur(5px);
+        }
+        .theme-dropdown optgroup {
+            background: #1e293b;
+            color: #f6ad55;
+            font-weight: bold;
         }
         .theme-dropdown option {
             background: #1e293b;
@@ -175,18 +180,27 @@
 <body>
 
     <div class="dashboard-container">
-        <!-- قائمة منسدلة لاختيار ألوان الثيمات -->
+        <!-- القائمة المنسدلة مقسمة حسب عجلة الألوان (ألوان دافئة وألوان باردة) -->
         <div class="theme-selector-container">
             <select class="theme-dropdown" id="themeSelect" onchange="changeTheme(this.value)">
-                <option value="peach">🎨 اختر لون الخلفية</option>
-                <option value="peach">بصلي فاخر</option>
-                <option value="pink">🌸 وردي فاخر</option>
-                <option value="pistachio">💚 فستقي منعش</option>
-                <option value="red">❤️ أحمر فاخر</option>
-                <option value="white">🤍 أبيض مبرق</option>
-                <option value="purple">💜 ليلي عميق</option>
-                <option value="emerald">🌿 زمردي هادئ</option>
-                <option value="dark">🌙 داكن فخم</option>
+                <option value="peach">🎨 عجلة الألوان</option>
+                
+                <optgroup label="🔥 ألوان دافئة (Warm Colors)">
+                    <option value="peach">بصلي فاخر</option>
+                    <option value="pink">🌸 وردي فاخر الصريح</option>
+                    <option value="red">❤️ أحمر فاخر</option>
+                </optgroup>
+
+                <optgroup label="❄️ ألوان باردة (Cool Colors)">
+                    <option value="pistachio">💚 فستقي منعش</option>
+                    <option value="emerald">🌿 زمردي هادئ</option>
+                    <option value="purple">💜 ليلي عميق</option>
+                </optgroup>
+
+                <optgroup label="⚪ خيارات محايدة وأنظمة أخرى">
+                    <option value="white">🤍 أبيض مبرق</option>
+                    <option value="dark">🌙 داكن فخم</option>
+                </optgroup>
             </select>
         </div>
 
@@ -264,8 +278,8 @@
                 body.style.background = 'radial-gradient(circle at 50% 10%, #4a2832 0%, #2c161d 40%, #150a0e 100%)';
                 body.style.color = '#f8fafc';
             } else if (theme === 'pink') {
-                body.style.background = 'radial-gradient(circle at 50% 10%, #d946ef 0%, #a21caf 40%, #701a75 100%)';
-                body.style.color = '#fae8ff';
+                body.style.background = 'radial-gradient(circle at 50% 10%, #f472b6 0%, #db2777 40%, #831843 100%)';
+                body.style.color = '#fff1f2';
             } else if (theme === 'pistachio') {
                 body.style.background = 'radial-gradient(circle at 50% 10%, #386641 0%, #283618 40%, #111d08 100%)';
                 body.style.color = '#fefae0';
