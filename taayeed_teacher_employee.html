@@ -218,7 +218,7 @@
                 <div style="display: flex; gap: 10px; margin-top: 8px;">
                     <div class="form-group" style="flex: 1;">
                         <label>إلى (الجهة الموجه لها الكتاب):</label>
-                        <input type="text" id="toInput" required placeholder="إلى من يهمه الأمر">
+                        <input type="text" id="toInput" required placeholder="إلى المديرية العامة لتربية القادسية - قسم الملاك الثانوي">
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>العام الدراسي:</label>
@@ -250,12 +250,12 @@
 
                 <div class="form-group" style="margin-top: 8px; display: none;" id="employeeFields">
                     <label>العنوان الوظيفي:</label>
-                    <input type="text" id="jobTitleInput" placeholder="كاتب، ملاحظ، حارس...">
+                    <input type="text" id="jobTitleInput" placeholder="موظف خدمة / كاتب / ملاحظ...">
                 </div>
 
                 <div class="form-group" style="margin-top: 8px;">
                     <label>اسم مدير المدرسة:</label>
-                    <input type="text" id="managerNameInput" required placeholder="عصام جاسم الأسدي">
+                    <input type="text" id="managerNameInput" required placeholder="عصام الاسدي">
                 </div>
             </div>
 
@@ -329,9 +329,9 @@
             } else {
                 const jobTitle = document.getElementById('jobTitleInput').value;
                 if (gender === 'female') {
-                    bodyText = `نؤيد لكم ان السيدة موظفة بعنوان (${jobTitle}) (<b>${personName}</b>) في (${schoolName}) مستمرة بالدوام للعام الدراسي (${academicYear}) وبناءً على طلبها زود بهذا التأييد..`;
+                    bodyText = `نؤيد لكم ان السيدة (<b>${personName}</b>) موظفة بعنوان (${jobTitle}) في (${schoolName}) مستمرة بالدوام للعام الدراسي (${academicYear}) وبناءً على طلبها زود بهذا التأييد..`;
                 } else {
-                    bodyText = `نؤيد لكم ان السيد موظف بعنوان (${jobTitle}) (<b>${personName}</b>) في (${schoolName}) مستمر بالدوام للعام الدراسي (${academicYear}) وبناءً على طلبه زود بهذا التأييد..`;
+                    bodyText = `نؤيد لكم ان السيد (<b>${personName}</b>) موظف بعنوان (${jobTitle}) في (${schoolName}) مستمر بالدوام للعام الدراسي (${academicYear}) وبناءً على طلبه زود بهذا التأييد..`;
                 }
             }
 
