@@ -69,7 +69,12 @@
             display: none;
         }
 
+        /* تنسيق الطباعة الاحترافي لصفحة A4 بدون اقتطاع */
         @media print {
+            @page {
+                size: A4;
+                margin: 10mm;
+            }
             body * {
                 visibility: hidden;
             }
@@ -82,11 +87,13 @@
                 top: 0;
                 right: 0;
                 width: 100%;
-                padding: 40px;
+                height: 100vh;
+                padding: 25px;
                 font-family: 'Traditional Arabic', 'Amiri', serif;
                 background: white;
                 color: black;
-                font-size: 16px;
+                font-size: 15px;
+                box-sizing: border-box;
             }
             .no-print {
                 display: none !important;
@@ -136,7 +143,7 @@
 
             <div class="form-group">
                 <label>المتضمن (عنوان الطلب/القرار مثل: نقل، تنسيب، مباشرة):</label>
-                <input type="text" id="contentNatureInput" required placeholder="مثال: نقل / تنسيب / مباشرة">
+                <input type="text" id="contentNatureInput" required placeholder="مثال: نقل مدرسين">
             </div>
 
             <div class="form-group">
@@ -164,15 +171,15 @@
         <a href="index.html" class="back-link">← العودة للرئيسية</a>
     </div>
 
-    <!-- قالب الكتاب الرسمي مع إطار جمالي أنيق -->
-    <div id="printArea" style="border: 3px double #2c3e50; padding: 40px; border-radius: 8px; position: relative;">
+    <!-- قالب الكتاب الرسمي ضمن إطار هندسي متناسق وغير مقتطع -->
+    <div id="printArea" style="border: 2px solid #2c3e50; padding: 30px; border-radius: 6px;">
         
-        <!-- الترويسة: المديرية العامة لتربية القادسية في المنتصف تماماً -->
-        <div style="text-align: center; font-weight: bold; font-size: 18px; margin-bottom: 10px;">
+        <!-- الترويسة: وزارة التربية - المديرية العامة لتربية القادسية في المنتصف تماماً -->
+        <div style="text-align: center; font-weight: bold; font-size: 18px; margin-bottom: 12px;">
             وزارة التربية
         </div>
 
-        <!-- اسم المدرسة على اليمين، والعدد والتاريخ في اليسار -->
+        <!-- اسم المدرسة يمين، والعدد والتاريخ يسار -->
         <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px; font-weight: bold; font-size: 15px;">
             <tr>
                 <td style="width: 50%; text-align: right;">إدارة / <span id="resSchoolName"></span></td>
@@ -184,33 +191,36 @@
         </table>
 
         <!-- إلى / بتوسيط الصفحة -->
-        <div style="text-align: center; font-size: 16px; font-weight: bold; margin-bottom: 20px;">
+        <div style="text-align: center; font-size: 16px; font-weight: bold; margin-bottom: 18px;">
             إلى / <span id="resTo"></span>
         </div>
 
         <!-- م / بتوسيط الصفحة -->
-        <div style="text-align: center; font-size: 16px; font-weight: bold; margin-bottom: 40px;">
+        <div style="text-align: center; font-size: 16px; font-weight: bold; margin-bottom: 30px;">
             م/ <span id="resSubjectTitle"></span>
         </div>
 
-        <!-- متن الكتاب -->
-        <div style="font-size: 16px; line-height: 2.5; text-align: justify; margin-bottom: 50px; padding: 0 20px;">
+        <!-- متن الكتاب بتنسيق مريح وواضح -->
+        <div style="font-size: 16px; line-height: 2.3; text-align: justify; margin-bottom: 40px; padding: 0 10px;">
             كتابكم المرقم (<span id="resRefBookNum" style="font-weight: bold;"></span>) في (<span id="resRefBookDate"></span>) والمتضمن (<span id="resContentNature" style="font-weight: bold;"></span>). باشر السيد (<span id="resTeacherName" style="font-weight: bold;"></span>) بعنوان مدرس اختصاص (<span id="resSubject"></span>) في مدرستنا يوم (<span id="resActionDate"></span>) راجين تفضلكم باعتياره.
         </div>
 
         <!-- للعلم مع التقدير في منتصف الصفحة -->
-        <div style="text-align: center; font-size: 16px; font-weight: bold; margin-bottom: 60px;">
+        <div style="text-align: center; font-size: 16px; font-weight: bold; margin-bottom: 40px;">
             للعلـم مع التقـدير
         </div>
 
-        <!-- مدير المدرسة في جهة اليسار وتحتها التوقيع والختم -->
-        <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
-            <div style="text-align: center; font-size: 16px; width: 220px; line-height: 1.8;">
-                مدير المدرسة<br>
-                <span id="resManagerName" style="font-weight: bold;"></span><br>
-                التوقيع والختم
-            </div>
-        </div>
+        <!-- مدير المدرسة وتوقيعه في جهة اليسار -->
+        <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+            <tr>
+                <td style="width: 60%;"></td>
+                <td style="width: 40%; text-align: center; font-size: 16px; line-height: 1.8;">
+                    مدير المدرسة<br>
+                    <span id="resManagerName" style="font-weight: bold;"></span><br>
+                    التوقيع والختم
+                </td>
+            </tr>
+        </table>
     </div>
 
     <script>
