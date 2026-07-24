@@ -198,7 +198,7 @@
                 <div style="display: flex; gap: 10px;">
                     <div class="form-group" style="flex: 1;">
                         <label>الترويسة العليا:</label>
-                        <input type="text" id="headerTitleInput" required value="وزارة التربية">
+                        <input type="text" id="headerTitleInput" required placeholder="المديرية العامة لتربية القادسية - قسم تربية الحمزة">
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>اسم المؤسسة (اعداديتنا / متوسطتنا / ثانويتنا...):</label>
@@ -239,7 +239,7 @@
                     </div>
                     <div class="form-group" style="flex: 2;">
                         <label>الاسم الكامل:</label>
-                        <input type="text" id="personNameInput" required placeholder="محمد علي حسن">
+                        <input type="text" id="personNameInput" required placeholder="علي علي حسن">
                     </div>
                 </div>
                 
@@ -255,7 +255,7 @@
 
                 <div class="form-group" style="margin-top: 8px;">
                     <label>اسم مدير المدرسة:</label>
-                    <input type="text" id="managerNameInput" required placeholder="عصام الاسدي">
+                    <input type="text" id="managerNameInput" required placeholder="اسم المدير ">
                 </div>
             </div>
 
@@ -365,8 +365,8 @@
                         </div>
                     </div>
 
-                    <!-- تم رفع عبارة للعلم مع التقدير وتوقيع المدير نحو الأعلى للمستوى المطلوب -->
-                    <div style="margin-bottom: ${isTwoCopies ? '8mm' : '26mm'};">
+                    <!-- تم رفع عبارة للعلم مع التقدير وتوقيع المدير نحو الأعلى بمسافة إضافية مناسبة -->
+                    <div style="margin-bottom: ${isTwoCopies ? '18mm' : '48mm'};">
                         <div style="text-align: center; font-size: ${isTwoCopies ? '12.5px' : '15px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '3mm' : '6mm'};">
                             للعلـم مع التقـدير
                         </div>
@@ -405,3 +405,4 @@
 
 </body>
 </html>
+ 
