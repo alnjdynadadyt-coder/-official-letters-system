@@ -2,74 +2,445 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>تأييد طالب بالدرجات</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تأييد طالب بالدرجات - نظام إصدار الكتب والمخاطبات الرسمية</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f4f6f9; padding: 20px; direction: rtl; }
-        .container { max-width: 800px; background: #fff; margin: 0 auto; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
-        select, input { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
-        th { background: #f8f9fa; }
-        .btn { background: #007bff; color: white; border: none; padding: 10px 15px; cursor: pointer; border-radius: 4px; width: 100%; font-size: 16px; }
+        body {
+            background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 10px;
+            direction: rtl;
+            color: #2d3748;
+        }
+        .form-container {
+            max-width: 750px;
+            background: #ffffff;
+            margin: 0 auto;
+            padding: 18px 20px;
+            border-radius: 14px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+            border-top: 5px solid #3182ce;
+        }
+        .form-header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            border-bottom: 2px solid #edf2f7;
+            padding-bottom: 8px;
+        }
+        h2 {
+            color: #1a202c;
+            margin: 0;
+            font-size: 19px;
+            font-weight: 700;
+        }
+        .section-box {
+            border: 1px solid rgba(0,0,0,0.07);
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+        .sec-print { background: #f0f9ff; border-color: #bae6fd; }
+        .sec-admin { background: #fdf4ff; border-color: #f5d0fe; }
+        .sec-person { background: #f0fdf4; border-color: #bbf7d0; }
+
+        .section-title {
+            font-size: 13.5px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border-bottom: 1px dashed rgba(0,0,0,0.1);
+            padding-bottom: 4px;
+        }
+        .sec-print .section-title { color: #0284c7; }
+        .sec-admin .section-title { color: #c084fc; }
+        .sec-person .section-title { color: #16a34a; }
+
+        .form-group {
+            margin-bottom: 8px;
+        }
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 3px;
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 12.5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            font-size: 13px;
+            box-sizing: border-box;
+            background-color: #fff;
+            transition: all 0.2s;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #3182ce;
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.15);
+        }
+        .btn-submit {
+            background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
+            color: white;
+            border: none;
+            padding: 11px 20px;
+            font-size: 14.5px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            margin-top: 4px;
+            box-shadow: 0 4px 12px rgba(49, 130, 206, 0.25);
+            transition: all 0.2s;
+        }
+        .btn-submit:hover {
+            background: linear-gradient(135deg, #2b6cb0 0%, #2c5282 100%);
+            box-shadow: 0 6px 15px rgba(49, 130, 206, 0.35);
+        }
+        .back-link {
+            display: inline-block;
+            background-color: #edf2f7;
+            color: #4a5568;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        .back-link:hover {
+            background-color: #e2e8f0;
+            color: #1a202c;
+        }
+        .back-link-bottom {
+            display: block;
+            text-align: center;
+            margin-top: 12px;
+        }
+        #printArea {
+            display: none;
+        }
+        @media print {
+            @page {
+                size: A4;
+                margin: 0mm;
+            }
+            body * {
+                visibility: hidden;
+            }
+            #printArea, #printArea * {
+                visibility: visible;
+            }
+            #printArea {
+                display: block;
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 210mm;
+                height: 297mm;
+                overflow: hidden;
+                font-family: 'Traditional Arabic', 'Amiri', serif;
+                background: white;
+                color: black;
+                box-sizing: border-box;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>إصدار تأييد طالب بالدرجات</h2>
-    <form id="gradesForm">
-        <div class="form-group">
-            <label>اختر المرحلة الدراسية:</label>
-            <select id="stageSelect" onchange="renderTable()">
-                <option value="third">الثالث المتوسط</option>
-                <option value="sci">السادس العلمي</option>
-                <option value="art">السادس الأدبي</option>
-            </select>
+    <div class="form-container no-print">
+        <div class="form-header-flex">
+            <h2>إصدار تأييد طالب بالدرجات</h2>
+            <a href="index.html" class="back-link">← العودة للرئيسية</a>
         </div>
 
-        <div class="form-group">
-            <label>اسم الطالب:</label>
-            <input type="text" id="studentName" required placeholder="أدخل اسم الطالب">
+        <form id="taayeedGradesForm" onsubmit="generatePDF(event)">
+            
+            <div class="section-box sec-print">
+                <div class="section-title">⚙️ الخيارات وطريقة الطباعة</div>
+                <div class="form-group">
+                    <label>نظام النسخ:</label>
+                    <select id="copiesLayout">
+                        <option value="one">نسخة واحدة (تملأ الصفحة)</option>
+                        <option value="two">نسختان (نفس الورقة)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="section-box sec-admin">
+                <div class="section-title">📋 المعلومات الإدارية للكتاب</div>
+                <div style="display: flex; gap: 10px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>الترويسة العليا:</label>
+                        <input type="text" id="headerTitleInput" required value="وزارة التربية">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>اسم المدرسة:</label>
+                        <input type="text" id="schoolNameInput" required placeholder="مثال: إعدادية النجدين للبنين">
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 8px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>رقم العدد:</label>
+                        <input type="text" id="bookNumberInput" required placeholder="مثال: 125">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>التاريخ:</label>
+                        <input type="date" id="dateInput" required>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top: 8px;">
+                    <label>إلى / (الجهة المطلوبة):</label>
+                    <input type="text" id="targetEntity" required placeholder="مثال: الجهة المستفيدة">
+                </div>
+            </div>
+
+            <div class="section-box sec-person">
+                <div class="section-title">👤 بيانات الطالب والدراسة</div>
+                <div style="display: flex; gap: 10px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>المرحلة الدراسية:</label>
+                        <select id="stageSelect" onchange="updateSubjects()">
+                            <option value="third">الثالث المتوسط</option>
+                            <option value="sci">السادس العلمي</option>
+                            <option value="art">السادس الأدبي</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>جنس الطالب:</label>
+                        <select id="studentGender">
+                            <option value="male">ذكر (طالب)</option>
+                            <option value="female">أنثى (طالبة)</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 8px;">
+                    <div class="form-group" style="flex: 2;">
+                        <label>اسم الطالب الثلاثي:</label>
+                        <input type="text" id="studentName" required placeholder="أدخل اسم الطالب">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>التولد:</label>
+                        <input type="text" id="studentBirth" required placeholder="مثال: 2008">
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 8px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>الرقم الامتحاني:</label>
+                        <input type="text" id="examNumber" required placeholder="الرقم الامتحاني">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>العام الدراسي:</label>
+                        <input type="text" id="academicYear" required placeholder="2025 - 2026">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>الدور:</label>
+                        <input type="text" id="examRound" required placeholder="الأول / الثاني">
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top: 8px;">
+                    <label>اسم مدير المدرسة:</label>
+                    <input type="text" id="managerName" required placeholder="اسم المدير">
+                </div>
+            </div>
+
+            <div class="section-box" style="background: #fff; border-color: #cbd5e0;">
+                <div class="section-title" style="color: #2d3748;">📊 درجات المواد الدراسية</div>
+                <div id="dynamicInputsContainer"></div>
+            </div>
+
+            <button type="submit" class="btn-submit">عرض وطباعة كتاب التأييد (PDF)</button>
+        </form>
+
+        <div class="back-link-bottom">
+            <a href="index.html" class="back-link">← العودة للرئيسية</a>
         </div>
+    </div>
 
-        <div class="form-group">
-            <label>جدول الدرجات:</label>
-            <div id="tableContainer"></div>
-        </div>
+    <div id="printArea">
+        <div id="documentWrapper" style="width: 100%; height: 100%; box-sizing: border-box;"></div>
+    </div>
 
-        <button type="button" class="btn" onclick="alert('تم تجهيز الواجهة بنجاح!')">عرض وطباعة التأييد</button>
-    </form>
-</div>
+    <script>
+        const subjectsData = {
+            third: ["التربية الإسلامية واللغة العربية", "اللغة الانكليزية", "الرياضيات", "الاجتماعيات", "الأحياء", "الكيمياء", "الفيزياء", "مادة إضافية"],
+            sci: ["التربية الإسلامية", "اللغة العربية", "اللغة الانكليزية", "الأحياء", "الرياضيات", "الكيمياء", "الفيزياء", "مادة إضافية"],
+            art: ["التربية الإسلامية", "اللغة العربية", "اللغة الانكليزية", "التاريخ", "الرياضيات", "الجغرافية", "الاقتصاد", "مادة إضافية"]
+        };
 
-<script>
-    const subjects = {
-        third: ["التربية الإسلامية و اللغة العربية", "اللغة الانكليزية", "الرياضيات", "الاجتماعيات", "الأحياء", "الكيمياء", "الفيزياء", "مادة إضافية"],
-        sci: ["التربية الإسلامية", "اللغة العربية", "اللغة الانكليزية", "الأحياء", "الرياضيات", "الكيمياء", "الفيزياء", "مادة إضافية"],
-        art: ["التربية الإسلامية", "اللغة العربية", "اللغة الانكليزية", "التاريخ", "الرياضيات", "الجغرافية", "الاقتصاد", "مادة إضافية"]
-    };
+        function updateSubjects() {
+            const stage = document.getElementById('stageSelect').value;
+            const subs = subjectsData[stage];
+            let container = document.getElementById('dynamicInputsContainer');
+            container.innerHTML = '';
 
-    function renderTable() {
-        const stage = document.getElementById('stageSelect').value;
-        const list = subjects[stage];
-        let html = `<table><tr><th>المادة</th><th>الدرجة رقماً</th><th>الدرجة كتابةً</th></tr>`;
-        
-        list.forEach((sub, i) => {
-            html += `<tr><td>${sub}</td><td><input type="text" placeholder="رقم"></td><td><input type="text" placeholder="كتابة"></td></tr>`;
-        });
-        
-        html += `<tr><td><b>المجموع</b></td><td><input type="text"></td><td><input type="text"></td></tr>`;
-        if(stage !== 'third') {
-            html += `<tr><td><b>المعدل</b></td><td colspan="2"><input type="text" placeholder="أدخل المعدل"></td></tr>`;
+            subs.forEach((sub, index) => {
+                container.innerHTML += `
+                    <div style="display: flex; gap: 8px; margin-bottom: 6px; align-items: center;">
+                        <span style="flex: 1.5; font-size: 12.5px; font-weight: 600;">${sub}:</span>
+                        <input type="text" placeholder="الدرجة رقماً" id="sub_num_${index}" style="flex: 1;" required>
+                        <input type="text" placeholder="الدرجة كتابةً" id="sub_text_${index}" style="flex: 1.5;" required>
+                    </div>
+                `;
+            });
+
+            container.innerHTML += `
+                <div style="display: flex; gap: 8px; margin-top: 10px; border-top: 1px solid #edf2f7; pt: 8px; align-items: center;">
+                    <span style="flex: 1.5; font-size: 13px; font-weight: bold;">المجموع:</span>
+                    <input type="text" placeholder="المجموع رقماً" id="totalNum" style="flex: 1;" required>
+                    <input type="text" placeholder="المجموع كتابةً" id="totalText" style="flex: 1.5;" required>
+                </div>
+                <div style="display: flex; gap: 8px; margin-top: 6px; align-items: center;" id="averageRow">
+                    <span style="flex: 1.5; font-size: 13px; font-weight: bold;">المعدل:</span>
+                    <input type="text" placeholder="المعدل" id="averageVal" style="flex: 2.5;" required>
+                </div>
+            `;
+
+            if (stage === 'third') {
+                document.getElementById('averageRow').style.display = 'none';
+            }
         }
-        html += `</table>`;
-        
-        document.getElementById('tableContainer').innerHTML = html;
-    }
 
-    window.onload = renderTable;
-</script>
+        window.onload = updateSubjects;
 
+        function formatDateToDMY(dateString) {
+            if (!dateString) return '';
+            const parts = dateString.split('-');
+            if (parts.length !== 3) return dateString;
+            return `${parts[2]} / ${parts[1]} / ${parts[0]}م`;
+        }
+
+        function generatePDF(e) {
+            e.preventDefault();
+            
+            const headerTitle = document.getElementById('headerTitleInput').value;
+            const schoolName = document.getElementById('schoolNameInput').value;
+            const bookNum = document.getElementById('bookNumberInput').value;
+            const dateVal = formatDateToDMY(document.getElementById('dateInput').value);
+            const target = document.getElementById('targetEntity').value;
+            
+            const stage = document.getElementById('stageSelect').value;
+            const stageNames = { third: "الثالث المتوسط", sci: "السادس العلمي", art: "السادس الأدبي" };
+            const gender = document.getElementById('studentGender').value;
+            const name = document.getElementById('studentName').value;
+            const birth = document.getElementById('studentBirth').value;
+            const examNum = document.getElementById('examNumber').value;
+            const year = document.getElementById('academicYear').value;
+            const round = document.getElementById('examRound').value;
+            const manager = document.getElementById('managerName').value;
+            const layoutMode = document.getElementById('copiesLayout').value;
+
+            let paragraph = "";
+            if (gender === 'male') {
+                paragraph = `نؤيد لكم أن الطالب (<b>${name}</b>) تولد (<b>${birth}</b>) أحد طلاب الصف (${stageNames[stage]}) ذو الرقم الامتحاني (<b>${examNum}</b>) قد دخل الامتحان الوزاري للعام الدراسي (${year}) وكان ناجحاً من الدور (${round}). وبناءً على طلبه زود بهذا التأييد.`;
+            } else {
+                paragraph = `نؤيد لكم أن الطالبة (<b>${name}</b>) تولد (<b>${birth}</b>) إحدى طالبات الصف (${stageNames[stage]}) ذات الرقم الامتحاني (<b>${examNum}</b>) قد دخلت الامتحان الوزاري للعام الدراسي (${year}) وكانت ناجحة من الدور (${round}). وبناءً على طلبها زودت بهذا التأييد.`;
+            }
+
+            const subs = subjectsData[stage];
+            let tableRows = "";
+            subs.forEach((sub, index) => {
+                const nVal = document.getElementById(`sub_num_${index}`).value;
+                const tVal = document.getElementById(`sub_text_${index}`).value;
+                tableRows += `<tr><td style="border: 1px solid black; padding: 3px; text-align: right;">${sub}</td><td style="border: 1px solid black; padding: 3px; text-align: center;">${nVal}</td><td style="border: 1px solid black; padding: 3px; text-align: center;">${tVal}</td></tr>`;
+            });
+
+            const totalNum = document.getElementById('totalNum').value;
+            const totalText = document.getElementById('totalText').value;
+            tableRows += `<tr><td style="border: 1px solid black; padding: 3px; font-weight: bold; text-align: right;">المجموع</td><td style="border: 1px solid black; padding: 3px; text-align: center; font-weight: bold;">${totalNum}</td><td style="border: 1px solid black; padding: 3px; text-align: center; font-weight: bold;">${totalText}</td></tr>`;
+
+            if (stage !== 'third') {
+                const avgVal = document.getElementById('averageVal').value;
+                tableRows += `<tr><td style="border: 1px solid black; padding: 3px; font-weight: bold; text-align: right;">المعدل</td><td colspan="2" style="border: 1px solid black; padding: 3px; text-align: center; font-weight: bold;">${avgVal}</td></tr>`;
+            }
+
+            const createCardHTML = (isTwoCopies) => `
+                <div style="margin: ${isTwoCopies ? '1mm 4mm' : '3mm 6mm'}; border: 2px solid #1a202c; padding: ${isTwoCopies ? '3mm 5mm' : '6mm 10mm'}; border-radius: 6px; background: #fff; height: ${isTwoCopies ? '140mm' : '285mm'}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div style="text-align: center; font-weight: bold; font-size: ${isTwoCopies ? '12px' : '15px'}; margin-bottom: 2mm; line-height: 1.2;">
+                            ${headerTitle}<br>${schoolName}
+                        </div>
+
+                        <table style="width: 100%; border-collapse: collapse; margin-bottom: 2mm; font-weight: bold; font-size: ${isTwoCopies ? '11px' : '13px'};">
+                            <tr>
+                                <td style="width: 50%; text-align: right;">العدد: ${bookNum}</td>
+                                <td style="width: 50%; text-align: left;">التاريخ: ${dateVal}</td>
+                            </tr>
+                        </table>
+
+                        <div style="text-align: center; font-size: ${isTwoCopies ? '11.5px' : '13.5px'}; font-weight: bold; margin-bottom: 2mm;">
+                            إلى / ${target}
+                        </div>
+
+                        <div style="text-align: center; font-size: ${isTwoCopies ? '11.5px' : '13.5px'}; font-weight: bold; margin-bottom: 2.5mm;">
+                            م / تأييد طالب بالدرجات
+                        </div>
+
+                        <div style="font-size: ${isTwoCopies ? '11px' : '13px'}; line-height: ${isTwoCopies ? '1.4' : '1.7'}; text-align: justify; margin-bottom: 3mm;">
+                            ${paragraph}
+                        </div>
+
+                        <table style="width: 100%; border-collapse: collapse; font-size: ${isTwoCopies ? '10.5px' : '12px'}; margin-bottom: 3mm;">
+                            <thead>
+                                <tr style="background: #f1f5f9;">
+                                    <th style="border: 1px solid black; padding: 3px; text-align: right;">المادة</th>
+                                    <th style="border: 1px solid black; padding: 3px; text-align: center; width: 25%;">الدرجة رقماً</th>
+                                    <th style="border: 1px solid black; padding: 3px; text-align: center; width: 35%;">الدرجة كتابةً</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${tableRows}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div>
+                        <div style="text-align: center; font-size: ${isTwoCopies ? '11.5px' : '13.5px'}; font-weight: bold; margin-bottom: 2mm;">
+                            للعـلم مع التقـدير
+                        </div>
+
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <td style="width: 75%;"></td>
+                                <td style="width: 25%; text-align: right; font-size: ${isTwoCopies ? '11px' : '13px'}; line-height: 1.2;">
+                                    <b>${manager}</b><br>
+                                    مدير المدرسة
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            `;
+
+            const wrapper = document.getElementById('documentWrapper');
+            if (layoutMode === 'two') {
+                wrapper.innerHTML = `
+                    <div style="height: 148.5mm; display: flex; flex-direction: column; justify-content: flex-start;">
+                        ${createCardHTML(true)}
+                    </div>
+                    <div style="height: 148.5mm; display: flex; flex-direction: column; justify-content: flex-start;">
+                        ${createCardHTML(true)}
+                    </div>
+                `;
+            } else {
+                wrapper.innerHTML = `<div style="height: 297mm; display: flex; flex-direction: column; justify-content: flex-start;">${createCardHTML(false)}</div>`;
+            }
+
+            window.print();
+        }
+    </script>
 </body>
 </html>
