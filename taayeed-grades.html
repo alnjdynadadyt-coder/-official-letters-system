@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>تأييد طالب بالدرجات</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f4f6f9; padding: 20px; direction: rtl; }
+        .container { max-width: 800px; background: #fff; margin: 0 auto; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        select, input { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+        th { background: #f8f9fa; }
+        .btn { background: #007bff; color: white; border: none; padding: 10px 15px; cursor: pointer; border-radius: 4px; width: 100%; font-size: 16px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>إصدار تأييد طالب بالدرجات</h2>
+    <form id="gradesForm">
+        <div class="form-group">
+            <label>اختر المرحلة الدراسية:</label>
+            <select id="stageSelect" onchange="renderTable()">
+                <option value="third">الثالث المتوسط</option>
+                <option value="sci">السادس العلمي</option>
+                <option value="art">السادس الأدبي</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>اسم الطالب:</label>
+            <input type="text" id="studentName" required placeholder="أدخل اسم الطالب">
+        </div>
+
+        <div class="form-group">
+            <label>جدول الدرجات:</label>
+            <div id="tableContainer"></div>
+        </div>
+
+        <button type="button" class="btn" onclick="alert('تم تجهيز الواجهة بنجاح!')">عرض وطباعة التأييد</button>
+    </form>
+</div>
+
+<script>
+    const subjects = {
+        third: ["التربية الإسلامية و اللغة العربية", "اللغة الانكليزية", "الرياضيات", "الاجتماعيات", "الأحياء", "الكيمياء", "الفيزياء", "مادة إضافية"],
+        sci: ["التربية الإسلامية", "اللغة العربية", "اللغة الانكليزية", "الأحياء", "الرياضيات", "الكيمياء", "الفيزياء", "مادة إضافية"],
+        art: ["التربية الإسلامية", "اللغة العربية", "اللغة الانكليزية", "التاريخ", "الرياضيات", "الجغرافية", "الاقتصاد", "مادة إضافية"]
+    };
+
+    function renderTable() {
+        const stage = document.getElementById('stageSelect').value;
+        const list = subjects[stage];
+        let html = `<table><tr><th>المادة</th><th>الدرجة رقماً</th><th>الدرجة كتابةً</th></tr>`;
+        
+        list.forEach((sub, i) => {
+            html += `<tr><td>${sub}</td><td><input type="text" placeholder="رقم"></td><td><input type="text" placeholder="كتابة"></td></tr>`;
+        });
+        
+        html += `<tr><td><b>المجموع</b></td><td><input type="text"></td><td><input type="text"></td></tr>`;
+        if(stage !== 'third') {
+            html += `<tr><td><b>المعدل</b></td><td colspan="2"><input type="text" placeholder="أدخل المعدل"></td></tr>`;
+        }
+        html += `</table>`;
+        
+        document.getElementById('tableContainer').innerHTML = html;
+    }
+
+    window.onload = renderTable;
+</script>
+
+</body>
+</html>
