@@ -179,21 +179,20 @@
                 </div>
             </div>
 
-            <!-- تم إخفاء حقل الترويسة من واجهة الإدخال، وستتم طباعتها تلقائياً -->
-            <div style="display: none;">
-                <input type="text" id="headerTitleInput" value="المديرية العامة لتربية القادسية - قسم تربية الحمزة">
-            </div>
-
             <div class="section-box sec-admin">
                 <div class="section-title">📋 المعلومات الإدارية للكتاب</div>
+                <div class="form-group" style="margin-bottom: 8px;">
+                    <label>الترويسة العليا:</label>
+                    <input type="text" id="headerTitleInput" required placeholder="مثال: المديرية العامة لتربية القادسية - قسم تربية الحمزة">
+                </div>
                 <div style="display: flex; gap: 10px;">
                     <div class="form-group" style="flex: 1;">
                         <label>اسم المدرسة:</label>
-                        <input type="text" id="schoolNameInput" required value="اعدادية النجدين للبنين">
+                        <input type="text" id="schoolNameInput" required placeholder="مثال: اعدادية النجدين للبنين">
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>رقم العدد:</label>
-                        <input type="text" id="bookNumberInput" required placeholder="مثال 1333">
+                        <input type="text" id="bookNumberInput" required placeholder="مثال: 1333">
                     </div>
                 </div>
                 <div style="display: flex; gap: 10px; margin-top: 8px;">
@@ -203,7 +202,7 @@
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>إلى (الجهة الموجه لها):</label>
-                        <input type="text" id="toInput" required value="المديرية العامة لتربية القادسية - قسم الملاك الثانوي">
+                        <input type="text" id="toInput" required placeholder="مثال: المديرية العامة لتربية القادسية - قسم الملاك الثانوي">
                     </div>
                 </div>
             </div>
@@ -213,7 +212,7 @@
                 <div style="display: flex; gap: 10px;">
                     <div class="form-group" style="flex: 1;">
                         <label>رقم الكتاب ذي العلاقة:</label>
-                        <input type="text" id="refBookNumInput" required placeholder="مثال 1200">
+                        <input type="text" id="refBookNumInput" required placeholder="مثال: 1200">
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>تاريخ الكتاب ذي العلاقة:</label>
@@ -222,7 +221,7 @@
                 </div>
                 <div class="form-group" style="margin-top: 8px;">
                     <label>المتضمن (مثل: نقل موظفين):</label>
-                    <input type="text" id="contentNatureInput" required value="نقل موظفين">
+                    <input type="text" id="contentNatureInput" required placeholder="مثال: نقل موظفين">
                 </div>
             </div>
 
@@ -238,13 +237,13 @@
                     </div>
                     <div class="form-group" style="flex: 2;">
                         <label>اسم الموظف / الموظفة:</label>
-                        <input type="text" id="employeeNameInput" required placeholder="علي علي علي">
+                        <input type="text" id="employeeNameInput" required placeholder="مثال: علي علي علي">
                     </div>
                 </div>
                 <div style="display: flex; gap: 10px; margin-top: 8px;">
                     <div class="form-group" style="flex: 1;">
                         <label>العنوان الوظيفي:</label>
-                        <input type="text" id="jobTitleInput" value="حارس" placeholder="حارس، مدرس، معلم...">
+                        <input type="text" id="jobTitleInput" placeholder="مثال: حارس، موظف خدمة، كاتب...">
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>تاريخ التنفيذ الفعلي:</label>
@@ -253,7 +252,7 @@
                 </div>
                 <div class="form-group" style="margin-top: 8px;">
                     <label>اسم مدير المدرسة:</label>
-                    <input type="text" id="managerNameInput" required value="عصام الاسدي">
+                    <input type="text" id="managerNameInput" required placeholder="مثال: اكتب الاسم المدير ">
                 </div>
             </div>
 
@@ -357,7 +356,6 @@
                         </div>
                     </div>
 
-                    <!-- تم رفع عبارة للعلم مع التقدير وتوقيع المدير نحو الأعلى قليلاً للمستوى المثالي -->
                     <div style="margin-bottom: ${isTwoCopies ? '8mm' : '26mm'};">
                         <div style="text-align: center; font-size: ${isTwoCopies ? '11.5px' : '14px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '3mm' : '6mm'};">
                             للعلـم مع التقـدير
