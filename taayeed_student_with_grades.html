@@ -183,7 +183,7 @@
                 <div style="display: flex; gap: 10px; margin-top: 8px;">
                     <div class="form-group" style="flex: 1;">
                         <label>رقم العدد:</label>
-                        <input type="text" id="bookNumberInput" placeholder="مثال: ١٣٣ او 133">
+                        <input type="text" id="bookNumberInput" placeholder="مثال: 1333">
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>التاريخ:</label>
@@ -192,7 +192,7 @@
                 </div>
                 <div class="form-group" style="margin-top: 8px;">
                     <label>إلى / (الجهة المطلوبة):</label>
-                    <input type="text" id="targetEntity" placeholder="مثال: جامعة او مدرسة">
+                    <input type="text" id="targetEntity" placeholder="مثال: جامعة القادسية">
                 </div>
             </div>
 
@@ -222,7 +222,7 @@
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>التولد:</label>
-                        <input type="text" id="studentBirth" placeholder="مثال: 2017 او ٢٠١٧">
+                        <input type="text" id="studentBirth" placeholder="مثال: 2000">
                     </div>
                 </div>
                 <div style="display: flex; gap: 8px; margin-top: 8px;">
@@ -232,7 +232,7 @@
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>العام الدراسي:</label>
-                        <input type="text" id="academicYear" placeholder="مثال: 2025- 2026او ٢٠٢٦-٢٠٢٦">
+                        <input type="text" id="academicYear" placeholder="مثال: 2025 - 2026">
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>الدور:</label>
@@ -367,17 +367,17 @@
             const manager = document.getElementById('managerName').value;
             const layoutMode = document.getElementById('copiesLayout').value;
 
-            // تقسيم النص إلى 3 أسطر بالترتيب المطلوب
+            // تنسيق النصوص على 3 أسطر منفصلة بدقة حسب طلبك
             let line1 = "";
             let line2 = "";
             let line3 = "";
 
             if (gender === 'male') {
-                line1 = `نؤيد لكم أن الطالب (<b>${name}</b>) تولد (<b>${birth}</b>) أحد طلاب الصف (${stageNames[stage]}) ذو الرقم الامتحاني (<b>${examNum}</b>).`;
+                line1 = `نؤيد لكم أن الطالب (<b>${name}</b>) تولد (${birth}) أحد طلاب الصف (${stageNames[stage]}) ذو الرقم الامتحاني (${examNum}).`;
                 line2 = `قد دخل الامتحان الوزاري للعام الدراسي (${year}) وكان ناجحاً من الدور (${round}).`;
                 line3 = `وبناءً على طلبه زود بهذا التأييد.`;
             } else {
-                line1 = `نؤيد لكم أن الطالبة (<b>${name}</b>) تولد (<b>${birth}</b>) إحدى طالبات الصف (${stageNames[stage]}) ذات الرقم الامتحاني (<b>${examNum}</b>).`;
+                line1 = `نؤيد لكم أن الطالبة (<b>${name}</b>) تولد (${birth}) إحدى طالبات الصف (${stageNames[stage]}) ذات الرقم الامتحاني (${examNum}).`;
                 line2 = `وقد دخلت الامتحان الوزاري للعام الدراسي (${year}) وكانت ناجحة من الدور (${round}).`;
                 line3 = `وبناءً على طلبها زودت بهذا التأييد.`;
             }
@@ -388,37 +388,37 @@
                 const sName = document.getElementById(`sub_name_${index}`).value;
                 const nVal = document.getElementById(`sub_num_${index}`).value;
                 const tVal = document.getElementById(`sub_text_${index}`).value;
-                tableRows += `<tr><td style="border: 1px solid black; padding: 2px 4px; text-align: right;">${sName}</td><td style="border: 1px solid black; padding: 2px 4px; text-align: center; width: 18%;"><b>${nVal}</b></td><td style="border: 1px solid black; padding: 2px 4px; text-align: center; width: 25%;"><b>${tVal}</b></td></tr>`;
+                tableRows += `<tr><td style="border: 1px solid black; padding: 2px 5px; text-align: right;">${sName}</td><td style="border: 1px solid black; padding: 2px 5px; text-align: center; width: 18%;"><b>${nVal}</b></td><td style="border: 1px solid black; padding: 2px 5px; text-align: center; width: 28%;"><b>${tVal}</b></td></tr>`;
             });
 
             const extraName = document.getElementById('extra_sub_name').value.trim();
             const extraNum = document.getElementById('extra_sub_num').value.trim();
             const extraText = document.getElementById('extra_sub_text').value.trim();
             if (extraName !== "" || extraNum !== "") {
-                tableRows += `<tr><td style="border: 1px solid black; padding: 2px 4px; text-align: right;">${extraName}</td><td style="border: 1px solid black; padding: 2px 4px; text-align: center;"><b>${extraNum}</b></td><td style="border: 1px solid black; padding: 2px 4px; text-align: center;"><b>${extraText}</b></td></tr>`;
+                tableRows += `<tr><td style="border: 1px solid black; padding: 2px 5px; text-align: right;">${extraName}</td><td style="border: 1px solid black; padding: 2px 5px; text-align: center;"><b>${extraNum}</b></td><td style="border: 1px solid black; padding: 2px 5px; text-align: center;"><b>${extraText}</b></td></tr>`;
             }
 
             const totalNum = document.getElementById('totalNum').value;
             const totalText = document.getElementById('totalText').value;
-            tableRows += `<tr><td style="border: 1px solid black; padding: 2px 4px; font-weight: bold; text-align: right;">المجموع</td><td style="border: 1px solid black; padding: 2px 4px; text-align: center; font-weight: bold;">${totalNum}</td><td style="border: 1px solid black; padding: 2px 4px; text-align: center; font-weight: bold;">${totalText}</td></tr>`;
+            tableRows += `<tr><td style="border: 1px solid black; padding: 2px 5px; font-weight: bold; text-align: right;">المجموع</td><td style="border: 1px solid black; padding: 2px 5px; text-align: center; font-weight: bold;">${totalNum}</td><td style="border: 1px solid black; padding: 2px 5px; text-align: center; font-weight: bold;">${totalText}</td></tr>`;
 
             if (stage !== 'third') {
                 const avgVal = document.getElementById('averageVal').value;
                 if(avgVal) {
-                    tableRows += `<tr><td style="border: 1px solid black; padding: 2px 4px; font-weight: bold; text-align: right;">المعدل</td><td colspan="2" style="border: 1px solid black; padding: 2px 4px; text-align: center; font-weight: bold;">${avgVal}</td></tr>`;
+                    tableRows += `<tr><td style="border: 1px solid black; padding: 2px 5px; font-weight: bold; text-align: right;">المعدل</td><td colspan="2" style="border: 1px solid black; padding: 2px 5px; text-align: center; font-weight: bold;">${avgVal}</td></tr>`;
                 }
             }
 
             const createCardHTML = (isTwoCopies) => `
-                <div style="width: 155mm; margin: ${isTwoCopies ? '0.5mm auto' : '4mm auto'}; border: 2px solid #1a202c; padding: ${isTwoCopies ? '3mm 5mm' : '5mm 8mm'}; border-radius: 6px; background: #fff; height: ${isTwoCopies ? '141mm' : '286mm'}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
+                <div style="width: 155mm; margin: ${isTwoCopies ? '0.5mm auto' : '4mm auto'}; border: 2px solid #1a202c; padding: ${isTwoCopies ? '3mm 5mm' : '4mm 7mm'}; border-radius: 6px; background: #fff; height: ${isTwoCopies ? '141mm' : '286mm'}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
                     <div>
                         <!-- الترويسة العليا -->
-                        <div style="text-align: center; font-weight: bold; font-size: ${isTwoCopies ? '10px' : '13px'}; margin-bottom: 1mm; line-height: 1.2;">
+                        <div style="text-align: center; font-weight: bold; font-size: ${isTwoCopies ? '10px' : '12.5px'}; margin-bottom: 0.5mm; line-height: 1.2;">
                             ${headerTitle}
                         </div>
 
                         <!-- اسم المدرسة يمين، العدد والتاريخ والصورة يسار -->
-                        <table style="width: 100%; border-collapse: collapse; margin-bottom: 1.5mm; font-weight: bold; font-size: ${isTwoCopies ? '10px' : '11.5px'};">
+                        <table style="width: 100%; border-collapse: collapse; margin-bottom: 1mm; font-weight: bold; font-size: ${isTwoCopies ? '9.5px' : '11px'};">
                             <tr>
                                 <td style="width: 50%; vertical-align: top; text-align: right;">
                                     <div>${schoolName}</div>
@@ -426,33 +426,33 @@
                                 <td style="width: 50%; text-align: left; vertical-align: top;">
                                     <div>العدد: ${bookNum}</div>
                                     <div style="margin-top: 1px;">التاريخ: ${dateVal}</div>
-                                    <div style="margin-top: 3px; width: 17mm; height: 21mm; border: 1px dashed #cbd5e0; display: inline-flex; align-items: center; justify-content: center; font-size: 8px; color: #a0aec0; background: #fafafa;">مكان الصورة</div>
+                                    <div style="margin-top: 2px; width: 15mm; height: 19mm; border: 1px dashed #cbd5e0; display: inline-flex; align-items: center; justify-content: center; font-size: 7.5px; color: #a0aec0; background: #fafafa;">مكان الصورة</div>
                                 </td>
                             </tr>
                         </table>
 
-                        <div style="text-align: center; font-size: ${isTwoCopies ? '10.5px' : '12.5px'}; font-weight: bold; margin-bottom: 1mm;">
+                        <div style="text-align: center; font-size: ${isTwoCopies ? '10px' : '12px'}; font-weight: bold; margin-bottom: 0.5mm;">
                             إلى / ${target}
                         </div>
 
-                        <div style="text-align: center; font-size: ${isTwoCopies ? '10.5px' : '12.5px'}; font-weight: bold; margin-bottom: 2mm;">
+                        <div style="text-align: center; font-size: ${isTwoCopies ? '10px' : '12px'}; font-weight: bold; margin-bottom: 1.5mm;">
                             م / تأييد طالب بالدرجات
                         </div>
 
-                        <!-- النص مقسم على 3 أسطر واضحة -->
-                        <div style="font-size: ${isTwoCopies ? '10px' : '11.5px'}; line-height: ${isTwoCopies ? '1.3' : '1.5'}; margin-bottom: 2mm;">
+                        <!-- النص مقسم على 3 أسطر بمسافات متناسقة -->
+                        <div style="font-size: ${isTwoCopies ? '9.5px' : '11px'}; line-height: ${isTwoCopies ? '1.25' : '1.45'}; margin-bottom: 1.5mm;">
                             <div>${line1}</div>
-                            <div style="margin-top: 2px;">${line2}</div>
-                            <div style="margin-top: 2px;">${line3}</div>
+                            <div style="margin-top: 1.5px;">${line2}</div>
+                            <div style="margin-top: 1.5px;">${line3}</div>
                         </div>
 
-                        <!-- الجدول بعرض وتنسيق متناسق -->
-                        <table style="width: 75%; margin: 0 auto; border-collapse: collapse; font-size: ${isTwoCopies ? '9.5px' : '11px'}; margin-bottom: 2mm;">
+                        <!-- الجدول بعرض وتنسيق متوازن ومضغوط -->
+                        <table style="width: 62%; margin: 0 auto; border-collapse: collapse; font-size: ${isTwoCopies ? '9px' : '10.5px'}; margin-bottom: 1.5mm;">
                             <thead>
                                 <tr style="background: #f1f5f9;">
                                     <th style="border: 1px solid black; padding: 2px 4px; text-align: right;">المادة</th>
                                     <th style="border: 1px solid black; padding: 2px 4px; text-align: center; width: 22%;">الدرجة رقماً</th>
-                                    <th style="border: 1px solid black; padding: 2px 4px; text-align: center; width: 28%;">الدرجة كتابةً</th>
+                                    <th style="border: 1px solid black; padding: 2px 4px; text-align: center; width: 32%;">الدرجة كتابةً</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -461,15 +461,15 @@
                         </table>
                     </div>
 
-                    <div style="margin-bottom: 2mm;">
-                        <div style="text-align: center; font-size: ${isTwoCopies ? '10.5px' : '12px'}; font-weight: bold; margin-bottom: 1.5mm;">
+                    <div style="margin-bottom: 1.5mm;">
+                        <div style="text-align: center; font-size: ${isTwoCopies ? '10px' : '11.5px'}; font-weight: bold; margin-bottom: 1mm;">
                             للعلـم مع التقـدير
                         </div>
 
                         <table style="width: 100%; border-collapse: collapse;">
                             <tr>
                                 <td style="width: 75%;"></td>
-                                <td style="width: 25%; text-align: right; font-size: ${isTwoCopies ? '10px' : '11.5px'}; line-height: 1.25;">
+                                <td style="width: 25%; text-align: right; font-size: ${isTwoCopies ? '9.5px' : '11px'}; line-height: 1.2;">
                                     <b>${manager}</b><br>
                                     مدير المدرسة
                                 </td>
