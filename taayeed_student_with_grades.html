@@ -184,12 +184,12 @@
                 <div class="section-title">📋 المعلومات الإدارية للكتاب</div>
                 <div class="form-group">
                     <label>الترويسة العليا:</label>
-                    <input type="text" id="headerTitleInput" value="المديرية العامة لتربية القادسية - قسم تربية الحمزة&#10;  ">
+                    <input type="text" id="headerTitleInput" placeholder="مثال: المديرية العامة لتربية القادسية - قسم تربية الحمزة / اعدادية النجدين للبنين">
                 </div>
                 <div style="display: flex; gap: 10px; margin-top: 8px;">
                     <div class="form-group" style="flex: 1;">
                         <label>رقم العدد:</label>
-                        <input type="text" id="bookNumberInput" value="1333">
+                        <input type="text" id="bookNumberInput" placeholder="مثال: 1333">
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>التاريخ:</label>
@@ -198,7 +198,7 @@
                 </div>
                 <div class="form-group" style="margin-top: 8px;">
                     <label>إلى / (الجهة المطلوبة):</label>
-                    <input type="text" id="targetEntity" value="جامعة او مدرسة ">
+                    <input type="text" id="targetEntity" placeholder="مثال: دائرة التقاعد">
                 </div>
             </div>
 
@@ -224,21 +224,21 @@
                 <div style="display: flex; gap: 8px; margin-top: 8px;">
                     <div class="form-group" style="flex: 2;">
                         <label>اسم الطالب الثلاثي:</label>
-                        <input type="text" id="studentName" value="علي علي علي">
+                        <input type="text" id="studentName" placeholder="أدخل اسم الطالب كاملاً">
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>التولد:</label>
-                        <input type="text" id="studentBirth" value="2017">
+                        <input type="text" id="studentBirth" placeholder="مثال: 2017">
                     </div>
                 </div>
                 <div style="display: flex; gap: 8px; margin-top: 8px;">
                     <div class="form-group" style="flex: 1;">
                         <label>الرقم الامتحاني:</label>
-                        <input type="text" id="examNumber" oninput="this.value = this.value.replace(/[^0-9٠-٩]/g, '')" value="5566677777">
+                        <input type="text" id="examNumber" oninput="this.value = this.value.replace(/[^0-9٠-٩]/g, '')" placeholder="أرقام فقط">
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>العام الدراسي:</label>
-                        <input type="text" id="academicYear" value="2026 - 2025">
+                        <input type="text" id="academicYear" placeholder="مثال: 2025 - 2026">
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>الدور:</label>
@@ -251,7 +251,7 @@
                 </div>
                 <div class="form-group" style="margin-top: 8px;">
                     <label>اسم مدير المدرسة:</label>
-                    <input type="text" id="managerName" value="عصام الاسدي">
+                    <input type="text" id="managerName" placeholder="أدخل اسم المدير">
                 </div>
             </div>
 
@@ -285,7 +285,7 @@
             "70": "سبعون", "71": "واحد وسبعون", "72": "اثنان وسبعون", "73": "ثلاثة وسبعون", "74": "أربعة وسبعون", "75": "خمسة وسبعون", "76": "ستة وسبعون", "77": "سبعة وسبعون", "78": "ثمانية وسبعون", "79": "تسعة وسبعون",
             "80": "ثمانون", "81": "واحد وثمانون", "82": "اثنان وثمانون", "83": "ثلاثة وثمانون", "84": "أربعة وثمانون", "85": "خمسة وثمانون", "86": "ستة وثمانون", "87": "سبعة وثمانون", "88": "ثمانية وثمانون", "89": "تسعة وثمانون",
             "90": "تسعون", "91": "واحد وتسعون", "92": "اثنان وتسعون", "93": "ثلاثة وتسعون", "94": "أربعة وتسعون", "95": "خمسة وتسعون", "96": "ستة وتسعون", "97": "سبعة وتسعون", "98": "ثمانية وتسعون", "99": "تسعة وتسعون",
-            "100": "مائة", "300": "ثلاثمائة", "480": "أربعمائة ومانون", "600": "ستمائة"
+            "100": "مائة", "300": "ثلاثمائة", "480": "أربعمائة وثمانون", "600": "ستمائة"
         };
 
         function convertToWords(numStr) {
@@ -313,30 +313,30 @@
                 container.innerHTML += `
                     <div style="display: flex; gap: 6px; margin-bottom: 5px; align-items: center;">
                         <input type="text" value="${sub}" id="sub_name_${index}" style="flex: 1.5; font-size: 12px; padding: 5px 8px;">
-                        <input type="text" placeholder="الدرجة رقماً" id="sub_num_${index}" oninput="handleNumberInput(this, 'sub_text_${index}')" style="flex: 1; padding: 5px 8px;" value="50">
-                        <input type="text" placeholder="الدرجة كتابةً" id="sub_text_${index}" style="flex: 1.5; padding: 5px 8px;" value="خمسون">
+                        <input type="text" placeholder="الدرجة رقماً" id="sub_num_${index}" oninput="handleNumberInput(this, 'sub_text_${index}')" style="flex: 1; padding: 5px 8px;">
+                        <input type="text" placeholder="الدرجة كتابةً" id="sub_text_${index}" style="flex: 1.5; padding: 5px 8px;">
                     </div>
                 `;
             });
 
-            // مادة إضافية قابلة للتعديل أو الترك
+            // مادة إضافية اختيارية فارغة بالكامل
             container.innerHTML += `
                 <div style="display: flex; gap: 6px; margin-bottom: 5px; align-items: center;">
-                    <input type="text" placeholder="اسم المادة (اختياري)" id="extra_sub_name" style="flex: 1.5; font-size: 12px; padding: 5px 8px;" value="">
-                    <input type="text" placeholder="الدرجة رقماً" id="extra_sub_num" oninput="handleNumberInput(this, 'extra_sub_text')" style="flex: 1; padding: 5px 8px;" value="">
-                    <input type="text" placeholder="الدرجة كتابةً" id="extra_sub_text" style="flex: 1.5; padding: 5px 8px;" value="">
+                    <input type="text" placeholder="اسم المادة (اختياري)" id="extra_sub_name" style="flex: 1.5; font-size: 12px; padding: 5px 8px;">
+                    <input type="text" placeholder="الدرجة رقماً" id="extra_sub_num" oninput="handleNumberInput(this, 'extra_sub_text')" style="flex: 1; padding: 5px 8px;">
+                    <input type="text" placeholder="الدرجة كتابةً" id="extra_sub_text" style="flex: 1.5; padding: 5px 8px;">
                 </div>
             `;
 
             container.innerHTML += `
                 <div style="display: flex; gap: 6px; margin-top: 8px; border-top: 1px solid #edf2f7; padding-top: 6px; align-items: center;">
                     <span style="flex: 1.5; font-size: 12.5px; font-weight: bold;">المجموع:</span>
-                    <input type="text" placeholder="المجموع رقماً" id="totalNum" oninput="handleNumberInput(this, 'totalText')" style="flex: 1; padding: 5px 8px;" value="350">
-                    <input type="text" placeholder="المجموع كتابةً" id="totalText" style="flex: 1.5; padding: 5px 8px;" value="ثلاثمائة و خمسون">
+                    <input type="text" placeholder="المجموع رقماً" id="totalNum" oninput="handleNumberInput(this, 'totalText')" style="flex: 1; padding: 5px 8px;">
+                    <input type="text" placeholder="المجموع كتابةً" id="totalText" style="flex: 1.5; padding: 5px 8px;">
                 </div>
                 <div style="display: flex; gap: 6px; margin-top: 5px; align-items: center;" id="averageRow">
                     <span style="flex: 1.5; font-size: 12.5px; font-weight: bold;">المعدل:</span>
-                    <input type="text" placeholder="المعدل" id="averageVal" oninput="this.value = this.value.replace(/[^0-9٠-٩\.]/g, '')" style="flex: 2.5; padding: 5px 8px;" value="">
+                    <input type="text" placeholder="المعدل" id="averageVal" oninput="this.value = this.value.replace(/[^0-9٠-٩\.]/g, '')" style="flex: 2.5; padding: 5px 8px;">
                 </div>
             `;
 
@@ -347,11 +347,7 @@
 
         window.onload = function() {
             updateSubjects();
-            const today = new Date().toISOString().split('T')[0];
-            const dateInput = document.getElementById('dateInput');
-            if(dateInput && !dateInput.value) {
-                dateInput.value = today;
-            }
+            // ترك تاريخ اليوم افتراضياً كخيار مساعد فقط دون حشوه قسرياً إن شئت، أو ترك حقل التاريخ فارغاً
         };
 
         function formatDateToDMY(dateString) {
@@ -394,7 +390,7 @@
                 tableRows += `<tr><td style="border: 1px solid black; padding: 2px 4px; text-align: right;">${sName}</td><td style="border: 1px solid black; padding: 2px 4px; text-align: center;">${nVal}</td><td style="border: 1px solid black; padding: 2px 4px; text-align: center;">${tVal}</td></tr>`;
             });
 
-            // المادة الإضافية (تظهر فقط إذا تم إدخال اسم أو درجة)
+            // المادة الإضافية (مخفية تماماً عند الطباعة إذا لم تُكتب)
             const extraName = document.getElementById('extra_sub_name').value.trim();
             const extraNum = document.getElementById('extra_sub_num').value.trim();
             const extraText = document.getElementById('extra_sub_text').value.trim();
@@ -425,7 +421,6 @@
                         <table style="width: 100%; border-collapse: collapse; margin-bottom: 1mm; font-weight: bold; font-size: ${isTwoCopies ? '10.5px' : '12px'};">
                             <tr>
                                 <td style="width: 50%; vertical-align: top;">
-                                    <!-- مساحة فارغة لوضع الصورة بحجم مناسب -->
                                     <div style="width: 25mm; height: 30mm; border: 1px dashed #cbd5e0; display: flex; align-items: center; justify-content: center; font-size: 9px; color: #a0aec0; background: #fafafa;">مكان الصورة</div>
                                 </td>
                                 <td style="width: 50%; text-align: left; vertical-align: top;">
