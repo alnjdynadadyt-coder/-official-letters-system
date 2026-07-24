@@ -152,7 +152,7 @@
 
             <div class="form-group">
                 <label>الترويسة العليا:</label>
-                <input type="text" id="headerTitleInput" required placeholder="مثال: المديرية العامة لتربية القادسية - قسم تربية الحمزة&#10;  ">
+                <input type="text" id="headerTitleInput" required placeholder="مثال: المديرية العامة لتربية القادسية - قسم تربية الحمزة&#10;إعدادية النجدين للبنين">
             </div>
 
             <div class="form-group">
@@ -280,78 +280,57 @@
             }
 
             const createCardHTML = (isTwoCopies) => `
-                <table style="width: 100%; height: ${isTwoCopies ? '130mm' : '265mm'}; border-collapse: collapse; border: 1px solid #111; background: #fff; table-layout: fixed;">
-                    <tr>
-                        <td style="padding: ${isTwoCopies ? '3mm 6mm' : '8mm 14mm'}; vertical-align: top;">
+                <div style="width: 190mm; height: ${isTwoCopies ? '135mm' : '270mm'}; margin: 0 auto; background: #fff; border: 1px solid #111; padding: ${isTwoCopies ? '12mm 15mm' : '25mm 20mm'}; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div style="text-align: center; font-weight: bold; font-size: ${isTwoCopies ? '13px' : '16px'}; line-height: 1.3;">
+                            ${headerTitle}<br>${schoolName}
+                        </div>
+                        <div style="margin-top: 10px;">
                             <table style="width: 100%; border-collapse: collapse;">
                                 <tr>
-                                    <td style="text-align: center; font-weight: bold; font-size: ${isTwoCopies ? '11px' : '15px'}; line-height: 1.25;">
-                                        ${headerTitle}<br>${schoolName}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="padding-top: 3px;">
-                                        <table style="width: 100%; border-collapse: collapse;">
-                                            <tr>
-                                                <td style="width: 60%;"></td>
-                                                <td style="width: 40%; text-align: left; font-weight: bold; font-size: ${isTwoCopies ? '10px' : '13px'}; line-height: 1.25;">
-                                                    العدد: ${bookNum}<br>
-                                                    التاريخ: ${dateVal}
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align: center; font-size: ${isTwoCopies ? '10.5px' : '14px'}; font-weight: bold; padding-top: 5px;">
-                                        إلى / ${target}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align: center; font-size: ${isTwoCopies ? '10.5px' : '14px'}; font-weight: bold; padding-top: 3px; padding-bottom: 6px;">
-                                        م / تأييد طالب
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="font-size: ${isTwoCopies ? '10.5px' : '14px'}; line-height: ${isTwoCopies ? '1.45' : '1.85'}; text-align: justify; padding-top: 2px;">
-                                        <div style="margin-bottom: 3px;">${line1}</div>
-                                        <div style="margin-bottom: 3px;">${line2}</div>
-                                        <div style="text-align: center; font-weight: bold; margin-top: 6px;">${line3}</div>
+                                    <td style="width: 50%;"></td>
+                                    <td style="width: 50%; text-align: left; font-weight: bold; font-size: ${isTwoCopies ? '11px' : '14px'}; line-height: 1.4;">
+                                        العدد: ${bookNum}<br>
+                                        التاريخ: ${dateVal}
                                     </td>
                                 </tr>
                             </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="padding: ${isTwoCopies ? '0 6mm 3mm 6mm' : '0 14mm 8mm 14mm'}; vertical-align: bottom;">
-                            <table style="width: 100%; border-collapse: collapse;">
-                                <tr>
-                                    <td style="width: 70%;"></td>
-                                    <td style="width: 30%; text-align: right; font-size: ${isTwoCopies ? '10px' : '13px'}; line-height: 1.25;">
-                                        <b>${manager}</b><br>
-                                        مدير المدرسة
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
+                        </div>
+                        <div style="text-align: center; font-size: ${isTwoCopies ? '12px' : '15px'}; font-weight: bold; margin-top: 15px;">
+                            إلى / ${target}
+                        </div>
+                        <div style="text-align: center; font-size: ${isTwoCopies ? '12px' : '15px'}; font-weight: bold; margin-top: 8px; margin-bottom: 25px;">
+                            م / تأييد طالب
+                        </div>
+                        <div style="font-size: ${isTwoCopies ? '12px' : '15px'}; line-height: ${isTwoCopies ? '1.8' : '2.2'}; text-align: justify;">
+                            <div style="margin-bottom: 8px;">${line1}</div>
+                            <div style="margin-bottom: 8px;">${line2}</div>
+                            <div style="text-align: center; font-weight: bold; margin-top: 25px;">${line3}</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: flex-end;">
+                        <div style="text-align: right; font-size: ${isTwoCopies ? '11px' : '14px'}; line-height: 1.4;">
+                            <b>${manager}</b><br>
+                            مدير المدرسة
+                        </div>
+                    </div>
+                </div>
             `;
 
             const wrapper = document.getElementById('documentWrapper');
 
             if (layoutMode === 'two') {
                 wrapper.innerHTML = `
-                    <div style="height: 144mm; padding: 2mm 5mm; box-sizing: border-box; display: flex; align-items: center;">
+                    <div style="height: 148.5mm; display: flex; align-items: center; justify-content: center;">
                         ${createCardHTML(true)}
                     </div>
-                    <div style="height: 144mm; padding: 2mm 5mm; box-sizing: border-box; display: flex; align-items: center;">
+                    <div style="height: 148.5mm; display: flex; align-items: center; justify-content: center;">
                         ${createCardHTML(true)}
                     </div>
                 `;
             } else {
                 wrapper.innerHTML = `
-                    <div style="height: 297mm; padding: 12mm 10mm; box-sizing: border-box; display: flex; align-items: center;">
+                    <div style="height: 297mm; display: flex; align-items: center; justify-content: center;">
                         ${createCardHTML(false)}
                     </div>
                 `;
