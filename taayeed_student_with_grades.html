@@ -167,7 +167,7 @@
             <a href="index.html" class="back-link">← العودة للرئيسية</a>
         </div>
 
-        <form id="taayeedGradesForm" onsubmit="generatePDF(event)">
+        <div id="taayeedGradesForm">
             
             <div class="section-box sec-print">
                 <div class="section-title">⚙️ الخيارات وطريقة الطباعة</div>
@@ -184,27 +184,27 @@
                 <div class="section-title">📋 المعلومات الإدارية للكتاب</div>
                 <div style="display: flex; gap: 10px;">
                     <div class="form-group" style="flex: 1;">
-                        <label>الترويسة العليا:</label>
-                        <input type="text" id="headerTitleInput" required value=" ">
+                        <label>الترويسة العليا (قابلة للتعديل):</label>
+                        <input type="text" id="headerTitleInput" value="وزارة التربية">
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>اسم المدرسة:</label>
-                        <input type="text" id="schoolNameInput" required placeholder="مثال: إعدادية النجدين للبنين">
+                        <input type="text" id="schoolNameInput" placeholder="مثال: متوسطة الفراهيدي للبنين">
                     </div>
                 </div>
                 <div style="display: flex; gap: 10px; margin-top: 8px;">
                     <div class="form-group" style="flex: 1;">
                         <label>رقم العدد:</label>
-                        <input type="text" id="bookNumberInput" required placeholder="مثال: 125">
+                        <input type="text" id="bookNumberInput" placeholder="مثال: 135">
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>التاريخ:</label>
-                        <input type="date" id="dateInput" required>
+                        <input type="date" id="dateInput">
                     </div>
                 </div>
                 <div class="form-group" style="margin-top: 8px;">
                     <label>إلى / (الجهة المطلوبة):</label>
-                    <input type="text" id="targetEntity" required placeholder="مثال: الجهة المستفيدة">
+                    <input type="text" id="targetEntity" placeholder="مثال: اعدادية النجدين للبنين">
                 </div>
             </div>
 
@@ -230,30 +230,34 @@
                 <div style="display: flex; gap: 10px; margin-top: 8px;">
                     <div class="form-group" style="flex: 2;">
                         <label>اسم الطالب الثلاثي:</label>
-                        <input type="text" id="studentName" required placeholder="أدخل اسم الطالب">
+                        <input type="text" id="studentName" placeholder="أدخل اسم الطالب">
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>التولد:</label>
-                        <input type="text" id="studentBirth" required placeholder="مثال: 2008">
+                        <input type="text" id="studentBirth" placeholder="مثال: 2008">
                     </div>
                 </div>
                 <div style="display: flex; gap: 10px; margin-top: 8px;">
                     <div class="form-group" style="flex: 1;">
                         <label>الرقم الامتحاني:</label>
-                        <input type="text" id="examNumber" required placeholder="الرقم الامتحاني">
+                        <input type="text" id="examNumber" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="أرقام فقط">
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>العام الدراسي:</label>
-                        <input type="text" id="academicYear" required placeholder="2025 - 2026">
+                        <input type="text" id="academicYear" placeholder="2026 - 2025">
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>الدور:</label>
-                        <input type="text" id="examRound" required placeholder="الأول / الثاني">
+                        <select id="examRound">
+                            <option value="الأول">الأول</option>
+                            <option value="الثاني">الثاني</option>
+                            <option value="الثالث">الثالث</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group" style="margin-top: 8px;">
                     <label>اسم مدير المدرسة:</label>
-                    <input type="text" id="managerName" required placeholder="اسم المدير">
+                    <input type="text" id="managerName" placeholder="اسم المدير">
                 </div>
             </div>
 
@@ -262,8 +266,8 @@
                 <div id="dynamicInputsContainer"></div>
             </div>
 
-            <button type="submit" class="btn-submit">عرض وطباعة كتاب التأييد (PDF)</button>
-        </form>
+            <button type="button" class="btn-submit" onclick="generatePDF()">عرض وطباعة كتاب التأييد (PDF)</button>
+        </div>
 
         <div class="back-link-bottom">
             <a href="index.html" class="back-link">← العودة للرئيسية</a>
@@ -281,6 +285,34 @@
             art: ["التربية الإسلامية", "اللغة العربية", "اللغة الانكليزية", "التاريخ", "الرياضيات", "الجغرافية", "الاقتصاد", "مادة إضافية"]
         };
 
+        // قاموس تحويل الأرقام إلى كلمات عربية رسمية للدرجات
+        const numbersToWords = {
+            "50": "خمسون", "51": "واحد وخمسون", "52": "اثنان وخمسون", "53": "ثلاثة وخمسون", "54": "أربعة وخمسون", "55": "خمسة وخمسون", "56": "ستة وخمسون", "57": "سبعة وخمسون", "58": "ثمانية وخمسون", "59": "تسعة وخمسون",
+            "60": "ستون", "61": "واحد وستون", "62": "اثنان وستون", "63": "ثلاثة وستون", "64": "أربعة وستون", "65": "خمسة وستون", "66": "ست و ستون", "67": "سبعة وستون", "68": "ثمانية وستون", "69": "تسعة وستون",
+            "70": "سبعون", "71": "واحد وسبعون", "72": "اثنان وسبعون", "73": "ثلاثة وسبعون", "74": "أربعة وسبعون", "75": "خمسة وسبعون", "76": "ستة وسبعون", "77": "سبعة وسبعون", "78": "ثمانية وسبعون", "79": "تسعة وسبعون",
+            "80": "ثمانون", "81": "واحد وثمانون", "82": "اثنان وثمانون", "83": "ثلاثة وثمانون", "84": "أربعة وثمانون", "85": "خمسة وثمانون", "86": "ستة وثمانون", "87": "سبعة وثمانون", "88": "ثمانية وثمانون", "89": "تسعة وثمانون",
+            "90": "تسعون", "91": "واحد وتسعون", "92": "اثنان وتسعون", "93": "ثلاثة وتسعون", "94": "أربعة وتسعون", "95": "خمسة وتسعون", "96": "ستة وتسعون", "97": "سبعة وتسعون", "98": "ثمانية وتسعون", "99": "تسعة وتسعون",
+            "100": "مائة", "300": "ثلاثمائة", "600": "ستمائة"
+        };
+
+        function convertToWords(numStr) {
+            if (numStr === "-" || numStr === "") return "-";
+            if (numbersToWords[numStr]) return numbersToWords[numStr];
+            let n = parseInt(numStr);
+            if (isNaN(n)) return numStr;
+            // دالة تقريبية للاستدلال السريع أو العرض الأساسي
+            return numStr; 
+        }
+
+        function handleNumberInput(inputElem, textElemId) {
+            let val = inputElem.value.replace(/[^0-9\-]/g, '');
+            inputElem.value = val;
+            const textElem = document.getElementById(textElemId);
+            if (textElem) {
+                textElem.value = convertToWords(val);
+            }
+        }
+
         function updateSubjects() {
             const stage = document.getElementById('stageSelect').value;
             const subs = subjectsData[stage];
@@ -291,8 +323,8 @@
                 container.innerHTML += `
                     <div style="display: flex; gap: 8px; margin-bottom: 6px; align-items: center;">
                         <span style="flex: 1.5; font-size: 12.5px; font-weight: 600;">${sub}:</span>
-                        <input type="text" placeholder="الدرجة رقماً" id="sub_num_${index}" style="flex: 1;" required>
-                        <input type="text" placeholder="الدرجة كتابةً" id="sub_text_${index}" style="flex: 1.5;" required>
+                        <input type="text" placeholder="الدرجة رقماً" id="sub_num_${index}" oninput="handleNumberInput(this, 'sub_text_${index}')" style="flex: 1;">
+                        <input type="text" placeholder="الدرجة كتابةً" id="sub_text_${index}" style="flex: 1.5;">
                     </div>
                 `;
             });
@@ -300,12 +332,12 @@
             container.innerHTML += `
                 <div style="display: flex; gap: 8px; margin-top: 10px; border-top: 1px solid #edf2f7; padding-top: 8px; align-items: center;">
                     <span style="flex: 1.5; font-size: 13px; font-weight: bold;">المجموع:</span>
-                    <input type="text" placeholder="المجموع رقماً" id="totalNum" style="flex: 1;" required>
-                    <input type="text" placeholder="المجموع كتابةً" id="totalText" style="flex: 1.5;" required>
+                    <input type="text" placeholder="المجموع رقماً" id="totalNum" oninput="handleNumberInput(this, 'totalText')" style="flex: 1;">
+                    <input type="text" placeholder="المجموع كتابةً" id="totalText" style="flex: 1.5;">
                 </div>
                 <div style="display: flex; gap: 8px; margin-top: 6px; align-items: center;" id="averageRow">
                     <span style="flex: 1.5; font-size: 13px; font-weight: bold;">المعدل:</span>
-                    <input type="text" placeholder="المعدل" id="averageVal" style="flex: 2.5;" required>
+                    <input type="text" placeholder="المعدل" id="averageVal" oninput="this.value = this.value.replace(/[^0-9\.]/g, '')" style="flex: 2.5;">
                 </div>
             `;
 
@@ -316,7 +348,6 @@
 
         window.onload = function() {
             updateSubjects();
-            // تعيين تاريخ اليوم تلقائياً
             const today = new Date().toISOString().split('T')[0];
             const dateInput = document.getElementById('dateInput');
             if(dateInput && !dateInput.value) {
@@ -331,9 +362,7 @@
             return `${parts[2]} / ${parts[1]} / ${parts[0]}م`;
         }
 
-        function generatePDF(e) {
-            e.preventDefault();
-            
+        function generatePDF() {
             const headerTitle = document.getElementById('headerTitleInput').value;
             const schoolName = document.getElementById('schoolNameInput').value;
             const bookNum = document.getElementById('bookNumberInput').value;
@@ -447,7 +476,6 @@
                 wrapper.innerHTML = `<div style="height: 297mm; display: flex; flex-direction: column; justify-content: flex-start;">${createCardHTML(false)}</div>`;
             }
 
-            // تنفيذ الطباعة فوراً بعد تجهيز محتوى الطباعة
             setTimeout(() => {
                 window.print();
             }, 150);
