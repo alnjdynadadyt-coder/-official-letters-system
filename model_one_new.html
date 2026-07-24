@@ -168,7 +168,7 @@
     <div class="form-container no-print">
         <div class="form-header-flex">
             <h2>إصدار تأييد استمرار (مدرس / موظف)</h2>
-            <a href="index.html" class="back-link">← العودة للرئيسية</a>
+            <a href="namatj_mukhataba.html" class="back-link">← العودة للنماذج</a>
         </div>
 
         <form id="taiyidForm" onsubmit="generatePDF(event)">
@@ -198,7 +198,7 @@
                 <div style="display: flex; gap: 10px;">
                     <div class="form-group" style="flex: 1;">
                         <label>الترويسة العليا:</label>
-                        <input type="text" id="headerTitleInput" required placeholder="المديرية العامة لتربية القادسية - قسم تربية الحمزة">
+                        <input type="text" id="headerTitleInput" required placeholder="المديرية العامة لتربية القادسية - قسم تربية الشامية">
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>اسم المؤسسة:</label>
@@ -211,8 +211,8 @@
                         <input type="text" id="bookNumberInput" required placeholder="مثال 105">
                     </div>
                     <div class="form-group" style="flex: 1;">
-                        <label>التاريخ:</label>
-                        <input type="date" id="dateInput" required>
+                        <label>التاريخ (كتابة بالأرقام):</label>
+                        <input type="text" id="dateInput" required placeholder="مثال: 2026/07/24">
                     </div>
                 </div>
                 <div style="display: flex; gap: 10px; margin-top: 8px;">
@@ -253,11 +253,11 @@
                     <input type="text" id="jobTitleInput" placeholder="موظف خدمة / كاتب / ملاحظ...">
                 </div>
 
-                <!-- التعديلات الجديدة المطلوبة -->
+                <!-- تم تحويل تاريخ التعيين والمباشرة إلى حقول نصية عادية -->
                 <div style="display: flex; gap: 10px; margin-top: 8px;">
                     <div class="form-group" style="flex: 1;">
-                        <label>تاريخ التعيين:</label>
-                        <input type="date" id="hireDateInput" required>
+                        <label>تاريخ التعيين (كتابة):</label>
+                        <input type="text" id="hireDateInput" required placeholder="مثال: 2015/06/10">
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>الملاك (نوع الملاك):</label>
@@ -267,12 +267,12 @@
 
                 <div style="display: flex; gap: 10px; margin-top: 8px;">
                     <div class="form-group" style="flex: 1;">
-                        <label>تاريخ المباشرة:</label>
-                        <input type="date" id="mubasharaDateInput" required>
+                        <label>تاريخ المباشرة (كتابة):</label>
+                        <input type="text" id="mubasharaDateInput" required placeholder="مثال: 2015/09/15">
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>العنوان الوظيفي الدقيق:</label>
-                        <input type="text" id="exactJobTitleInput" required placeholder="مدرس / ملاحظ فني...">
+                        <input type="text" id="exactJobTitleInput" required placeholder="مدرس أقدم / ملاحظ فني...">
                     </div>
                 </div>
 
@@ -291,7 +291,7 @@
         </form>
 
         <div class="back-link-bottom">
-            <a href="index.html" class="back-link">← العودة للرئيسية</a>
+            <a href="namatj_mukhataba.html" class="back-link">← العودة للنماذج</a>
         </div>
     </div>
 
@@ -322,13 +322,6 @@
             toggleCategoryFields();
         };
 
-        function formatDateToDMY(dateString) {
-            if (!dateString) return '';
-            const parts = dateString.split('-');
-            if (parts.length !== 3) return dateString;
-            return `${parts[2]}-${parts[1]}-${parts[0]}`;
-        }
-
         function generatePDF(e) {
             e.preventDefault();
             
@@ -336,17 +329,17 @@
             const headerTitle = document.getElementById('headerTitleInput').value;
             const schoolName = document.getElementById('schoolNameInput').value;
             const bookNum = document.getElementById('bookNumberInput').value;
-            const dateVal = formatDateToDMY(document.getElementById('dateInput').value);
+            const dateVal = document.getElementById('dateInput').value; // يأخذ النص المكتوب مباشرة
             const toVal = document.getElementById('toInput').value;
             const academicYear = document.getElementById('academicYearInput').value;
             
             const gender = document.getElementById('genderInput').value;
             const personName = document.getElementById('personNameInput').value;
             
-            // البيانات الجديدة
-            const hireDate = formatDateToDMY(document.getElementById('hireDateInput').value);
+            // قراءة التواريخ المكتوبة يدوياً كنصوص
+            const hireDate = document.getElementById('hireDateInput').value;
             const makan = document.getElementById('makanInput').value;
-            const mubasharaDate = formatDateToDMY(document.getElementById('mubasharaDateInput').value);
+            const mubasharaDate = document.getElementById('mubasharaDateInput').value;
             const exactJobTitle = document.getElementById('exactJobTitleInput').value;
             const purpose = document.getElementById('purposeInput').value;
 
@@ -358,16 +351,16 @@
             if (category === 'teacher') {
                 const subject = document.getElementById('subjectInput').value;
                 if (gender === 'female') {
-                    bodyText = `نؤيد لكم أن السيدة (<b>${personName}</b>) مدرسة اختصاص (${subject}) في (${schoolName}) مستمرة بالدوام للعام الدراسي (${academicYear})، علماً أن تاريخ تعيينها هو (${hireDate}) ملاك (${makan}) وتاريخ مباشرتها هو (${mubasharaDate}) وعنوانها الوظيفي الدقيق هو (${exactJobTitle})، وأن الغرض من التأييد هو (${purpose})، وبناءً على طلبها زودت بهذا التأييد.`;
+                    bodyText = `نؤيد لكم أن السيدة (<b>${personName}</b>) مدرسة اختصاص (${subject}) في (${schoolName}) مستمرة بالدوام للعام الدراسي (${academicYear})، علماً أن تاريخ تعيينها في (${hireDate}) ملاك (${makan}) وتاريخ مباشرتها في (${mubasharaDate}) وعنوانها الوظيفي الدقيق  (${exactJobTitle})، وأن الغرض من التأييد هو (${purpose})، وبناءً على طلبها زودت بهذا التأييد.`;
                 } else {
-                    bodyText = `نؤيد لكم أن السيد (<b>${personName}</b>) مدرس اختصاص (${subject}) في (${schoolName}) مستمر بالدوام للعام الدراسي (${academicYear})، علماً أن تاريخ تعيينه هو (${hireDate}) ملاك (${makan}) وتاريخ مباشرته هو (${mubasharaDate}) وعنوانه الوظيفي الدقيق هو (${exactJobTitle})، وأن الغرض من التأييد هو (${purpose})، وبناءً على طلبه زود بهذا التأييد.`;
+                    bodyText = `نؤيد لكم أن السيد (<b>${personName}</b>) مدرس اختصاص (${subject}) في (${schoolName}) مستمر بالدوام للعام الدراسي (${academicYear})، علماً أن تاريخ تعيينه في (${hireDate}) ملاك (${makan}) وتاريخ مباشرته في (${mubasharaDate}) وعنوانه الوظيفي الدقيق  (${exactJobTitle})، وأن الغرض من التأييد هو (${purpose})، وبناءً على طلبه زود بهذا التأييد.`;
                 }
             } else {
                 const jobTitle = document.getElementById('jobTitleInput').value;
                 if (gender === 'female') {
-                    bodyText = `نؤيد لكم أن السيدة (<b>${personName}</b>) موظفة بعنوان (${jobTitle}) في (${schoolName}) مستمرة بالدوام للعام الدراسي (${academicYear})، علماً أن تاريخ تعيينها هو (${hireDate}) ملاك (${makan}) وتاريخ مباشرتها هو (${mubasharaDate}) وعنوانها الوظيفي الدقيق هو (${exactJobTitle})، وأن الغرض من التأييد هو (${purpose})، وبناءً على طلبها زودت بهذا التأييد.`;
+                    bodyText = `نؤيد لكم أن السيدة (<b>${personName}</b>) موظفة بعنوان (${jobTitle}) في (${schoolName}) مستمرة بالدوام للعام الدراسي (${academicYear})، علماً أن تاريخ تعيينها في (${hireDate}) ملاك (${makan}) وتاريخ مباشرتها في (${mubasharaDate}) وعنوانها الوظيفي الدقيق  (${exactJobTitle})، وأن الغرض من التأييد هو (${purpose})، وبناءً على طلبها زودت بهذا التأييد.`;
                 } else {
-                    bodyText = `نؤيد لكم أن السيد (<b>${personName}</b>) موظف بعنوان (${jobTitle}) في (${schoolName}) مستمر بالدوام للعام الدراسي (${academicYear})، علماً أن تاريخ تعيينه هو (${hireDate}) ملاك (${makan}) وتاريخ مباشرته هو (${mubasharaDate}) وعنوانه الوظيفي الدقيق هو (${exactJobTitle})، وأن الغرض من التأييد هو (${purpose})، وبناءً على طلبه زود بهذا التأييد.`;
+                    bodyText = `نؤيد لكم أن السيد (<b>${personName}</b>) موظف بعنوان (${jobTitle}) في (${schoolName}) مستمر بالدوام للعام الدراسي (${academicYear})، علماً أن تاريخ تعيينه في (${hireDate}) ملاك (${makan}) وتاريخ مباشرته في (${mubasharaDate}) وعنوانه الوظيفي الدقيق  (${exactJobTitle})، وأن الغرض من التأييد هو (${purpose})، وبناءً على طلبه زود بهذا التأييد.`;
                 }
             }
 
