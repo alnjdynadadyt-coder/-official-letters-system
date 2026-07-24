@@ -7,7 +7,6 @@
     <style>
         * {
             box-sizing: border-box;
-            transition: all 0.3s ease;
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -28,8 +27,7 @@
             margin: auto;
             padding: 35px 25px;
             border-radius: 24px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 
-                        inset 0 1px 1px rgba(255, 255, 255, 0.2);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.12);
             position: relative;
         }
@@ -45,7 +43,6 @@
             font-size: 13px;
             font-weight: 600;
             text-decoration: none;
-            backdrop-filter: blur(5px);
         }
         .back-btn:hover {
             background: rgba(246, 173, 85, 0.3);
@@ -121,14 +118,13 @@
                 visibility: visible;
             }
             #printArea {
-                display: block;
+                display: block !important;
                 position: absolute;
                 top: 0;
                 right: 0;
                 width: 210mm;
                 height: 297mm;
-                max-height: 297mm;
-                overflow: hidden;
+                overflow: hidden !important;
                 font-family: 'Traditional Arabic', 'Amiri', serif;
                 background: white;
                 color: black;
@@ -143,7 +139,7 @@
 
     <div class="container no-print">
         <a href="index.html" class="back-btn">العودة للرئيسية ←</a>
-        <h2>تأييد الطالب بدون درجات</h2>
+        <h2>تأييد طالب بدون درجات</h2>
 
         <form id="taayeedForm" onsubmit="generatePDF(event)">
             <div class="form-group">
@@ -223,28 +219,20 @@
             const body = document.body;
             if (theme === 'peach') {
                 body.style.background = 'radial-gradient(circle at 50% 10%, #4a2832 0%, #2c161d 40%, #150a0e 100%)';
-                body.style.color = '#f8fafc';
             } else if (theme === 'pink') {
                 body.style.background = 'radial-gradient(circle at 50% 10%, #f472b6 0%, #db2777 40%, #831843 100%)';
-                body.style.color = '#fff1f2';
             } else if (theme === 'pistachio') {
                 body.style.background = 'radial-gradient(circle at 50% 10%, #386641 0%, #283618 40%, #111d08 100%)';
-                body.style.color = '#fefae0';
             } else if (theme === 'red') {
                 body.style.background = 'radial-gradient(circle at 50% 10%, #e11d48 0%, #9f1239 40%, #4c0519 100%)';
-                body.style.color = '#fff1f2';
             } else if (theme === 'white') {
                 body.style.background = 'radial-gradient(circle at 50% 10%, #f8fafc 0%, #cbd5e1 40%, #94a3b8 100%)';
-                body.style.color = '#0f172a';
             } else if (theme === 'purple') {
                 body.style.background = 'radial-gradient(circle at 50% 10%, #3b3069 0%, #1e1b4b 40%, #0f0c1b 100%)';
-                body.style.color = '#f8fafc';
             } else if (theme === 'emerald') {
                 body.style.background = 'radial-gradient(circle at 50% 10%, #065f46 0%, #064e3b 40%, #022c22 100%)';
-                body.style.color = '#f8fafc';
             } else if (theme === 'dark') {
                 body.style.background = 'radial-gradient(circle at 50% 10%, #334155 0%, #1e293b 40%, #0f172a 100%)';
-                body.style.color = '#f8fafc';
             }
         }
 
@@ -292,62 +280,81 @@
             }
 
             const createCardHTML = (isTwoCopies) => `
-                <div style="border: 1px solid #111; padding: ${isTwoCopies ? '2mm 4mm' : '4mm 10mm'}; border-radius: 4px; background: #fff; height: ${isTwoCopies ? '136mm' : '275mm'}; max-height: ${isTwoCopies ? '136mm' : '275mm'}; display: flex; flex-direction: column; justify-content: space-between; box-sizing: border-box; overflow: hidden;">
-                    <div>
-                        <div style="text-align: center; font-weight: bold; font-size: ${isTwoCopies ? '11px' : '15px'}; margin-bottom: 2px; line-height: 1.25;">
-                            ${headerTitle}<br>${schoolName}
-                        </div>
-
-                        <!-- العدد فوق التاريخ تماماً -->
-                        <div style="display: flex; justify-content: flex-end; margin-bottom: 2px;">
-                            <div style="text-align: left; font-weight: bold; font-size: ${isTwoCopies ? '10px' : '13px'}; line-height: 1.2;">
-                                العدد: ${bookNum}<br>
-                                التاريخ: ${dateVal}
-                            </div>
-                        </div>
-
-                        <div style="text-align: center; font-size: ${isTwoCopies ? '10.5px' : '14px'}; font-weight: bold; margin-bottom: 2px;">
-                            إلى / ${target}
-                        </div>
-
-                        <div style="text-align: center; font-size: ${isTwoCopies ? '10.5px' : '14px'}; font-weight: bold; margin-bottom: 3px;">
-                            م / تأييد طالب
-                        </div>
-
-                        <div style="font-size: ${isTwoCopies ? '10.5px' : '14px'}; line-height: ${isTwoCopies ? '1.4' : '1.85'}; text-align: justify; padding: 0 2px;">
-                            <div style="margin-bottom: 2px;">${line1}</div>
-                            <div style="margin-bottom: 2px;">${line2}</div>
-                            <div style="text-align: center; font-weight: bold; margin-top: 4px;">${line3}</div>
-                        </div>
-                    </div>
-
-                    <div style="margin-bottom: 4px;">
-                        <table style="width: 100%; border-collapse: collapse;">
-                            <tr>
-                                <td style="width: 75%;"></td>
-                                <td style="width: 25%; text-align: right; font-size: ${isTwoCopies ? '9.5px' : '12.5px'}; line-height: 1.2; padding-right: 4px;">
-                                    <b>${manager}</b><br>
-                                    مدير المدرسة
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
+                <table style="width: 100%; height: ${isTwoCopies ? '135mm' : '285mm'}; border-collapse: collapse; border: 1px solid #111; background: #fff; table-layout: fixed;">
+                    <tr>
+                        <td style="padding: ${isTwoCopies ? '4mm 8mm' : '8mm 15mm'}; vertical-align: top;">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <tr>
+                                    <td style="text-align: center; font-weight: bold; font-size: ${isTwoCopies ? '11px' : '15px'}; line-height: 1.3;">
+                                        ${headerTitle}<br>${schoolName}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-top: 4px;">
+                                        <table style="width: 100%; border-collapse: collapse;">
+                                            <tr>
+                                                <td style="width: 60%;"></td>
+                                                <td style="width: 40%; text-align: left; font-weight: bold; font-size: ${isTwoCopies ? '10px' : '13px'}; line-height: 1.3;">
+                                                    العدد: ${bookNum}<br>
+                                                    التاريخ: ${dateVal}
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center; font-size: ${isTwoCopies ? '10.5px' : '14px'}; font-weight: bold; padding-top: 6px;">
+                                        إلى / ${target}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center; font-size: ${isTwoCopies ? '10.5px' : '14px'}; font-weight: bold; padding-top: 4px; padding-bottom: 8px;">
+                                        م / تأييد طالب
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: ${isTwoCopies ? '10.5px' : '14px'}; line-height: ${isTwoCopies ? '1.5' : '1.9'}; text-align: justify; padding-top: 4px;">
+                                        <div style="margin-bottom: 4px;">${line1}</div>
+                                        <div style="margin-bottom: 4px;">${line2}</div>
+                                        <div style="text-align: center; font-weight: bold; margin-top: 8px;">${line3}</div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: ${isTwoCopies ? '0 8mm 4mm 8mm' : '0 15mm 10mm 15mm'}; vertical-align: bottom;">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <tr>
+                                    <td style="width: 70%;"></td>
+                                    <td style="width: 30%; text-align: right; font-size: ${isTwoCopies ? '10px' : '13px'}; line-height: 1.3;">
+                                        <b>${manager}</b><br>
+                                        مدير المدرسة
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
             `;
 
             const wrapper = document.getElementById('documentWrapper');
 
             if (layoutMode === 'two') {
                 wrapper.innerHTML = `
-                    <div style="height: 148.5mm; max-height: 148.5mm; padding: 1mm 2mm; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box; overflow: hidden;">
+                    <div style="height: 147.5mm; padding: 1mm; box-sizing: border-box;">
                         ${createCardHTML(true)}
                     </div>
-                    <div style="height: 148.5mm; max-height: 148.5mm; padding: 1mm 2mm; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box; overflow: hidden;">
+                    <div style="height: 147.5mm; padding: 1mm; box-sizing: border-box;">
                         ${createCardHTML(true)}
                     </div>
                 `;
             } else {
-                wrapper.innerHTML = `<div style="height: 297mm; max-height: 297mm; padding: 2mm 3mm; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box; overflow: hidden;">${createCardHTML(false)}</div>`;
+                wrapper.innerHTML = `
+                    <div style="height: 297mm; padding: 2mm; box-sizing: border-box;">
+                        ${createCardHTML(false)}
+                    </div>
+                `;
             }
 
             window.print();
