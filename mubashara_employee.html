@@ -35,15 +35,12 @@
             font-size: 19px;
             font-weight: 700;
         }
-        
         .section-box {
             border: 1px solid rgba(0,0,0,0.07);
             border-radius: 8px;
             padding: 10px 14px;
             margin-bottom: 10px;
-            transition: all 0.3s ease;
         }
-
         .sec-print { background: #f0f9ff; border-color: #bae6fd; }
         .sec-admin { background: #fdf4ff; border-color: #f5d0fe; }
         .sec-ref { background: #fefce8; border-color: #fef08a; }
@@ -85,7 +82,6 @@
             font-size: 13px;
             box-sizing: border-box;
             background-color: #fff;
-            transition: all 0.2s;
         }
         input:focus, select:focus {
             outline: none;
@@ -104,11 +100,6 @@
             font-weight: bold;
             margin-top: 4px;
             box-shadow: 0 4px 12px rgba(49, 130, 206, 0.25);
-            transition: all 0.2s;
-        }
-        .btn-submit:hover {
-            background: linear-gradient(135deg, #2b6cb0 0%, #2c5282 100%);
-            box-shadow: 0 6px 15px rgba(49, 130, 206, 0.35);
         }
         .back-link {
             display: inline-block;
@@ -119,22 +110,15 @@
             border-radius: 6px;
             font-size: 12px;
             font-weight: bold;
-            transition: background 0.2s;
-        }
-        .back-link:hover {
-            background-color: #e2e8f0;
-            color: #1a202c;
         }
         .back-link-bottom {
             display: block;
             text-align: center;
             margin-top: 12px;
         }
-
         #printArea {
             display: none;
         }
-
         @media print {
             @page {
                 size: A4;
@@ -195,31 +179,32 @@
                 </div>
             </div>
 
+            <!-- تم إخفاء حقل الترويسة من واجهة الإدخال، وستتم طباعتها تلقائياً -->
+            <div style="display: none;">
+                <input type="text" id="headerTitleInput" value="المديرية العامة لتربية القادسية - قسم تربية الحمزة">
+            </div>
+
             <div class="section-box sec-admin">
                 <div class="section-title">📋 المعلومات الإدارية للكتاب</div>
                 <div style="display: flex; gap: 10px;">
                     <div class="form-group" style="flex: 1;">
-                        <label>الترويسة العليا:</label>
-                        <input type="text" id="headerTitleInput" required value="وزارة التربية">
+                        <label>اسم المدرسة:</label>
+                        <input type="text" id="schoolNameInput" required value="اعدادية النجدين للبنين">
                     </div>
                     <div class="form-group" style="flex: 1;">
-                        <label>اسم المدرسة:</label>
-                        <input type="text" id="schoolNameInput" required placeholder="اعدادية النجدين للبنين">
+                        <label>رقم العدد:</label>
+                        <input type="text" id="bookNumberInput" required placeholder="مثال 1333">
                     </div>
                 </div>
                 <div style="display: flex; gap: 10px; margin-top: 8px;">
                     <div class="form-group" style="flex: 1;">
-                        <label>رقم العدد:</label>
-                        <input type="text" id="bookNumberInput" required placeholder="مثال 102">
-                    </div>
-                    <div class="form-group" style="flex: 1;">
                         <label>التاريخ:</label>
                         <input type="date" id="dateInput" required>
                     </div>
-                </div>
-                <div class="form-group" style="margin-top: 8px;">
-                    <label>إلى (الجهة الموجه لها):</label>
-                    <input type="text" id="toInput" required placeholder="مثال المديرية العامة لتربية القادسية - قسم الملاك الإداري">
+                    <div class="form-group" style="flex: 1;">
+                        <label>إلى (الجهة الموجه لها):</label>
+                        <input type="text" id="toInput" required value="المديرية العامة لتربية القادسية - قسم الملاك الثانوي">
+                    </div>
                 </div>
             </div>
 
@@ -237,7 +222,7 @@
                 </div>
                 <div class="form-group" style="margin-top: 8px;">
                     <label>المتضمن (مثل: نقل موظفين):</label>
-                    <input type="text" id="contentNatureInput" required placeholder="نقل موظفين">
+                    <input type="text" id="contentNatureInput" required value="نقل موظفين">
                 </div>
             </div>
 
@@ -253,13 +238,13 @@
                     </div>
                     <div class="form-group" style="flex: 2;">
                         <label>اسم الموظف / الموظفة:</label>
-                        <input type="text" id="employeeNameInput" required placeholder="محمد علي حسن">
+                        <input type="text" id="employeeNameInput" required placeholder="علي علي علي">
                     </div>
                 </div>
                 <div style="display: flex; gap: 10px; margin-top: 8px;">
                     <div class="form-group" style="flex: 1;">
-                        <label>العنوان الوظيفي (اختياري):</label>
-                        <input type="text" id="jobTitleInput" placeholder="كاتب، ملاحظ، حارس، فني...">
+                        <label>العنوان الوظيفي:</label>
+                        <input type="text" id="jobTitleInput" value="حارس" placeholder="حارس، مدرس، معلم...">
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>تاريخ التنفيذ الفعلي:</label>
@@ -268,7 +253,7 @@
                 </div>
                 <div class="form-group" style="margin-top: 8px;">
                     <label>اسم مدير المدرسة:</label>
-                    <input type="text" id="managerNameInput" required placeholder="عصام جاسم الأسدي">
+                    <input type="text" id="managerNameInput" required value="عصام الاسدي">
                 </div>
             </div>
 
@@ -325,9 +310,8 @@
             let subjectTitle = "";
             let actionText = "";
 
-            // صياغة النص مع العنوان الوظيفي الاختياري ودعم المذكر والمؤنث
             const jobDescMale = jobTitleVal ? ` ذي العنوان الوظيفي (${jobTitleVal})` : ``;
-            const jobDescFemale = jobTitleVal ? ` ذي العنوان الوظيفي (${jobTitleVal})` : ``;
+            const jobDescFemale = jobTitleVal ? ` ذات العنوان الوظيفي (${jobTitleVal})` : ``;
 
             if (orderType === 'infikak') {
                 subjectTitle = "انفكاك موظف";
@@ -344,11 +328,11 @@
             const createCardHTML = (isTwoCopies) => `
                 <div style="margin: ${isTwoCopies ? '2mm 6mm' : '5mm 8mm'}; border: 2.5px solid #1a202c; padding: ${isTwoCopies ? '4mm 6mm' : '8mm 14mm'}; border-radius: 8px; background: #fff; height: ${isTwoCopies ? '135mm' : '287mm'}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
                     <div>
-                        <div style="text-align: center; font-weight: bold; font-size: ${isTwoCopies ? '13.5px' : '17.5px'}; margin-bottom: ${isTwoCopies ? '1.5mm' : '4mm'};">
+                        <div style="text-align: center; font-weight: bold; font-size: ${isTwoCopies ? '12px' : '15px'}; margin-bottom: ${isTwoCopies ? '1.5mm' : '4mm'};">
                             ${headerTitle}
                         </div>
 
-                        <table style="width: 100%; border-collapse: collapse; margin-bottom: ${isTwoCopies ? '2.5mm' : '6mm'}; font-weight: bold; font-size: ${isTwoCopies ? '12px' : '14.5px'};">
+                        <table style="width: 100%; border-collapse: collapse; margin-bottom: ${isTwoCopies ? '2.5mm' : '6mm'}; font-weight: bold; font-size: ${isTwoCopies ? '11px' : '13.5px'};">
                             <tr>
                                 <td style="width: 50%; text-align: right;">إدارة / ${schoolName}</td>
                                 <td style="width: 50%; text-align: left;">
@@ -358,30 +342,31 @@
                             </tr>
                         </table>
 
-                        <div style="text-align: center; font-size: ${isTwoCopies ? '12.5px' : '15px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '2.5mm' : '5mm'};">
+                        <div style="text-align: center; font-size: ${isTwoCopies ? '11.5px' : '14px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '2.5mm' : '5mm'};">
                             إلى / ${toVal}
                         </div>
 
-                        <div style="text-align: center; font-size: ${isTwoCopies ? '12.5px' : '15px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '4mm' : '8mm'};">
+                        <div style="text-align: center; font-size: ${isTwoCopies ? '11.5px' : '14px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '4mm' : '8mm'};">
                             م/ ${subjectTitle}
                         </div>
 
-                        <div style="font-size: ${isTwoCopies ? '12px' : '14.5px'}; line-height: ${isTwoCopies ? '1.5' : '1.9'}; text-align: justify; padding: 0 2mm;">
+                        <div style="font-size: ${isTwoCopies ? '11px' : '13.5px'}; line-height: ${isTwoCopies ? '1.5' : '1.9'}; text-align: justify; padding: 0 2mm;">
                             كتابكم المرقم (${refBookNum}) في (${refBookDate}) والمتضمن (${contentNature}).
                             <br>
                             ${actionText}
                         </div>
                     </div>
 
-                    <div style="margin-bottom: ${isTwoCopies ? '1.5mm' : '4mm'};">
-                        <div style="text-align: center; font-size: ${isTwoCopies ? '12.5px' : '15px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '3mm' : '6mm'};">
+                    <!-- تم رفع عبارة للعلم مع التقدير وتوقيع المدير نحو الأعلى قليلاً للمستوى المثالي -->
+                    <div style="margin-bottom: ${isTwoCopies ? '8mm' : '26mm'};">
+                        <div style="text-align: center; font-size: ${isTwoCopies ? '11.5px' : '14px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '3mm' : '6mm'};">
                             للعلـم مع التقـدير
                         </div>
 
                         <table style="width: 100%; border-collapse: collapse;">
                             <tr>
                                 <td style="width: 78%;"></td>
-                                <td style="width: 22%; text-align: right; font-size: ${isTwoCopies ? '12px' : '14px'}; line-height: 1.3; padding-right: 5px;">
+                                <td style="width: 22%; text-align: right; font-size: ${isTwoCopies ? '11px' : '13px'}; line-height: 1.3; padding-right: 5px;">
                                     <b>${managerName}</b><br>
                                     مدير المدرسة
                                 </td>
@@ -411,4 +396,4 @@
     </script>
 
 </body>
-                      </html> 
+</html>
