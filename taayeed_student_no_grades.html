@@ -167,7 +167,7 @@
 
     <div class="form-container no-print">
         <div class="form-header-flex">
-            <h2>إصدار تأييد طالب (بدون درجات)</h2>
+            <h2>إصدار تأييد الطالب (بدون درجات)</h2>
             <a href="index.html" class="back-link">← العودة للرئيسية</a>
         </div>
 
@@ -293,25 +293,20 @@
             const createCardHTML = (isTwoCopies) => `
                 <div style="margin: ${isTwoCopies ? '2mm 6mm' : '5mm 8mm'}; border: 2.5px solid #1a202c; padding: ${isTwoCopies ? '4mm 6mm' : '8mm 14mm'}; border-radius: 8px; background: #fff; height: ${isTwoCopies ? '135mm' : '287mm'}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
                     <div>
-                        <div style="text-align: center; font-weight: bold; font-size: ${isTwoCopies ? '13.5px' : '17.5px'}; margin-bottom: ${isTwoCopies ? '1.5mm' : '4mm'}; line-height: 1.3;">
+                        <div style="text-align: center; font-weight: bold; font-size: ${isTwoCopies ? '13.5px' : '17.5px'}; margin-bottom: ${isTwoCopies ? '1.5mm' : '3mm'}; line-height: 1.3;">
                             ${headerTitle}<br>${schoolName}
                         </div>
 
-                        <table style="width: 100%; border-collapse: collapse; margin-bottom: ${isTwoCopies ? '2mm' : '5mm'}; font-weight: bold; font-size: ${isTwoCopies ? '12px' : '14.5px'};">
-                            <tr>
-                                <td style="width: 50%; text-align: right;"></td>
-                                <td style="width: 50%; text-align: left; line-height: 1.4;">
-                                    العدد: ${bookNum}<br>
-                                    التاريخ: ${dateVal}
-                                </td>
-                            </tr>
-                        </table>
+                        <div style="text-align: left; font-weight: bold; font-size: ${isTwoCopies ? '11.5px' : '14px'}; margin-bottom: ${isTwoCopies ? '2mm' : '4mm'}; line-height: 1.3;">
+                            العدد: ${bookNum}<br>
+                            التاريخ: ${dateVal}
+                        </div>
 
                         <div style="text-align: center; font-size: ${isTwoCopies ? '12.5px' : '15px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '2mm' : '4mm'};">
                             إلى / ${target}
                         </div>
 
-                        <div style="text-align: center; font-size: ${isTwoCopies ? '12.5px' : '15px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '3mm' : '6mm'};">
+                        <div style="text-align: center; font-size: ${isTwoCopies ? '12.5px' : '15px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '3mm' : '5mm'};">
                             م / تأييد طالب
                         </div>
 
@@ -321,8 +316,8 @@
                         </div>
                     </div>
 
-                    <div style="margin-bottom: ${isTwoCopies ? '6mm' : '14mm'};">
-                        <div style="text-align: center; font-size: ${isTwoCopies ? '12.5px' : '15px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '3mm' : '5mm'};">
+                    <div style="margin-bottom: ${isTwoCopies ? '12mm' : '28mm'};">
+                        <div style="text-align: center; font-size: ${isTwoCopies ? '12.5px' : '15px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '2mm' : '4mm'};">
                             للعـلم مع التقـدير
                         </div>
 
