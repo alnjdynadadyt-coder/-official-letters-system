@@ -3,106 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تأييد طالب بدون درجات - نظام إصدار الكتب والمخاطبات الرسمية</title>
+    <title>أمر مباشرة وانفكاك مدرس</title>
     <style>
-        * {
-            box-sizing: border-box;
-            transition: all 0.3s ease;
-        }
         body {
+            background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 20px;
+            padding: 10px;
             direction: rtl;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            color: #2d3748;
         }
-        .container {
-            width: 100%;
+        .form-container {
             max-width: 750px;
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            margin: auto;
-            padding: 35px 25px;
-            border-radius: 24px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 
-                        inset 0 1px 1px rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            position: relative;
+            background: #ffffff;
+            margin: 0 auto;
+            padding: 18px 20px;
+            border-radius: 14px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+            border-top: 5px solid #3182ce;
         }
-        .back-btn {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(0, 0, 0, 0.3);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-            text-decoration: none;
-            backdrop-filter: blur(5px);
-        }
-        .back-btn:hover {
-            background: rgba(246, 173, 85, 0.3);
-            border-color: #f6ad55;
+        .form-header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            border-bottom: 2px solid #edf2f7;
+            padding-bottom: 8px;
         }
         h2 {
-            text-align: center;
-            color: #ffffff;
-            margin-bottom: 25px;
-            font-size: 22px;
-            font-weight: 800;
+            color: #1a202c;
+            margin: 0;
+            font-size: 19px;
+            font-weight: 700;
         }
+        
+        .section-box {
+            border: 1px solid rgba(0,0,0,0.07);
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .sec-print { background: #f0f9ff; border-color: #bae6fd; }
+        .sec-admin { background: #fdf4ff; border-color: #f5d0fe; }
+        .sec-ref { background: #fefce8; border-color: #fef08a; }
+        .sec-person { background: #f0fdf4; border-color: #bbf7d0; }
+
+        .section-title {
+            font-size: 13.5px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border-bottom: 1px dashed rgba(0,0,0,0.1);
+            padding-bottom: 4px;
+        }
+        .sec-print .section-title { color: #0284c7; }
+        .sec-admin .section-title { color: #c084fc; }
+        .sec-ref .section-title { color: #ca8a04; }
+        .sec-person .section-title { color: #16a34a; }
+
         .form-group {
-            margin-bottom: 12px;
+            margin-bottom: 8px;
+        }
+        .form-group:last-child {
+            margin-bottom: 0;
         }
         label {
             display: block;
-            margin-bottom: 6px;
-            font-size: 14px;
-            color: #f6ad55;
+            margin-bottom: 3px;
             font-weight: 600;
+            color: #4a5568;
+            font-size: 12.5px;
         }
         input, select {
             width: 100%;
-            padding: 12px 15px;
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
-            color: #ffffff;
-            font-size: 14.5px;
-            font-family: inherit;
-            outline: none;
+            padding: 8px 10px;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            font-size: 13px;
+            box-sizing: border-box;
+            background-color: #fff;
+            transition: all 0.2s;
         }
         input:focus, select:focus {
-            border-color: #f6ad55;
-            box-shadow: 0 0 10px rgba(246, 173, 85, 0.2);
-        }
-        option {
-            background: #1e293b;
-            color: #ffffff;
+            outline: none;
+            border-color: #3182ce;
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.15);
         }
         .btn-submit {
-            width: 100%;
-            background: linear-gradient(135deg, #f6ad55, #dd6b20);
-            color: #fff;
+            background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
+            color: white;
             border: none;
-            padding: 14px;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: bold;
+            padding: 11px 20px;
+            font-size: 14.5px;
+            border-radius: 8px;
             cursor: pointer;
-            margin-top: 20px;
-            box-shadow: 0 4px 12px rgba(221, 107, 32, 0.4);
+            width: 100%;
+            font-weight: bold;
+            margin-top: 4px;
+            box-shadow: 0 4px 12px rgba(49, 130, 206, 0.25);
+            transition: all 0.2s;
         }
         .btn-submit:hover {
-            transform: translateY(-2px);
-            opacity: 0.95;
+            background: linear-gradient(135deg, #2b6cb0 0%, #2c5282 100%);
+            box-shadow: 0 6px 15px rgba(49, 130, 206, 0.35);
+        }
+        .back-link {
+            display: inline-block;
+            background-color: #edf2f7;
+            color: #4a5568;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        .back-link:hover {
+            background-color: #e2e8f0;
+            color: #1a202c;
+        }
+        .back-link-bottom {
+            display: block;
+            text-align: center;
+            margin-top: 12px;
         }
 
         #printArea {
@@ -112,7 +138,7 @@
         @media print {
             @page {
                 size: A4;
-                margin: 0;
+                margin: 0mm;
             }
             body * {
                 visibility: hidden;
@@ -131,6 +157,7 @@
                 font-family: 'Traditional Arabic', 'Amiri', serif;
                 background: white;
                 color: black;
+                box-sizing: border-box;
             }
             .no-print {
                 display: none !important;
@@ -138,193 +165,220 @@
         }
     </style>
 </head>
-<body style="background: radial-gradient(circle at 50% 10%, #4a2832 0%, #2c161d 40%, #150a0e 100%); color: #f8fafc;">
+<body>
 
-    <div class="container no-print">
-        <a href="index.html" class="back-btn">العودة للرئيسية ←</a>
-        <h2>تأييد طالب بدون درجات</h2>
+    <div class="form-container no-print">
+        <div class="form-header-flex">
+            <h2>إدخال أمر المباشرة / الانفكاك</h2>
+            <a href="index.html" class="back-link">← العودة للرئيسية</a>
+        </div>
 
-        <form id="taayeedForm" onsubmit="generatePDF(event)">
-            <div class="form-group">
-                <label>نظام النسخ:</label>
-                <select id="copiesLayout">
-                    <option value="one">نسخة واحدة (تملأ الصفحة)</option>
-                    <option value="two">نسختان (في نفس الصفحة A4)</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>الترويسة العليا:</label>
-                <input type="text" id="headerTitleInput" required placeholder="مثال: المديرية العامة لتربية القادسية - قسم تربية الحمزة&#10;إعدادية النجدين للبنين">
-            </div>
-
-            <div class="form-group">
-                <label>اسم المؤسسة / المدرسة:</label>
-                <input type="text" id="schoolNameInput" required placeholder="مثال: إعدادية النجدين للبنين">
-            </div>
-
-            <div style="display: flex; gap: 10px;">
-                <div class="form-group" style="flex: 1;">
-                    <label>رقم العدد:</label>
-                    <input type="text" id="bookNumberInput" required placeholder="مثال: 333">
-                </div>
-                <div class="form-group" style="flex: 1;">
-                    <label>تاريخ الكتاب:</label>
-                    <input type="date" id="dateInput" required>
+        <form id="teacherForm" onsubmit="generatePDF(event)">
+            
+            <div class="section-box sec-print">
+                <div class="section-title">⚙️ الخيارات وطريقة الطباعة</div>
+                <div style="display: flex; gap: 10px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>نوع الكتاب:</label>
+                        <select id="orderTypeInput">
+                            <option value="mubashara">مباشرة مدرس / مدرسة</option>
+                            <option value="infikak">انفكاك مدرس / مدرسة</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>نظام النسخ:</label>
+                        <select id="copiesLayout">
+                            <option value="one">نسخة واحدة (تملأ الصفحة)</option>
+                            <option value="two">نسختان (نفس الورقة)</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
-            <div class="form-group">
-                <label>إلى / (الجهة المطلوبة):</label>
-                <input type="text" id="targetEntity" required placeholder="مثال: دائرة التقاعد">
-            </div>
-
-            <div style="display: flex; gap: 10px;">
-                <div class="form-group" style="flex: 2;">
-                    <label>اسم الطالب / الطالبة الثلاثي:</label>
-                    <input type="text" id="studentName" required placeholder="أدخل اسم الطالب أو الطالبة كاملاً">
+            <div class="section-box sec-admin">
+                <div class="section-title">📋 المعلومات الإدارية للكتاب</div>
+                <div style="display: flex; gap: 10px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>الترويسة العليا:</label>
+                        <input type="text" id="headerTitleInput" required value="وزارة التربية">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>اسم المدرسة:</label>
+                        <input type="text" id="schoolNameInput" required placeholder="  ">
+                    </div>
                 </div>
-                <div class="form-group" style="flex: 1;">
-                    <label>جنس الطالب:</label>
-                    <select id="studentGender" required>
-                        <option value="male">ذكر (طالب)</option>
-                        <option value="female">أنثى (طالبة)</option>
-                    </select>
+                <div style="display: flex; gap: 10px; margin-top: 8px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>رقم العدد:</label>
+                        <input type="text" id="bookNumberInput" required placeholder="مثال 102">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>التاريخ:</label>
+                        <input type="date" id="dateInput" required>
+                    </div>
                 </div>
-            </div>
-
-            <div style="display: flex; gap: 10px;">
-                <div class="form-group" style="flex: 1;">
-                    <label>الصف الدراسي:</label>
-                    <input type="text" id="studentClass" required placeholder="مثال: الأول المتوسط">
-                </div>
-                <div class="form-group" style="flex: 1;">
-                    <label>العام الدراسي:</label>
-                    <input type="text" id="academicYear" required placeholder="مثال: 2025 - 2026">
+                <div class="form-group" style="margin-top: 8px;">
+                    <label>إلى (الجهة الموجه لها):</label>
+                    <input type="text" id="toInput" required placeholder="مثال المديرية العامة لتربية القادسية - قسم الملاك الثانوي">
                 </div>
             </div>
 
-            <div class="form-group">
-                <label>اسم المدير:</label>
-                <input type="text" id="managerName" required placeholder="أدخل اسم مدير المدرسة">
+            <div class="section-box sec-ref">
+                <div class="section-title">📂 الكتاب ذي العلاقة والمرجع</div>
+                <div style="display: flex; gap: 10px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>رقم الكتاب ذي العلاقة:</label>
+                        <input type="text" id="refBookNumInput" required placeholder="مثال 1200">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>تاريخ الكتاب ذي العلاقة:</label>
+                        <input type="date" id="refBookDateInput" required>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top: 8px;">
+                    <label>المتضمن (مثل: نقل مدرسين):</label>
+                    <input type="text" id="contentNatureInput" required placeholder=" ">
+                </div>
             </div>
 
-            <button type="submit" class="btn-submit">عرض وطباعة كتاب التأييد (PDF)</button>
+            <div class="section-box sec-person">
+                <div class="section-title">👤 بيانات المعني بالأمر</div>
+                <div style="display: flex; gap: 10px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>الجنس:</label>
+                        <select id="genderInput">
+                            <option value="male">ذكر (مدرس)</option>
+                            <option value="female">أنثى (مدرسة)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="flex: 2;">
+                        <label>اسم المدرس / المدرسة:</label>
+                        <input type="text" id="teacherNameInput" required placeholder="علي علي علي">
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 8px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>الاختصاص:</label>
+                        <input type="text" id="subjectInput" required placeholder="التربية الاسلامية">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>تاريخ التنفيذ الفعلي:</label>
+                        <input type="date" id="actionDateInput" required>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top: 8px;">
+                    <label>اسم مدير المدرسة:</label>
+                    <input type="text" id="managerNameInput" required placeholder="  ">
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit">عرض وطباعة الكتاب (PDF)</button>
         </form>
+
+        <div class="back-link-bottom">
+            <a href="index.html" class="back-link">← العودة للرئيسية</a>
+        </div>
     </div>
 
     <div id="printArea">
-        <div id="documentWrapper" style="width: 100%; height: 100%;"></div>
+        <div id="documentWrapper" style="width: 100%; height: 100%; box-sizing: border-box;"></div>
     </div>
 
     <script>
-        function applyTheme(theme) {
-            const body = document.body;
-            if (theme === 'peach') {
-                body.style.background = 'radial-gradient(circle at 50% 10%, #4a2832 0%, #2c161d 40%, #150a0e 100%)';
-                body.style.color = '#f8fafc';
-            } else if (theme === 'pink') {
-                body.style.background = 'radial-gradient(circle at 50% 10%, #f472b6 0%, #db2777 40%, #831843 100%)';
-                body.style.color = '#fff1f2';
-            } else if (theme === 'pistachio') {
-                body.style.background = 'radial-gradient(circle at 50% 10%, #386641 0%, #283618 40%, #111d08 100%)';
-                body.style.color = '#fefae0';
-            } else if (theme === 'red') {
-                body.style.background = 'radial-gradient(circle at 50% 10%, #e11d48 0%, #9f1239 40%, #4c0519 100%)';
-                body.style.color = '#fff1f2';
-            } else if (theme === 'white') {
-                body.style.background = 'radial-gradient(circle at 50% 10%, #f8fafc 0%, #cbd5e1 40%, #94a3b8 100%)';
-                body.style.color = '#0f172a';
-            } else if (theme === 'purple') {
-                body.style.background = 'radial-gradient(circle at 50% 10%, #3b3069 0%, #1e1b4b 40%, #0f0c1b 100%)';
-                body.style.color = '#f8fafc';
-            } else if (theme === 'emerald') {
-                body.style.background = 'radial-gradient(circle at 50% 10%, #065f46 0%, #064e3b 40%, #022c22 100%)';
-                body.style.color = '#f8fafc';
-            } else if (theme === 'dark') {
-                body.style.background = 'radial-gradient(circle at 50% 10%, #334155 0%, #1e293b 40%, #0f172a 100%)';
-                body.style.color = '#f8fafc';
-            }
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            const savedTheme = localStorage.getItem('userSelectedTheme');
-            if (savedTheme) {
-                applyTheme(savedTheme);
-            }
-        });
-
-        function formatDateToDMY(dateString) {
+        function formatDateToDMY(dateString, includeDayName = false) {
             if (!dateString) return '';
             const parts = dateString.split('-');
             if (parts.length !== 3) return dateString;
-            return `${parts[2]} / ${parts[1]} / ${parts[0]}م`;
+            const year = parts[0];
+            const month = parts[1];
+            const day = parts[2];
+            
+            const dateObj = new Date(year, month - 1, day);
+            let dayName = '';
+            if (includeDayName) {
+                const daysOfWeek = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+                dayName = daysOfWeek[dateObj.getDay()] + ' ';
+            }
+            return dayName + `${day}-${month}-${year}`;
         }
 
         function generatePDF(e) {
             e.preventDefault();
-
-            const headerTitle = document.getElementById('headerTitleInput').value.replace(/\n/g, '<br>');
+            
+            const orderType = document.getElementById('orderTypeInput').value;
+            const headerTitle = document.getElementById('headerTitleInput').value;
             const schoolName = document.getElementById('schoolNameInput').value;
             const bookNum = document.getElementById('bookNumberInput').value;
             const dateVal = formatDateToDMY(document.getElementById('dateInput').value);
-            const target = document.getElementById('targetEntity').value;
-            const name = document.getElementById('studentName').value;
-            const gender = document.getElementById('studentGender').value;
-            const studentClass = document.getElementById('studentClass').value;
-            const year = document.getElementById('academicYear').value;
-            const manager = document.getElementById('managerName').value;
+            const toVal = document.getElementById('toInput').value;
+            const refBookNum = document.getElementById('refBookNumInput').value;
+            const refBookDate = formatDateToDMY(document.getElementById('refBookDateInput').value);
+            const contentNature = document.getElementById('contentNatureInput').value;
+            
+            const gender = document.getElementById('genderInput').value;
+            const teacherName = document.getElementById('teacherNameInput').value;
+            const subject = document.getElementById('subjectInput').value;
+            const actionDate = formatDateToDMY(document.getElementById('actionDateInput').value, true);
+            const managerName = document.getElementById('managerNameInput').value;
             const layoutMode = document.getElementById('copiesLayout').value;
 
-            let line1 = "";
-            let line2 = "";
-            let line3 = "";
+            let subjectTitle = "";
+            let actionText = "";
 
-            if (gender === 'male') {
-                line1 = `نؤيد لكم أن الطالب (<b>${name}</b>) أحد طلاب الصف (<b>${studentClass}</b>) مستمر بالدوام للعام الدراسي (<b>${year}</b>).`;
-                line2 = `وبناءً على طلبه زود بهذا التأييد.`;
-                line3 = `للعلم مع التقدير`;
+            if (orderType === 'infikak') {
+                subjectTitle = "انفكاك مدرس";
+                actionText = gender === 'female' ? 
+                    `انفكت السيدة (<b>${teacherName}</b>) مدرسة اختصاص (${subject}) من مدرستنا يوم (${actionDate}) استناداً لأمركم الاداري اعلاه.` : 
+                    `انفك السيد (<b>${teacherName}</b>) مدرس اختصاص (${subject}) من مدرستنا يوم (${actionDate}) استناداً لأمركم الاداري اعلاه.`;
             } else {
-                line1 = `نؤيد لكم أن الطالبة (<b>${name}</b>) إحدى طالبات الصف (<b>${studentClass}</b>) مستمرة بالدوام للعام الدراسي (<b>${year}</b>).`;
-                line2 = `وبناءً على طلبها زودت بهذا التأييد.`;
-                line3 = `للعلم مع التقدير`;
+                subjectTitle = "مباشرة مدرس";
+                actionText = gender === 'female' ? 
+                    `باشرت السيدة (<b>${teacherName}</b>) مدرسة اختصاص (${subject}) في مدرستنا يوم (${actionDate}) استناداً لأمركم الاداري اعلاه.` : 
+                    `باشر السيد (<b>${teacherName}</b>) مدرس اختصاص (${subject}) في مدرستنا يوم (${actionDate}) استناداً لأمركم الاداري اعلاه.`;
             }
 
             const createCardHTML = (isTwoCopies) => `
-                <div style="border: 1px solid #111; padding: ${isTwoCopies ? '2mm 4mm' : '4mm 10mm'}; border-radius: 4px; background: #fff; height: ${isTwoCopies ? '138mm' : '285mm'}; display: flex; flex-direction: column; justify-content: space-between; box-sizing: border-box;">
+                <div style="margin: ${isTwoCopies ? '1mm 4mm' : '3mm 6mm'}; border: 2px solid #1a202c; padding: ${isTwoCopies ? '3mm 5mm' : '6mm 10mm'}; border-radius: 6px; background: #fff; height: ${isTwoCopies ? '140mm' : '285mm'}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden;">
                     <div>
-                        <div style="text-align: center; font-weight: bold; font-size: ${isTwoCopies ? '11.5px' : '15px'}; margin-bottom: 2px; line-height: 1.25;">
-                            ${headerTitle}<br>${schoolName}
+                        <div style="text-align: center; font-weight: bold; font-size: ${isTwoCopies ? '12.5px' : '16px'}; margin-bottom: ${isTwoCopies ? '1mm' : '3mm'};">
+                            ${headerTitle}
                         </div>
 
-                        <div style="display: flex; justify-content: flex-end; margin-bottom: 2px;">
-                            <div style="text-align: left; font-weight: bold; font-size: ${isTwoCopies ? '10.5px' : '13px'}; line-height: 1.2;">
-                                العدد: ${bookNum}<br>
-                                التاريخ: ${dateVal}
-                            </div>
+                        <table style="width: 100%; border-collapse: collapse; margin-bottom: ${isTwoCopies ? '2mm' : '4mm'}; font-weight: bold; font-size: ${isTwoCopies ? '11px' : '13.5px'};">
+                            <tr>
+                                <td style="width: 50%; text-align: right;">إدارة / ${schoolName}</td>
+                                <td style="width: 50%; text-align: left;">
+                                    العدد: ${bookNum}<br>
+                                    التاريخ: ${dateVal}
+                                </td>
+                            </tr>
+                        </table>
+
+                        <div style="text-align: center; font-size: ${isTwoCopies ? '11.5px' : '14px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '2mm' : '4mm'};">
+                            إلى / ${toVal}
                         </div>
 
-                        <div style="text-align: center; font-size: ${isTwoCopies ? '11px' : '14px'}; font-weight: bold; margin-bottom: 2px;">
-                            إلى / ${target}
+                        <div style="text-align: center; font-size: ${isTwoCopies ? '11.5px' : '14px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '3mm' : '6mm'};">
+                            م/ ${subjectTitle}
                         </div>
 
-                        <div style="text-align: center; font-size: ${isTwoCopies ? '11px' : '14px'}; font-weight: bold; margin-bottom: 3px;">
-                            م / تأييد طالب
-                        </div>
-
-                        <div style="font-size: ${isTwoCopies ? '11px' : '14px'}; line-height: ${isTwoCopies ? '1.45' : '1.85'}; text-align: justify; padding: 0 2px;">
-                            <div style="margin-bottom: 2px;">${line1}</div>
-                            <div style="margin-bottom: 2px;">${line2}</div>
-                            <div style="text-align: center; font-weight: bold; margin-top: 4px;">${line3}</div>
+                        <div style="font-size: ${isTwoCopies ? '11px' : '13.5px'}; line-height: ${isTwoCopies ? '1.4' : '1.8'}; text-align: justify; padding: 0 2mm;">
+                            كتابكم المرقم (${refBookNum}) في (${refBookDate}) والمتضمن (${contentNature}).
+                            <br>
+                            ${actionText}
                         </div>
                     </div>
 
-                    <div style="margin-bottom: 6px;">
+                    <div style="margin-bottom: ${isTwoCopies ? '1mm' : '2mm'};">
+                        <div style="text-align: center; font-size: ${isTwoCopies ? '11.5px' : '14px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '2mm' : '4mm'};">
+                            للعلـم مع التقـدير
+                        </div>
+
                         <table style="width: 100%; border-collapse: collapse;">
                             <tr>
-                                <td style="width: 75%;"></td>
-                                <td style="width: 25%; text-align: right; font-size: ${isTwoCopies ? '10px' : '12.5px'}; line-height: 1.2; padding-right: 4px;">
-                                    <b>${manager}</b><br>
+                                <td style="width: 78%;"></td>
+                                <td style="width: 22%; text-align: right; font-size: ${isTwoCopies ? '11px' : '13px'}; line-height: 1.2; padding-right: 5px;">
+                                    <b>${managerName}</b><br>
                                     مدير المدرسة
                                 </td>
                             </tr>
@@ -337,19 +391,20 @@
 
             if (layoutMode === 'two') {
                 wrapper.innerHTML = `
-                    <div style="height: 148.5mm; padding: 1mm 2mm; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box;">
+                    <div style="height: 148.5mm; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box;">
                         ${createCardHTML(true)}
                     </div>
-                    <div style="height: 148.5mm; padding: 1mm 2mm; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box;">
+                    <div style="height: 148.5mm; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box;">
                         ${createCardHTML(true)}
                     </div>
                 `;
             } else {
-                wrapper.innerHTML = `<div style="height: 297mm; padding: 2mm 3mm; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box;">${createCardHTML(false)}</div>`;
+                wrapper.innerHTML = `<div style="height: 297mm; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box;">${createCardHTML(false)}</div>`;
             }
 
             window.print();
         }
     </script>
+
 </body>
 </html>
