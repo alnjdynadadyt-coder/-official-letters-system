@@ -367,7 +367,6 @@
             const manager = document.getElementById('managerName').value;
             const layoutMode = document.getElementById('copiesLayout').value;
 
-            // تنسيق النصوص على 3 أسطر منفصلة بدقة حسب طلبك
             let line1 = "";
             let line2 = "";
             let line3 = "";
@@ -388,24 +387,24 @@
                 const sName = document.getElementById(`sub_name_${index}`).value;
                 const nVal = document.getElementById(`sub_num_${index}`).value;
                 const tVal = document.getElementById(`sub_text_${index}`).value;
-                tableRows += `<tr><td style="border: 1px solid black; padding: 2px 5px; text-align: right;">${sName}</td><td style="border: 1px solid black; padding: 2px 5px; text-align: center; width: 18%;"><b>${nVal}</b></td><td style="border: 1px solid black; padding: 2px 5px; text-align: center; width: 28%;"><b>${tVal}</b></td></tr>`;
+                tableRows += `<tr><td style="border: 1px solid black; padding: 1.5px 5px; text-align: right;">${sName}</td><td style="border: 1px solid black; padding: 1.5px 5px; text-align: center; width: 18%;"><b>${nVal}</b></td><td style="border: 1px solid black; padding: 1.5px 5px; text-align: center; width: 28%;"><b>${tVal}</b></td></tr>`;
             });
 
             const extraName = document.getElementById('extra_sub_name').value.trim();
             const extraNum = document.getElementById('extra_sub_num').value.trim();
             const extraText = document.getElementById('extra_sub_text').value.trim();
             if (extraName !== "" || extraNum !== "") {
-                tableRows += `<tr><td style="border: 1px solid black; padding: 2px 5px; text-align: right;">${extraName}</td><td style="border: 1px solid black; padding: 2px 5px; text-align: center;"><b>${extraNum}</b></td><td style="border: 1px solid black; padding: 2px 5px; text-align: center;"><b>${extraText}</b></td></tr>`;
+                tableRows += `<tr><td style="border: 1px solid black; padding: 1.5px 5px; text-align: right;">${extraName}</td><td style="border: 1px solid black; padding: 1.5px 5px; text-align: center;"><b>${extraNum}</b></td><td style="border: 1px solid black; padding: 1.5px 5px; text-align: center;"><b>${extraText}</b></td></tr>`;
             }
 
             const totalNum = document.getElementById('totalNum').value;
             const totalText = document.getElementById('totalText').value;
-            tableRows += `<tr><td style="border: 1px solid black; padding: 2px 5px; font-weight: bold; text-align: right;">المجموع</td><td style="border: 1px solid black; padding: 2px 5px; text-align: center; font-weight: bold;">${totalNum}</td><td style="border: 1px solid black; padding: 2px 5px; text-align: center; font-weight: bold;">${totalText}</td></tr>`;
+            tableRows += `<tr><td style="border: 1px solid black; padding: 1.5px 5px; font-weight: bold; text-align: right;">المجموع</td><td style="border: 1px solid black; padding: 1.5px 5px; text-align: center; font-weight: bold;">${totalNum}</td><td style="border: 1px solid black; padding: 1.5px 5px; text-align: center; font-weight: bold;">${totalText}</td></tr>`;
 
             if (stage !== 'third') {
                 const avgVal = document.getElementById('averageVal').value;
                 if(avgVal) {
-                    tableRows += `<tr><td style="border: 1px solid black; padding: 2px 5px; font-weight: bold; text-align: right;">المعدل</td><td colspan="2" style="border: 1px solid black; padding: 2px 5px; text-align: center; font-weight: bold;">${avgVal}</td></tr>`;
+                    tableRows += `<tr><td style="border: 1px solid black; padding: 1.5px 5px; font-weight: bold; text-align: right;">المعدل</td><td colspan="2" style="border: 1px solid black; padding: 1.5px 5px; text-align: center; font-weight: bold;">${avgVal}</td></tr>`;
                 }
             }
 
@@ -447,12 +446,12 @@
                         </div>
 
                         <!-- الجدول بعرض وتنسيق متوازن ومضغوط -->
-                        <table style="width: 62%; margin: 0 auto; border-collapse: collapse; font-size: ${isTwoCopies ? '9px' : '10.5px'}; margin-bottom: 1.5mm;">
+                        <table style="width: 62%; margin: 0 auto; border-collapse: collapse; font-size: ${isTwoCopies ? '9px' : '10.5px'}; margin-bottom: 1mm;">
                             <thead>
                                 <tr style="background: #f1f5f9;">
-                                    <th style="border: 1px solid black; padding: 2px 4px; text-align: right;">المادة</th>
-                                    <th style="border: 1px solid black; padding: 2px 4px; text-align: center; width: 22%;">الدرجة رقماً</th>
-                                    <th style="border: 1px solid black; padding: 2px 4px; text-align: center; width: 32%;">الدرجة كتابةً</th>
+                                    <th style="border: 1px solid black; padding: 1.5px 4px; text-align: right;">المادة</th>
+                                    <th style="border: 1px solid black; padding: 1.5px 4px; text-align: center; width: 22%;">الدرجة رقماً</th>
+                                    <th style="border: 1px solid black; padding: 1.5px 4px; text-align: center; width: 32%;">الدرجة كتابةً</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -461,8 +460,9 @@
                         </table>
                     </div>
 
-                    <div style="margin-bottom: 1.5mm;">
-                        <div style="text-align: center; font-size: ${isTwoCopies ? '10px' : '11.5px'}; font-weight: bold; margin-bottom: 1mm;">
+                    <!-- رفع التوقيع وعبارة للعلم مع التقدير نحو الأعلى قليلاً -->
+                    <div style="margin-bottom: ${isTwoCopies ? '4mm' : '12mm'};">
+                        <div style="text-align: center; font-size: ${isTwoCopies ? '10px' : '11.5px'}; font-weight: bold; margin-bottom: 3mm;">
                             للعلـم مع التقـدير
                         </div>
 
