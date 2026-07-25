@@ -248,7 +248,7 @@
 
                 <div style="display: flex; gap: 10px; margin-bottom: 8px;">
                     <div class="form-group" style="flex: 1;">
-                        <label>نوع الخط (النص الأساسي + التوقيع):</label>
+                        <label>نوع الخط (النص الأساسي فقط):</label>
                         <select id="fontFamilyInput">
                             <option value="'Traditional Arabic', serif">Traditional Arabic (التقليدي الرسمي)</option>
                             <option value="'Amiri', serif">أميري (Amiri - أصيل)</option>
@@ -262,7 +262,7 @@
                         </select>
                     </div>
                     <div class="form-group" style="flex: 1;">
-                        <label>حجم الخط (النص الأساسي + التوقيع):</label>
+                        <label>حجم الخط (النص الأساسي فقط):</label>
                         <select id="fontSizeInput">
                             <option value="14px">14</option>
                             <option value="15px">15</option>
@@ -280,7 +280,7 @@
 
                 <div style="display: flex; gap: 10px;">
                     <div class="form-group" style="flex: 1;">
-                        <label>نوع خط العناوين:</label>
+                        <label>نوع خط العناوين + اسم المدير:</label>
                         <select id="titleFontFamilyInput">
                             <option value="inherit">نفس خط النص الأساسي</option>
                             <option value="'Amiri', serif" selected>أميري (Amiri)</option>
@@ -290,7 +290,7 @@
                         </select>
                     </div>
                     <div class="form-group" style="flex: 1;">
-                        <label>حجم خط العناوين:</label>
+                        <label>حجم خط العناوين + اسم المدير:</label>
                         <select id="titleFontSizeInput">
                             <option value="matched">تلقائي متناسق</option>
                             <option value="16px">16px</option>
@@ -570,7 +570,7 @@
                         </div>
                     </div>
 
-                    <!-- عبارة للعلم مع التقدير وإطار التوقيع في أقصى اليسار بالشكل الجديد -->
+                    <!-- عبارة للعلم مع التقدير وإطار التوقيع في أقصى اليسار بالشكل الجديد (يتبع خط وحجم العناوين) -->
                     <div style="margin-bottom: ${isTwoCopies ? '10mm' : '22mm'};">
                         <div style="text-align: center; font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '5mm' : '12mm'};">
                             للعلـم مع التقـدير
@@ -581,8 +581,8 @@
                                 <td style="width: 50%;"></td>
                                 <td style="width: 50%; text-align: left; padding-left: 5mm;">
                                     <div style="display: inline-block; border: 2px solid ${fontColor}; border-radius: 18px; padding: ${isTwoCopies ? '4px 14px' : '8px 22px'}; text-align: center; min-width: 180px;">
-                                        <div style="font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; font-weight: bold; margin-bottom: 2px;">${managerName}</div>
-                                        <div style="font-size: ${isTwoCopies ? (parseInt(twoCopiesBodySize)-2)+'px' : (parseInt(bodySize)-2)+'px'}; font-weight: normal;">مدير المدرسة</div>
+                                        <div style="font-family: ${actualTitleFont}; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; font-weight: bold; margin-bottom: 2px;">${managerName}</div>
+                                        <div style="font-family: ${actualTitleFont}; font-size: ${isTwoCopies ? (parseInt(twoCopiesTitleSize)-2)+'px' : (parseInt(actualTitleSize)-2)+'px'}; font-weight: normal;">مدير المدرسة</div>
                                     </div>
                                 </td>
                             </tr>
@@ -612,4 +612,3 @@
 
 </body>
 </html>
- 
