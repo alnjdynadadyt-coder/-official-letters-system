@@ -193,6 +193,86 @@
                 </div>
             </div>
 
+                            <div style="display: flex; gap: 10px; margin-bottom: 8px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>إطار الورقة الفني:</label>
+                        <select id="borderStyleInput">
+                            <option value="solid-normal">إطار رسمي أنيق (عادي)</option>
+                            <option value="solid-thick">إطار سميك بارز</option>
+                            <option value="double">إطار مزدوج كلاسيكي</option>
+                            <option value="fancy-double">إطار زخرفي مزدوج رفيع</option>
+                            <option value="rounded">إطار بزوايا منحنية أنيقة</option>
+                            <option value="dashed">إطار منقط رسمي</option>
+                            <option value="none">بدون إطار</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>لون الخط العام:</label>
+                        <select id="fontColorInput">
+                            <option value="#000000">أسود داكن (أصلي)</option>
+                            <option value="#1e3a8a">أزرق ملكي إداري</option>
+                            <option value="#991b1b">أحمر رسمي</option>
+                            <option value="#334155">رمادي غامق احترافي</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-bottom: 8px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>نوع الخط (النص الأساسي + التوقيع):</label>
+                        <select id="fontFamilyInput">
+                            <option value="'Traditional Arabic', serif">Traditional Arabic (التقليدي الرسمي)</option>
+                            <option value="'Amiri', serif">أميري (Amiri - أصيل)</option>
+                            <option value="'Scheherazade New', serif" selected>شهرزاد (Scheherazade - كلاسيكي)</option>
+                            <option value="'Reem Kufi', sans-serif">الخط الكوفي (Reem Kufi)</option>
+                            <option value="'El Messiri', sans-serif">المسيري (El Messiri - مميز)</option>
+                            <option value="'Lateef', serif">لطيف (Lateef - نسخ دقيق)</option>
+                            <option value="'Tajawal', sans-serif">تجوال (Tajawal - حديث)</option>
+                            <option value="'Cairo', sans-serif">كايرو (Cairo - عريض)</option>
+                            <option value="'Changa', sans-serif">شنطة/شانجا (Changa)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>حجم الخط (النص الأساسي + التوقيع):</label>
+                        <select id="fontSizeInput">
+                            <option value="14px">14</option>
+                            <option value="15px">15</option>
+                            <option value="16px">16</option>
+                            <option value="17px">17</option>
+                            <option value="18px">18</option>
+                            <option value="19px">19</option>
+                            <option value="20px">20</option>
+                            <option value="22px" selected>22</option>
+                            <option value="24px">24</option>
+                            <option value="26px">26</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>نوع خط العناوين:</label>
+                        <select id="titleFontFamilyInput">
+                            <option value="inherit">نفس خط النص الأساسي</option>
+                            <option value="'Amiri', serif" selected>أميري (Amiri)</option>
+                            <option value="'Cairo', sans-serif">كايرو (Cairo)</option>
+                            <option value="'Reem Kufi', sans-serif">الخط الكوفي (Reem Kufi)</option>
+                            <option value="'Tajawal', sans-serif">تجوال (Tajawal)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>حجم خط العناوين:</label>
+                        <select id="titleFontSizeInput">
+                            <option value="matched">تلقائي متناسق</option>
+                            <option value="16px">16px</option>
+                            <option value="18px" selected>18px</option>
+                            <option value="20px">20px</option>
+                            <option value="22px">22px</option>
+                            <option value="24px">24px</option>
+                        </select>
+                    </div>
+                </div>
+    </div>
             <div class="section-box sec-admin">
                 <div class="section-title">📋 المعلومات الإدارية للكتاب</div>
                 <div style="display: flex; gap: 10px;">
@@ -317,6 +397,49 @@
             }
         }
 
+                // الحفظ اليدوي المؤقت بناءً على طلب المستخدم
+        function manualSaveSettings() {
+            localStorage.setItem('saved_headerTitle', document.getElementById('headerTitleInput').value);
+            localStorage.setItem('saved_schoolName', document.getElementById('schoolNameInput').value);
+            localStorage.setItem('saved_managerName', document.getElementById('managerNameInput').value);
+            localStorage.setItem('saved_fontFamily', document.getElementById('fontFamilyInput').value);
+            localStorage.setItem('saved_fontSize', document.getElementById('fontSizeInput').value);
+            localStorage.setItem('saved_titleFontFamily', document.getElementById('titleFontFamilyInput').value);
+            localStorage.setItem('saved_titleFontSize', document.getElementById('titleFontSizeInput').value);
+            localStorage.setItem('saved_borderStyle', document.getElementById('borderStyleInput').value);
+            localStorage.setItem('saved_fontColor', document.getElementById('fontColorInput').value);
+            alert('تم حفظ الإعدادات والترويسة مؤقتاً بنجاح!');
+        }
+
+        // إلغاء وحذف الحفظ المؤقت بالكامل
+        function manualClearSettings() {
+            localStorage.removeItem('saved_headerTitle');
+            localStorage.removeItem('saved_schoolName');
+            localStorage.removeItem('saved_managerName');
+            localStorage.removeItem('saved_fontFamily');
+            localStorage.removeItem('saved_fontSize');
+            localStorage.removeItem('saved_titleFontFamily');
+            localStorage.removeItem('saved_titleFontSize');
+            localStorage.removeItem('saved_borderStyle');
+            localStorage.removeItem('saved_fontColor');
+            alert('تم إلغاء وحذف كافة البيانات المحفوظة مؤقتاً وعودتها للأصل.');
+            location.reload();
+        }
+
+        // استرجاع الإعدادات فقط إذا كان هناك حفظ مؤقت سابق مسجل
+        function loadSettingsIfSaved() {
+            if(localStorage.getItem('saved_headerTitle')) {
+                document.getElementById('headerTitleInput').value = localStorage.getItem('saved_headerTitle');
+                document.getElementById('schoolNameInput').value = localStorage.getItem('saved_schoolName');
+                document.getElementById('managerNameInput').value = localStorage.getItem('saved_managerName');
+                document.getElementById('fontFamilyInput').value = localStorage.getItem('saved_fontFamily');
+                document.getElementById('fontSizeInput').value = localStorage.getItem('saved_fontSize');
+                document.getElementById('titleFontFamilyInput').value = localStorage.getItem('saved_titleFontFamily');
+                document.getElementById('titleFontSizeInput').value = localStorage.getItem('saved_titleFontSize');
+                document.getElementById('borderStyleInput').value = localStorage.getItem('saved_borderStyle');
+                document.getElementById('fontColorInput').value = localStorage.getItem('saved_fontColor');
+            }
+        }
         window.onload = function() {
             toggleCategoryFields();
         };
@@ -374,12 +497,15 @@
                             ${headerTitle}
                         </div>
 
-                        <table style="width: 100%; border-collapse: collapse; margin-bottom: ${isTwoCopies ? '2.5mm' : '6mm'}; font-weight: bold; font-size: ${isTwoCopies ? '12px' : '14.5px'};">
+                        <!-- جدول العدد والتاريخ في اليسار واسم المدرسة والإدارة في اليمين -->
+                        <table style="width: 100%; border-collapse: collapse; margin-bottom: ${isTwoCopies ? '2.5mm' : '6mm'}; font-weight: bold; font-family: ${actualTitleFont}; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; color: ${fontColor};">
                             <tr>
-                                <td style="width: 50%; text-align: right;">إدارة / ${schoolName}</td>
-                                <td style="width: 50%; text-align: left;">
-                                    العدد: ${bookNum}<br>
-                                    التاريخ: ${dateVal}
+                                <td style="width: 50%; text-align: right; vertical-align: top;">إدارة / ${schoolName}</td>
+                                <td style="width: 50%; text-align: left; vertical-align: top;">
+                                    <div style="display: inline-block; text-align: right; min-width: 130px;">
+                                        العدد: ${bookNum}<br>
+                                        التاريخ: ${dateVal}
+                                    </div>
                                 </td>
                             </tr>
                         </table>
