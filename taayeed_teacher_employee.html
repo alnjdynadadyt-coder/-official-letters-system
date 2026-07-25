@@ -280,7 +280,7 @@
 
                 <div style="display: flex; gap: 10px;">
                     <div class="form-group" style="flex: 1;">
-                        <label>نوع خط العناوين + اسم المدير:</label>
+                        <label>نوع خط العناوين (الترويسة، المدرسة، اسم المدير):</label>
                         <select id="titleFontFamilyInput">
                             <option value="inherit">نفس خط النص الأساسي</option>
                             <option value="'Amiri', serif" selected>أميري (Amiri)</option>
@@ -290,7 +290,7 @@
                         </select>
                     </div>
                     <div class="form-group" style="flex: 1;">
-                        <label>حجم خط العناوين + اسم المدير:</label>
+                        <label>حجم خط العناوين (الترويسة، المدرسة، اسم المدير):</label>
                         <select id="titleFontSizeInput">
                             <option value="matched">تلقائي متناسق</option>
                             <option value="16px">16px</option>
@@ -570,7 +570,7 @@
                         </div>
                     </div>
 
-                    <!-- عبارة للعلم مع التقدير وإطار التوقيع في أقصى اليسار بالشكل الجديد (يتبع خط وحجم العناوين) -->
+                    <!-- عبارة للعلم مع التقدير وإطار التوقيع في أقصى اليسار مرتبط بخط وحجم العناوين -->
                     <div style="margin-bottom: ${isTwoCopies ? '10mm' : '22mm'};">
                         <div style="text-align: center; font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '5mm' : '12mm'};">
                             للعلـم مع التقـدير
