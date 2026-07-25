@@ -366,11 +366,19 @@
                 </div>
             </div>
 
+                <div class="form-group" style="margin-top: 8px;">
+                    <label>إضافة نص اختياري (يظهر أسفل النص الأساسي بدون كلمة ملاحظة):</label>
+                    <textarea id="notesInput" rows="2" placeholder="اكتب النص الإضافي هنا مباشرة إن وجد..."></textarea>
+                </div>
+            </div>
+
             <button type="submit" class="btn-submit">عرض وطباعة كتاب التأييد (PDF)</button>
         </form>
 
         <div class="back-link-bottom">
             <a href="namatj_mukhataba.html" class="back-link">← العودة للنماذج</a>
+            <button type="button" class="btn-save-cache" onclick="manualSaveSettings()">حفظ مؤقت للإعدادات والترويسة</button>
+            <button type="button" class="btn-clear-cache" onclick="manualClearSettings()">إلغاء وحذف الحفظ المؤقت</button>
         </div>
     </div>
 
@@ -440,6 +448,7 @@
                 document.getElementById('fontColorInput').value = localStorage.getItem('saved_fontColor');
             }
         }
+        
         window.onload = function() {
             toggleCategoryFields();
         };
