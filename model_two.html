@@ -377,7 +377,7 @@
             }
         }
 
-        // الحفظ المؤقت الشامل (الترويسة، المدرسة، المدير، الخطوط والأحجام)
+        // الحفظ المؤقت الشامل
         function saveSettings() {
             localStorage.setItem('headerTitle', document.getElementById('headerTitleInput').value);
             localStorage.setItem('schoolName', document.getElementById('schoolNameInput').value);
@@ -483,17 +483,16 @@
                             ${headerTitle}
                         </div>
 
-                        <!-- جدول العدد والتاريخ الموحد والمثبت بجهة اليسار بدقة -->
+                        <!-- جدول العدد والتاريخ المثبت بأقصى اليمين تحت الترويسة -->
                         <table style="width: 100%; border-collapse: collapse; margin-bottom: ${isTwoCopies ? '2.5mm' : '6mm'}; font-weight: bold; font-family: ${actualTitleFont}; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; color: ${fontColor};">
                             <tr>
-                                <td style="width: 40%; text-align: right; vertical-align: top;">إدارة / ${schoolName}</td>
-                                <td style="width: 20%;"></td>
-                                <td style="width: 40%; text-align: left; vertical-align: top;">
+                                <td style="width: 50%; text-align: right; vertical-align: top;">
                                     <div style="display: inline-block; text-align: right; min-width: 130px;">
                                         العدد: ${bookNum}<br>
                                         التاريخ: ${dateVal}
                                     </div>
                                 </td>
+                                <td style="width: 50%; text-align: left; vertical-align: top;">إدارة / ${schoolName}</td>
                             </tr>
                         </table>
 
@@ -510,18 +509,18 @@
                         </div>
                     </div>
 
-                    <!-- تم رفع عبارة للعلم مع التقدير وإزاحة اسم المدير لأقصى اليسار بمسافة أنيقة -->
-                    <div style="margin-bottom: ${isTwoCopies ? '14mm' : '38mm'};">
-                        <div style="text-align: center; font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '4mm' : '10mm'};">
+                    <!-- ضبط تباعد عبارة للعلم مع التقدير وإرجاع سطر مدير المدرسة لليمين قليلاً بمقدار شعرة -->
+                    <div style="margin-bottom: ${isTwoCopies ? '12mm' : '28mm'};">
+                        <div style="text-align: center; font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '6mm' : '16mm'};">
                             للعلـم مع التقـدير
                         </div>
 
                         <table style="width: 100%; border-collapse: collapse; color: ${fontColor};">
                             <tr>
                                 <td style="width: 50%;"></td>
-                                <td style="width: 50%; text-align: left; font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; line-height: 1.3; padding-left: 10mm;">
+                                <td style="width: 50%; text-align: left; font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; line-height: 1.3; padding-left: 14mm;">
                                     <b>${managerName}</b><br>
-                                    مدير المدرسة
+                                    المدير
                                 </td>
                             </tr>
                         </table>
