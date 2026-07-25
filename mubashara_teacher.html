@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>أمر مباشرة وانفكاك مدرس</title>
+    <!-- استدعاء خطوط جوجل العربية الاحترافية المعتمدة -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&family=Changa:wght@400;600&family=Reem+Kufi:wght@400;700&family=Scheherazade+New:wght@400;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
             background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
@@ -110,6 +112,38 @@
             background: linear-gradient(135deg, #2b6cb0 0%, #2c5282 100%);
             box-shadow: 0 6px 15px rgba(49, 130, 206, 0.35);
         }
+        .btn-save-temp {
+            background: linear-gradient(135deg, #319795 0%, #2c7a7b 100%);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            font-size: 13px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 5px;
+            box-shadow: 0 2px 8px rgba(49, 151, 149, 0.2);
+            transition: all 0.2s;
+        }
+        .btn-save-temp:hover {
+            background: linear-gradient(135deg, #2c7a7b 0%, #234e52 100%);
+        }
+        .btn-clear-temp {
+            background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            font-size: 13px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 5px;
+            box-shadow: 0 2px 8px rgba(229, 62, 62, 0.2);
+            transition: all 0.2s;
+        }
+        .btn-clear-temp:hover {
+            background: linear-gradient(135deg, #c53030 0%, #9b2c2c 100%);
+        }
         .back-link {
             display: inline-block;
             background-color: #edf2f7;
@@ -154,9 +188,7 @@
                 width: 210mm;
                 height: 297mm;
                 overflow: hidden;
-                font-family: 'Traditional Arabic', 'Amiri', serif;
                 background: white;
-                color: black;
                 box-sizing: border-box;
             }
             .no-print {
@@ -176,7 +208,7 @@
         <form id="teacherForm" onsubmit="generatePDF(event)">
             
             <div class="section-box sec-print">
-                <div class="section-title">⚙️ الخيارات وطريقة الطباعة</div>
+                <div class="section-title">⚙️ خيارات وتنسيق الطباعة، الإطارات والخطوط المتقدمة</div>
                 <div style="display: flex; gap: 10px;">
                     <div class="form-group" style="flex: 1;">
                         <label>نوع الكتاب:</label>
@@ -193,6 +225,76 @@
                         </select>
                     </div>
                 </div>
+
+                <div style="display: flex; gap: 10px; margin-top: 8px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>إطار الورقة الفني:</label>
+                        <select id="frameStyleInput">
+                            <option value="solid-normal">إطار رسمي أنيق (عادي)</option>
+                            <option value="solid-thick">إطار سميك بارز</option>
+                            <option value="double">إطار مزدوج كلاسيكي</option>
+                            <option value="decorative">إطار زخرفي مزدوج رفيع</option>
+                            <option value="rounded">إطار بزوايا منحنية أنيقة</option>
+                            <option value="dashed">إطار منقط احترافي</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>لون الخط العام:</label>
+                        <select id="fontColorInput">
+                            <option value="#1a202c">أسود داكن (أصلي)</option>
+                            <option value="#1e3a8a">أزرق ملكي إداري</option>
+                            <option value="#7f1d1d">أحمر رسمي</option>
+                            <option value="#334155">رمادي غامق احترافي</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-top: 8px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>نوع الخط (النص الأساسي + التوقيع):</label>
+                        <select id="bodyFont">
+                            <option value="'Scheherazade New', serif">شهرزاد (Scheherazade) - كلاسيكي</option>
+                            <option value="'Amiri', serif">أميري (Amiri) - رسمي أصيل</option>
+                            <option value="'Cairo', sans-serif">كايرو (Cairo) - حديث ونظيف</option>
+                            <option value="'Tajawal', sans-serif">تجوال (Tajawal) - رسمي مريح</option>
+                            <option value="'Changa', sans-serif">شنطة (Changa) - عريض وبارز</option>
+                            <option value="'Reem Kufi', sans-serif">الخط الكوفي (Reem Kufi)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>حجم الخط (النص الأساسي فقط):</label>
+                        <select id="bodyFontSize">
+                            <option value="18px">18px - صغير</option>
+                            <option value="20px">20px - متوسط</option>
+                            <option value="22px" selected>22px - قياسي مناسب</option>
+                            <option value="24px">24px - كبير</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-top: 8px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>نوع خط العناوين (الترويسة، المدرسة، اسم المدير):</label>
+                        <select id="titleFont">
+                            <option value="inherit">نفس خط النص الأساسي</option>
+                            <option value="'Amiri', serif">أميري (Amiri)</option>
+                            <option value="'Reem Kufi', sans-serif">الخط الكوفي (Reem Kufi)</option>
+                            <option value="'Cairo', sans-serif">كايرو (Cairo)</option>
+                            <option value="'Tajawal', sans-serif">تجوال (Tajawal)</option>
+                            <option value="'Changa', sans-serif">شنطة (Changa)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>حجم خط العناوين:</label>
+                        <select id="titleSizeChoice">
+                            <option value="matched">متطابق تلقائياً مع النص</option>
+                            <option value="16px">16px</option>
+                            <option value="18px" selected>18px</option>
+                            <option value="20px">20px</option>
+                            <option value="22px">22px</option>
+                        </select>
+                    </div>
+                </div>
             </div>
 
             <div class="section-box sec-admin">
@@ -203,14 +305,14 @@
                         <input type="text" id="headerTitleInput" required placeholder="المديرية العامة لتربية القادسية - قسم تربية الحمزة">
                     </div>
                     <div class="form-group" style="flex: 1;">
-                        <label>اسم المدرسة:</label>
+                        <label>اسم المؤسسة (المدرسة):</label>
                         <input type="text" id="schoolNameInput" required placeholder="اعدادية النجدين للبنين">
                     </div>
                 </div>
                 <div style="display: flex; gap: 10px; margin-top: 8px;">
                     <div class="form-group" style="flex: 1;">
                         <label>رقم العدد:</label>
-                        <input type="text" id="bookNumberInput" required placeholder="مثال 102">
+                        <input type="text" id="bookNumberInput" required placeholder="مثال 1233">
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>التاريخ:</label>
@@ -218,7 +320,7 @@
                     </div>
                 </div>
                 <div class="form-group" style="margin-top: 8px;">
-                    <label>إلى (الجهة الموجه لها):</label>
+                    <label>إلى (الجهة الموجه لها الكتاب):</label>
                     <input type="text" id="toInput" required placeholder="مثال المديرية العامة لتربية القادسية - قسم الملاك الثانوي">
                 </div>
             </div>
@@ -252,7 +354,7 @@
                         </select>
                     </div>
                     <div class="form-group" style="flex: 2;">
-                        <label>اسم المدرس / المدرسة:</label>
+                        <label>الاسم الكامل:</label>
                         <input type="text" id="teacherNameInput" required placeholder="علي علي علي">
                     </div>
                 </div>
@@ -268,11 +370,19 @@
                 </div>
                 <div class="form-group" style="margin-top: 8px;">
                     <label>اسم مدير المدرسة:</label>
-                    <input type="text" id="managerNameInput" required placeholder="اسم المدير ">
+                    <input type="text" id="managerNameInput" required placeholder="عصام جاسم تركي">
+                </div>
+                <div class="form-group" style="margin-top: 8px;">
+                    <label>إضافة نص اختياري (يظهر أسفل النص الأساسي بدون كلمة ملاحظة):</label>
+                    <input type="text" id="optionalNoteInput" placeholder="اكتب النص الإضافي هنا مباشرة إن وجدت ضرورتها...">
                 </div>
             </div>
 
             <button type="submit" class="btn-submit">عرض وطباعة الكتاب (PDF)</button>
+            <div style="display: flex; gap: 10px;">
+                <button type="button" class="btn-save-temp" onclick="saveTemporarySettings()">حفظ مؤقت للإعدادات والترويسة</button>
+                <button type="button" class="btn-clear-temp" onclick="clearTemporarySettings()">إلغاء وحذف الحفظ المؤقت</button>
+            </div>
         </form>
 
         <div class="back-link-bottom">
@@ -285,6 +395,50 @@
     </div>
 
     <script>
+        // دالة تحميل البيانات المحفوظة مؤقتاً عند فتح الصفحة
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedHeader = localStorage.getItem('official_header_title');
+            const savedSchool = localStorage.getItem('official_school_name');
+            const savedManager = localStorage.getItem('official_manager_name');
+            const savedFont = localStorage.getItem('official_body_font');
+            const savedColor = localStorage.getItem('official_font_color');
+            const savedFrame = localStorage.getItem('official_frame_style');
+
+            if (savedHeader) document.getElementById('headerTitleInput').value = savedHeader;
+            if (savedSchool) document.getElementById('schoolNameInput').value = savedSchool;
+            if (savedManager) document.getElementById('managerNameInput').value = savedManager;
+            if (savedFont) document.getElementById('bodyFont').value = savedFont;
+            if (savedColor) document.getElementById('fontColorInput').value = savedColor;
+            if (savedFrame) document.getElementById('frameStyleInput').value = savedFrame;
+            
+            // ضبط تاريخ اليوم افتراضياً إذا كانت الحقول فارغة
+            const today = new Date().toISOString().split('T')[0];
+            if (!document.getElementById('dateInput').value) {
+                document.getElementById('dateInput').value = today;
+            }
+        });
+
+        function saveTemporarySettings() {
+            localStorage.setItem('official_header_title', document.getElementById('headerTitleInput').value);
+            localStorage.setItem('official_school_name', document.getElementById('schoolNameInput').value);
+            localStorage.setItem('official_manager_name', document.getElementById('managerNameInput').value);
+            localStorage.setItem('official_body_font', document.getElementById('bodyFont').value);
+            localStorage.setItem('official_font_color', document.getElementById('fontColorInput').value);
+            localStorage.setItem('official_frame_style', document.getElementById('frameStyleInput').value);
+            alert('تم حفظ الإعدادات والترويسة مؤقتاً بنجاح!');
+        }
+
+        function clearTemporarySettings() {
+            localStorage.removeItem('official_header_title');
+            localStorage.removeItem('official_school_name');
+            localStorage.removeItem('official_manager_name');
+            localStorage.removeItem('official_body_font');
+            localStorage.removeItem('official_font_color');
+            localStorage.removeItem('official_frame_style');
+            alert('تم حذف الحفظ المؤقت واستعادة الوضع الافتراضي.');
+            location.reload();
+        }
+
         function formatDateToDMY(dateString, includeDayName = false) {
             if (!dateString) return '';
             const parts = dateString.split('-');
@@ -300,6 +454,24 @@
                 dayName = daysOfWeek[dateObj.getDay()] + ' ';
             }
             return dayName + `${day}-${month}-${year}`;
+        }
+
+        function getFrameCSS(styleVal, colorVal) {
+            switch(styleVal) {
+                case 'solid-thick':
+                    return `4px solid ${colorVal}`;
+                case 'double':
+                    return `4px double ${colorVal}`;
+                case 'decorative':
+                    return `double 5px ${colorVal}`;
+                case 'rounded':
+                    return `2px solid ${colorVal}; border-radius: 16px;`;
+                case 'dashed':
+                    return `2px dashed ${colorVal}`;
+                case 'solid-normal':
+                default:
+                    return `2px solid ${colorVal}`;
+            }
         }
 
         function generatePDF(e) {
@@ -320,67 +492,91 @@
             const subject = document.getElementById('subjectInput').value;
             const actionDate = formatDateToDMY(document.getElementById('actionDateInput').value, true);
             const managerName = document.getElementById('managerNameInput').value;
+            const optionalNote = document.getElementById('optionalNoteInput').value.trim();
             const layoutMode = document.getElementById('copiesLayout').value;
+
+            // خيارات التنسيق والخطوط المتقدمة
+            const frameStyle = document.getElementById('frameStyleInput').value;
+            const fontColor = document.getElementById('fontColorInput').value;
+            const selectedFont = document.getElementById('bodyFont').value;
+            const baseFontSize = parseInt(document.getElementById('bodyFontSize').value);
+            
+            const titleFontChoice = document.getElementById('titleFont').value;
+            const actualTitleFont = titleFontChoice === 'inherit' ? selectedFont : titleFontChoice;
+            const titleSizeChoice = document.getElementById('titleSizeChoice').value;
+            
+            const actualTitleSize = titleSizeChoice === 'matched' ? (baseFontSize + 2) + 'px' : titleSizeChoice;
+            const twoCopiesTitleSize = titleSizeChoice === 'matched' ? '12.5px' : (parseInt(titleSizeChoice) - 3) + 'px';
+
+            const bodySize = baseFontSize + 'px';
+            const twoCopiesBodySize = (baseFontSize - 10) + 'px';
+
+            const frameCSS = getFrameCSS(frameStyle, fontColor);
 
             let subjectTitle = "";
             let actionText = "";
 
             if (orderType === 'infikak') {
-                subjectTitle = "انفكاك مدرس";
+                subjectTitle = "انفكاك مدرس / مدرسة";
                 actionText = gender === 'female' ? 
                     `انفكت السيدة (<b>${teacherName}</b>) مدرسة اختصاص (${subject}) من مدرستنا يوم (${actionDate}) استناداً لأمركم الاداري اعلاه.` : 
                     `انفك السيد (<b>${teacherName}</b>) مدرس اختصاص (${subject}) من مدرستنا يوم (${actionDate}) استناداً لأمركم الاداري اعلاه.`;
             } else {
-                subjectTitle = "مباشرة مدرس";
+                subjectTitle = "مباشرة مدرس / مدرسة";
                 actionText = gender === 'female' ? 
                     `باشرت السيدة (<b>${teacherName}</b>) مدرسة اختصاص (${subject}) في مدرستنا يوم (${actionDate}) استناداً لأمركم الاداري اعلاه.` : 
                     `باشر السيد (<b>${teacherName}</b>) مدرس اختصاص (${subject}) في مدرستنا يوم (${actionDate}) استناداً لأمركم الاداري اعلاه.`;
             }
 
+            const optionalNoteHTML = optionalNote ? `<div style="margin-top: 4px;">${optionalNote}</div>` : '';
+
             const createCardHTML = (isTwoCopies) => `
-                <div style="margin: ${isTwoCopies ? '2mm 6mm' : '5mm 8mm'}; border: 2.5px solid #1a202c; padding: ${isTwoCopies ? '4mm 6mm' : '8mm 14mm'}; border-radius: 8px; background: #fff; height: ${isTwoCopies ? '135mm' : '287mm'}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
+                <div style="margin: ${isTwoCopies ? '2mm 6mm' : '5mm 8mm'}; border: ${frameCSS}; padding: ${isTwoCopies ? '4mm 6mm' : '8mm 14mm'}; border-radius: ${frameStyle === 'rounded' ? '16px' : '8px'}; background: #fff; height: ${isTwoCopies ? '135mm' : '287mm'}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; font-family: ${selectedFont}; color: ${fontColor};">
                     <div>
-                        <div style="text-align: center; font-weight: bold; font-size: ${isTwoCopies ? '13.5px' : '17.5px'}; margin-bottom: ${isTwoCopies ? '1.5mm' : '4mm'};">
+                        <div style="text-align: center; font-family: ${actualTitleFont}; font-weight: bold; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; margin-bottom: ${isTwoCopies ? '1.5mm' : '4mm'};">
                             ${headerTitle}
                         </div>
 
-                        <table style="width: 100%; border-collapse: collapse; margin-bottom: ${isTwoCopies ? '2.5mm' : '6mm'}; font-weight: bold; font-size: ${isTwoCopies ? '12px' : '14.5px'};">
+                        <table style="width: 100%; border-collapse: collapse; margin-bottom: ${isTwoCopies ? '2.5mm' : '6mm'}; font-weight: bold; font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; color: ${fontColor};">
                             <tr>
-                                <td style="width: 50%; text-align: right;">إدارة / ${schoolName}</td>
-                                <td style="width: 50%; text-align: left;">
+                                <td style="width: 50%; text-align: right; font-family: ${actualTitleFont};">إدارة / ${schoolName}</td>
+                                <td style="width: 50%; text-align: left; font-family: ${actualTitleFont};">
                                     العدد: ${bookNum}<br>
                                     التاريخ: ${dateVal}
                                 </td>
                             </tr>
                         </table>
 
-                        <div style="text-align: center; font-size: ${isTwoCopies ? '12.5px' : '15px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '2.5mm' : '5mm'};">
+                        <div style="text-align: center; font-family: ${actualTitleFont}; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '2.5mm' : '5mm'};">
                             إلى / ${toVal}
                         </div>
 
-                        <div style="text-align: center; font-size: ${isTwoCopies ? '12.5px' : '15px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '4mm' : '8mm'};">
+                        <div style="text-align: center; font-family: ${actualTitleFont}; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '4mm' : '8mm'};">
                             م/ ${subjectTitle}
                         </div>
 
-                        <div style="font-size: ${isTwoCopies ? '12px' : '14.5px'}; line-height: ${isTwoCopies ? '1.5' : '1.9'}; text-align: justify; padding: 0 2mm;">
+                        <div style="font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; line-height: ${isTwoCopies ? '1.5' : '1.9'}; text-align: justify; padding: 0 2mm;">
                             كتابكم المرقم (${refBookNum}) في (${refBookDate}) والمتضمن (${contentNature}).
                             <br>
                             ${actionText}
+                            ${optionalNoteHTML}
                         </div>
                     </div>
 
-                    <!-- تم رفع عبارة للعلم مع التقدير وتوقيع المدير نحو الأعلى بمسافة إضافية مناسبة -->
-                    <div style="margin-bottom: ${isTwoCopies ? '18mm' : '48mm'};">
-                        <div style="text-align: center; font-size: ${isTwoCopies ? '12.5px' : '15px'}; font-weight: bold; margin-bottom: ${isTwoCopies ? '3mm' : '6mm'};">
+                    <!-- إطار اسم المدير في الجهة اليسرى تماماً مع الإطار المنحني والخطوط المرتبطة -->
+                    <div style="margin-bottom: ${isTwoCopies ? '10mm' : '22mm'};">
+                        <div style="text-align: center; font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '5mm' : '12mm'}; font-family: ${actualTitleFont};">
                             للعلـم مع التقـدير
                         </div>
 
-                        <table style="width: 100%; border-collapse: collapse;">
+                        <table style="width: 100%; border-collapse: collapse; color: ${fontColor};">
                             <tr>
-                                <td style="width: 78%;"></td>
-                                <td style="width: 22%; text-align: right; font-size: ${isTwoCopies ? '12px' : '14px'}; line-height: 1.3; padding-right: 5px;">
-                                    <b>${managerName}</b><br>
-                                    مدير المدرسة
+                                <td style="width: 50%;"></td>
+                                <td style="width: 50%; text-align: left; padding-left: 5mm;">
+                                    <div style="display: inline-block; border: 1.5px solid ${fontColor}; border-radius: 12px; padding: ${isTwoCopies ? '4px 14px' : '8px 22px'}; text-align: center; min-width: 170px;">
+                                        <div style="font-family: ${actualTitleFont}; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; font-weight: bold; margin-bottom: 2px;">${managerName}</div>
+                                        <div style="font-family: ${actualTitleFont}; font-size: ${isTwoCopies ? (parseInt(twoCopiesTitleSize)-2)+'px' : (parseInt(actualTitleSize)-2)+'px'}; font-weight: normal;">مدير المدرسة</div>
+                                    </div>
                                 </td>
                             </tr>
                         </table>
@@ -409,3 +605,4 @@
 
 </body>
 </html>
+ 
