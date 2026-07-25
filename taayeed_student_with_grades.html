@@ -192,7 +192,7 @@
                         <label>نظام النسخ:</label>
                         <select id="copiesLayout">
                             <option value="one">نسخة واحدة (تملأ الصفحة)</option>
-                            <option value="two">نسختان (نفس الورقة)</option>
+                            <option value="two" selected>نسختان (نفس الورقة)</option>
                         </select>
                     </div>
                     <div class="form-group" style="flex: 1;">
@@ -243,10 +243,10 @@
                             <option value="15px">15</option>
                             <option value="16px">16</option>
                             <option value="17px">17</option>
-                            <option value="18px">18</option>
+                            <option value="18px" selected>18</option>
                             <option value="19px">19</option>
                             <option value="20px">20</option>
-                            <option value="22px" selected>22</option>
+                            <option value="22px">22</option>
                             <option value="24px">24</option>
                             <option value="26px">26</option>
                         </select>
@@ -267,11 +267,11 @@
                     <label>حجم خط العناوين:</label>
                     <select id="titleFontSizeInput">
                         <option value="matched">تلقائي متناسق</option>
-                        <option value="16px">16px</option>
-                        <option value="18px" selected>18px</option>
+                        <option value="14px">14px</option>
+                        <option value="16px" selected>16px</option>
+                        <option value="18px">18px</option>
                         <option value="20px">20px</option>
                         <option value="22px">22px</option>
-                        <option value="24px">24px</option>
                     </select>
                 </div>
             </div>
@@ -541,9 +541,8 @@
             let line3 = "";
 
             if (gender === 'male') {
-                line1 = `نؤيد لكم أن الطالب (<b>${name}</b>) تولد (${birth}) أحد طلاب الصف (${stageNames[stage]}) ذو الرقم الامتحاني (${examNum}).`;
-                line2 = `قد دخل الامتحان الوزاري للعام الدراسي (${year}) وكان ناجحاً من الدور (${round}).`;
-                line3 = `وبناءً على طلبه زود بهذا التأييد.`;
+                line1 = `نؤيد لكم أن الطالب (<b>${name}</b>) تولد (${birth}) أحد طلاب الصف (${stageNames[stage]}) ذو الرقم الامتحاني (${examNum}).`; `قد دخل الامتحان الوزاري للعام الدراسي (${year}) وكان ناجحاً من الدور (${round}).`;
+                line2 = `وبناءً على طلبه زود بهذا التأييد.`;
             } else {
                 line1 = `نؤيد لكم أن الطالبة (<b>${name}</b>) تولد (${birth}) إحدى طالبات الصف (${stageNames[stage]}) ذات الرقم الامتحاني (${examNum}).`;
                 line2 = `وقد دخلت الامتحان الوزاري للعام الدراسي (${year}) وكانت ناجحة من الدور (${round}).`;
@@ -554,24 +553,24 @@
                 line3 += `<br>${optionalText}`;
             }
 
-            let borderCSS = "2.5px solid #1a202c";
-            let borderRadiusCSS = "8px";
-            if (borderStyleChoice === 'solid-thick') borderCSS = "4px solid #1a202c";
-            if (borderStyleChoice === 'double') borderCSS = "4px double #1a202c";
-            if (borderStyleChoice === 'fancy-double') borderCSS = "1px solid #1a202c; outline: 2px solid #1a202c; outline-offset: 3px;";
-            if (borderStyleChoice === 'rounded') { borderCSS = "2.5px solid #1a202c"; borderRadiusCSS = "20px"; }
+            let borderCSS = "2px solid #1a202c";
+            let borderRadiusCSS = "6px";
+            if (borderStyleChoice === 'solid-thick') borderCSS = "3.5px solid #1a202c";
+            if (borderStyleChoice === 'double') borderCSS = "3.5px double #1a202c";
+            if (borderStyleChoice === 'fancy-double') borderCSS = "1px solid #1a202c; outline: 1.5px solid #1a202c; outline-offset: 2px;";
+            if (borderStyleChoice === 'rounded') { borderCSS = "2px solid #1a202c"; borderRadiusCSS = "15px"; }
             if (borderStyleChoice === 'dashed') borderCSS = "2px dashed #1a202c";
             if (borderStyleChoice === 'none') borderCSS = "none";
 
             const bodySize = baseFontSize + 'px';
-            const twoCopiesBodySize = (baseFontSize - 3) + 'px';
+            const twoCopiesBodySize = '12px'; // قياس مخصص ومضبوط لعدم التداخل في النسختين
 
             const actualTitleFont = titleFont === 'inherit' ? selectedFont : titleFont;
             const actualTitleSize = titleSizeChoice === 'matched' ? (baseFontSize + 2) + 'px' : titleSizeChoice;
-            const twoCopiesTitleSize = titleSizeChoice === 'matched' ? '12.5px' : (parseInt(titleSizeChoice) - 3) + 'px';
+            const twoCopiesTitleSize = '13px'; // حجم عناوين متناسق وآمن لنسختين في ورقة واحدة
             
             const tableFontSize = (baseFontSize - 4) + 'px';
-            const twoCopiesTableFontSize = (baseFontSize - 6) + 'px';
+            const twoCopiesTableFontSize = '11px'; // حجم خط الجدول للنسختين
 
             const subs = subjectsData[stage];
             let tableRows = "";
@@ -579,31 +578,31 @@
                 const sName = document.getElementById(`sub_name_${index}`).value;
                 const nVal = document.getElementById(`sub_num_${index}`).value;
                 const tVal = document.getElementById(`sub_text_${index}`).value;
-                tableRows += `<tr><td style="border: 1px solid ${fontColor}; padding: 2px 6px; text-align: right;">${sName}</td><td style="border: 1px solid ${fontColor}; padding: 2px 6px; text-align: center; width: 18%;"><b>${nVal}</b></td><td style="border: 1px solid ${fontColor}; padding: 2px 6px; text-align: center; width: 28%;"><b>${tVal}</b></td></tr>`;
+                tableRows += `<tr><td style="border: 1px solid ${fontColor}; padding: 1px 4px; text-align: right;">${sName}</td><td style="border: 1px solid ${fontColor}; padding: 1px 4px; text-align: center; width: 18%;"><b>${nVal}</b></td><td style="border: 1px solid ${fontColor}; padding: 1px 4px; text-align: center; width: 28%;"><b>${tVal}</b></td></tr>`;
             });
 
             const extraName = document.getElementById('extra_sub_name').value.trim();
             const extraNum = document.getElementById('extra_sub_num').value.trim();
             const extraText = document.getElementById('extra_sub_text').value.trim();
             if (extraName !== "" || extraNum !== "") {
-                tableRows += `<tr><td style="border: 1px solid ${fontColor}; padding: 2px 6px; text-align: right;">${extraName}</td><td style="border: 1px solid ${fontColor}; padding: 2px 6px; text-align: center;"><b>${extraNum}</b></td><td style="border: 1px solid ${fontColor}; padding: 2px 6px; text-align: center;"><b>${extraText}</b></td></tr>`;
+                tableRows += `<tr><td style="border: 1px solid ${fontColor}; padding: 1px 4px; text-align: right;">${extraName}</td><td style="border: 1px solid ${fontColor}; padding: 1px 4px; text-align: center;"><b>${extraNum}</b></td><td style="border: 1px solid ${fontColor}; padding: 1px 4px; text-align: center;"><b>${extraText}</b></td></tr>`;
             }
 
             const totalNum = document.getElementById('totalNum').value;
             const totalText = document.getElementById('totalText').value;
-            tableRows += `<tr><td style="border: 1px solid ${fontColor}; padding: 2px 6px; font-weight: bold; text-align: right;">المجموع</td><td style="border: 1px solid ${fontColor}; padding: 2px 6px; text-align: center; font-weight: bold;">${totalNum}</td><td style="border: 1px solid ${fontColor}; padding: 2px 6px; text-align: center; font-weight: bold;">${totalText}</td></tr>`;
+            tableRows += `<tr><td style="border: 1px solid ${fontColor}; padding: 1px 4px; font-weight: bold; text-align: right;">المجموع</td><td style="border: 1px solid ${fontColor}; padding: 1px 4px; text-align: center; font-weight: bold;">${totalNum}</td><td style="border: 1px solid ${fontColor}; padding: 1px 4px; text-align: center; font-weight: bold;">${totalText}</td></tr>`;
 
             if (stage !== 'third') {
                 const avgVal = document.getElementById('averageVal').value;
                 if(avgVal) {
-                    tableRows += `<tr><td style="border: 1px solid ${fontColor}; padding: 2px 6px; font-weight: bold; text-align: right;">المعدل</td><td colspan="2" style="border: 1px solid ${fontColor}; padding: 2px 6px; text-align: center; font-weight: bold;">${avgVal}</td></tr>`;
+                    tableRows += `<tr><td style="border: 1px solid ${fontColor}; padding: 1px 4px; font-weight: bold; text-align: right;">المعدل</td><td colspan="2" style="border: 1px solid ${fontColor}; padding: 1px 4px; text-align: center; font-weight: bold;">${avgVal}</td></tr>`;
                 }
             }
 
             const createCardHTML = (isTwoCopies) => `
-                <div style="font-family: ${selectedFont}; color: ${fontColor}; margin: ${isTwoCopies ? '2mm 6mm' : '5mm 8mm'}; border: ${borderCSS}; border-radius: ${borderRadiusCSS}; padding: ${isTwoCopies ? '4mm 6mm' : '6mm 10mm'}; background: #fff; height: ${isTwoCopies ? '142mm' : '286mm'}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
+                <div style="font-family: ${selectedFont}; color: ${fontColor}; margin: ${isTwoCopies ? '1.5mm 4mm' : '5mm 8mm'}; border: ${borderCSS}; border-radius: ${borderRadiusCSS}; padding: ${isTwoCopies ? '3mm 5mm' : '6mm 10mm'}; background: #fff; height: ${isTwoCopies ? '141mm' : '286mm'}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden;">
                     <div>
-                        <div style="font-family: ${actualTitleFont}; text-align: center; font-weight: bold; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; margin-bottom: ${isTwoCopies ? '1.5mm' : '2mm'}; line-height: 1.3;">
+                        <div style="font-family: ${actualTitleFont}; text-align: center; font-weight: bold; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; margin-bottom: ${isTwoCopies ? '1mm' : '2mm'}; line-height: 1.2;">
                           ${headerTitle}
                         </div>
 
@@ -615,20 +614,20 @@
                                 </td>
                                 <td style="width: 50%; text-align: left; vertical-align: top;">
                                     <div style="display: inline-flex; flex-direction: column; align-items: flex-end;">
-                                        <div style="text-align: right; min-width: 130px;">
+                                        <div style="text-align: right; min-width: 120px;">
                                             العدد: ${bookNum}<br>
                                             التاريخ: ${dateVal}
                                         </div>
-                                        <div style="margin-top: 2px; width: 16mm; height: 20mm; border: 1px dashed ${fontColor}; display: flex; align-items: center; justify-content: center; font-size: 7.5px; opacity: 0.65; background: #fafafa;">مكان الصورة</div>
+                                        <div style="margin-top: 1px; width: 14mm; height: 17mm; border: 1px dashed ${fontColor}; display: flex; align-items: center; justify-content: center; font-size: 7px; opacity: 0.65; background: #fafafa;">مكان الصورة</div>
                                     </div>
                                 </td>
                             </tr>
                         </table>
 
-                        <!-- جعل "إلى" و "م" تبدأن من المنتصف بـ محاذاة إطار الصورة المربع لتوفير مساحة وتناسق رائع -->
-                        <div style="width: 100%; display: flex; justify-content: center; margin-bottom: ${isTwoCopies ? '2mm' : '3mm'};">
+                        <!-- جعل "إلى" و "م" تبدأن من المنتصف بمحاذاة إطار الصورة المربع لتوفير مساحة وتناسق رائع -->
+                        <div style="width: 100%; display: flex; justify-content: center; margin-bottom: ${isTwoCopies ? '1.5mm' : '3mm'};">
                             <div style="width: 65%; text-align: right;">
-                                <div style="font-family: ${actualTitleFont}; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; font-weight: bold; margin-bottom: 1mm;">
+                                <div style="font-family: ${actualTitleFont}; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; font-weight: bold; margin-bottom: 0.5mm;">
                                     إلى / ${target}
                                 </div>
                                 <div style="font-family: ${actualTitleFont}; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; font-weight: bold;">
@@ -637,18 +636,18 @@
                             </div>
                         </div>
 
-                        <div style="font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; line-height: ${isTwoCopies ? '1.35' : '1.6'}; text-align: justify; padding: 0 2mm; margin-bottom: ${isTwoCopies ? '2mm' : '3mm'};">
-                            <div style="margin-bottom: 2px;">${line1}</div>
-                            <div style="margin-bottom: 2px;">${line2}</div>
-                            <div style="margin-bottom: 2px;">${line3}</div>
+                        <div style="font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; line-height: ${isTwoCopies ? '1.3' : '1.6'}; text-align: justify; padding: 0 1mm; margin-bottom: ${isTwoCopies ? '1.5mm' : '3mm'};">
+                            <div style="margin-bottom: 1px;">${line1}</div>
+                            <div style="margin-bottom: 1px;">${line2}</div>
+                            <div style="margin-bottom: 1px;">${line3}</div>
                         </div>
 
-                        <table style="width: 80%; margin: 0 auto; border-collapse: collapse; font-size: ${isTwoCopies ? twoCopiesTableFontSize : tableFontSize}; margin-bottom: 2mm; color: ${fontColor};">
+                        <table style="width: 82%; margin: 0 auto; border-collapse: collapse; font-size: ${isTwoCopies ? twoCopiesTableFontSize : tableFontSize}; margin-bottom: 1.5mm; color: ${fontColor};">
                             <thead>
                                 <tr style="background: rgba(0,0,0,0.03);">
-                                    <th style="border: 1px solid ${fontColor}; padding: 2px 5px; text-align: right;">المادة</th>
-                                    <th style="border: 1px solid ${fontColor}; padding: 2px 5px; text-align: center; width: 22%;">الدرجة رقماً</th>
-                                    <th style="border: 1px solid ${fontColor}; padding: 2px 5px; text-align: center; width: 32%;">الدرجة كتابةً</th>
+                                    <th style="border: 1px solid ${fontColor}; padding: 1px 4px; text-align: right;">المادة</th>
+                                    <th style="border: 1px solid ${fontColor}; padding: 1px 4px; text-align: center; width: 22%;">الدرجة رقماً</th>
+                                    <th style="border: 1px solid ${fontColor}; padding: 1px 4px; text-align: center; width: 32%;">الدرجة كتابةً</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -658,8 +657,8 @@
                     </div>
 
                     <!-- التوقيع والإطار الدائري لاسم المدير في الجهة اليسرى تماماً -->
-                    <div style="margin-bottom: ${isTwoCopies ? '2mm' : '4mm'};">
-                        <div style="text-align: center; font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '2mm' : '4mm'};">
+                    <div style="margin-bottom: ${isTwoCopies ? '1mm' : '4mm'};">
+                        <div style="text-align: center; font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '1mm' : '4mm'};">
                             للعـلم مع التقـدير
                         </div>
 
@@ -667,9 +666,9 @@
                             <tr>
                                 <td style="width: 50%;"></td>
                                 <td style="width: 50%; text-align: left; padding-left: 5mm;">
-                                    <div style="display: inline-block; border: 1.5px solid ${fontColor}; border-radius: 12px; padding: ${isTwoCopies ? '4px 14px' : '6px 20px'}; text-align: center; min-width: 160px;">
-                                        <div style="font-family: ${actualTitleFont}; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; font-weight: bold; margin-bottom: 2px;">${manager}</div>
-                                        <div style="font-family: ${actualTitleFont}; font-size: ${isTwoCopies ? (parseInt(twoCopiesTitleSize)-2)+'px' : (parseInt(actualTitleSize)-2)+'px'}; font-weight: normal;">مدير المدرسة</div>
+                                    <div style="display: inline-block; border: 1.5px solid ${fontColor}; border-radius: 10px; padding: ${isTwoCopies ? '2px 10px' : '6px 20px'}; text-align: center; min-width: 140px;">
+                                        <div style="font-family: ${actualTitleFont}; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; font-weight: bold; margin-bottom: 1px;">${manager}</div>
+                                        <div style="font-family: ${actualTitleFont}; font-size: ${isTwoCopies ? '11px' : (parseInt(actualTitleSize)-2)+'px'}; font-weight: normal;">مدير المدرسة</div>
                                     </div>
                                 </td>
                             </tr>
@@ -681,10 +680,10 @@
             const wrapper = document.getElementById('documentWrapper');
             if (layoutMode === 'two') {
                 wrapper.innerHTML = `
-                    <div style="height: 148.5mm; display: flex; flex-direction: column; justify-content: flex-start;">
+                    <div style="height: 148.5mm; display: flex; flex-direction: column; justify-content: flex-start; padding-top: 1mm;">
                         ${createCardHTML(true)}
                     </div>
-                    <div style="height: 148.5mm; display: flex; flex-direction: column; justify-content: flex-end;">
+                    <div style="height: 148.5mm; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 1mm;">
                         ${createCardHTML(true)}
                     </div>
                 `;
