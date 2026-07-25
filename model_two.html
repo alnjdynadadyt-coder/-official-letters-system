@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تأييد استمرار مدرس أو موظف</title>
-    <!-- استيراد باقة أوسع من الخطوط العربية المتنوعة -->
+    <!-- استيراد باقة الخطوط العربية المتنوعة -->
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;700&family=Changa:wght@400;700&family=El+Messiri:wght@400;700&family=Lateef&family=Readex+Pro:wght@400;700&family=Reem+Kufi:wght@400;700&family=Scheherazade+New:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -77,7 +77,7 @@
             color: #4a5568;
             font-size: 12.5px;
         }
-        input, select {
+        input, select, textarea {
             width: 100%;
             padding: 8px 10px;
             border: 1px solid #cbd5e0;
@@ -86,8 +86,9 @@
             box-sizing: border-box;
             background-color: #fff;
             transition: all 0.2s;
+            font-family: inherit;
         }
-        input:focus, select:focus {
+        input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: #d69e2e;
             box-shadow: 0 0 0 3px rgba(214, 158, 46, 0.15);
@@ -219,7 +220,7 @@
 
                 <div style="display: flex; gap: 10px; margin-bottom: 8px;">
                     <div class="form-group" style="flex: 1;">
-                        <label>نوع الخط (النص الأساسي):</label>
+                        <label>نوع الخط (النص الأساسي + التوقيع):</label>
                         <select id="fontFamilyInput">
                             <option value="'Traditional Arabic', serif">Traditional Arabic (التقليدي الرسمي)</option>
                             <option value="'Amiri', serif">أميري (Amiri - أصيل)</option>
@@ -233,7 +234,7 @@
                         </select>
                     </div>
                     <div class="form-group" style="flex: 1;">
-                        <label>حجم الخط (النص الأساسي):</label>
+                        <label>حجم الخط (النص الأساسي + التوقيع):</label>
                         <select id="fontSizeInput">
                             <option value="14px">14</option>
                             <option value="15px">15</option>
@@ -251,17 +252,17 @@
 
                 <div style="display: flex; gap: 10px;">
                     <div class="form-group" style="flex: 1;">
-                        <label>نوع خط العنوان والموضوع:</label>
+                        <label>نوع خط العناوين:</label>
                         <select id="titleFontFamilyInput">
                             <option value="inherit">نفس خط النص الأساسي</option>
                             <option value="'Amiri', serif">أميري (Amiri)</option>
-                            <option value="'Cairo', sans-serif">كايرو (Cairo - عريض بارز)</option>
+                            <option value="'Cairo', sans-serif">كايرو (Cairo)</option>
                             <option value="'Reem Kufi', sans-serif">الخط الكوفي (Reem Kufi)</option>
                             <option value="'Tajawal', sans-serif">تجوال (Tajawal)</option>
                         </select>
                     </div>
                     <div class="form-group" style="flex: 1;">
-                        <label>حجم خط العنوان والموضوع:</label>
+                        <label>حجم خط العناوين:</label>
                         <select id="titleFontSizeInput">
                             <option value="matched">تلقائي متناسق</option>
                             <option value="16px">16px</option>
@@ -269,7 +270,6 @@
                             <option value="20px" selected>20px (مميز)</option>
                             <option value="22px">22px</option>
                             <option value="24px">24px</option>
-                            <option value="26px">26px (كبير جداً)</option>
                         </select>
                     </div>
                 </div>
@@ -283,7 +283,7 @@
                         <input type="text" id="headerTitleInput" required placeholder="المديرية العامة لتربية القادسية - قسم تربية الحمزة">
                     </div>
                     <div class="form-group" style="flex: 1;">
-                        <label>اسم المؤسسة (اعداديتنا / متوسطتنا / ثانويتنا...):</label>
+                        <label>اسم المؤسسة (المدرسة):</label>
                         <input type="text" id="schoolNameInput" required placeholder="اعدادية النجدين للبنين">
                     </div>
                 </div>
@@ -337,7 +337,12 @@
 
                 <div class="form-group" style="margin-top: 8px;">
                     <label>اسم مدير المدرسة:</label>
-                    <input type="text" id="managerNameInput" required placeholder="اسم المدير ">
+                    <input type="text" id="managerNameInput" required placeholder="اسم المدير">
+                </div>
+
+                <div class="form-group" style="margin-top: 8px;">
+                    <label>ملاحظات إضافية (اختياري - تظهر أسفل النص الأساسي):</label>
+                    <textarea id="notesInput" rows="2" placeholder="مثال: مُنح هذا التأييد بناءً على طلبه لتقديمه إلى الجهات المختصة..."></textarea>
                 </div>
             </div>
 
@@ -372,8 +377,22 @@
             }
         }
 
+        // حفظ ثوابت الإدارة محلياً لجهازك اللوحي لتوفير الوقت
+        function saveSettings() {
+            localStorage.setItem('headerTitle', document.getElementById('headerTitleInput').value);
+            localStorage.setItem('schoolName', document.getElementById('schoolNameInput').value);
+            localStorage.setItem('managerName', document.getElementById('managerNameInput').value);
+        }
+
+        function loadSettings() {
+            if(localStorage.getItem('headerTitle')) document.getElementById('headerTitleInput').value = localStorage.getItem('headerTitle');
+            if(localStorage.getItem('schoolName')) document.getElementById('schoolNameInput').value = localStorage.getItem('schoolName');
+            if(localStorage.getItem('managerName')) document.getElementById('managerNameInput').value = localStorage.getItem('managerName');
+        }
+
         window.onload = function() {
             toggleCategoryFields();
+            loadSettings();
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('dateInput').value = today;
         };
@@ -387,6 +406,7 @@
 
         function generatePDF(e) {
             e.preventDefault();
+            saveSettings(); // حفظ الثوابت تلقائياً في الأيباد
             
             const category = document.getElementById('categoryInput').value;
             const headerTitle = document.getElementById('headerTitleInput').value;
@@ -399,6 +419,7 @@
             const gender = document.getElementById('genderInput').value;
             const personName = document.getElementById('personNameInput').value;
             const managerName = document.getElementById('managerNameInput').value;
+            const notes = document.getElementById('notesInput').value;
             const layoutMode = document.getElementById('copiesLayout').value;
             
             const selectedFont = document.getElementById('fontFamilyInput').value;
@@ -427,17 +448,19 @@
                 }
             }
 
-            // تحديد إطار الورقة بدقة وتصاميم متنوعة
+            if(notes.trim() !== "") {
+                bodyText += `<br><span style="font-size: 0.95em; margin-top: 5px; display: block;">ملاحظة: ${notes}</span>`;
+            }
+
             let borderCSS = "2.5px solid #1a202c";
             let borderRadiusCSS = "8px";
             if (borderStyleChoice === 'solid-thick') borderCSS = "4px solid #1a202c";
             if (borderStyleChoice === 'double') borderCSS = "4px double #1a202c";
             if (borderStyleChoice === 'fancy-double') borderCSS = "1px solid #1a202c; outline: 2px solid #1a202c; outline-offset: 3px;";
-            if (borderStyleChoice === 'rounded') { borderCSS = "2.5px solid #1a202c"; borderRadius = "20px"; }
+            if (borderStyleChoice === 'rounded') { borderCSS = "2.5px solid #1a202c"; borderRadiusCSS = "20px"; }
             if (borderStyleChoice === 'dashed') borderCSS = "2px dashed #1a202c";
             if (borderStyleChoice === 'none') borderCSS = "none";
 
-            const tableSize = (baseFontSize - 1) + 'px';
             const bodySize = baseFontSize + 'px';
             const twoCopiesBodySize = (baseFontSize - 3) + 'px';
 
@@ -452,7 +475,7 @@
                             ${headerTitle}
                         </div>
 
-                        <table style="width: 100%; border-collapse: collapse; margin-bottom: ${isTwoCopies ? '2.5mm' : '6mm'}; font-weight: bold; font-size: ${isTwoCopies ? '12px' : tableSize}; color: ${fontColor};">
+                        <table style="width: 100%; border-collapse: collapse; margin-bottom: ${isTwoCopies ? '2.5mm' : '6mm'}; font-weight: bold; font-family: ${actualTitleFont}; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; color: ${fontColor};">
                             <tr>
                                 <td style="width: 50%; text-align: right;">إدارة / ${schoolName}</td>
                                 <td style="width: 50%; text-align: left;">
@@ -476,14 +499,14 @@
                     </div>
 
                     <div style="margin-bottom: ${isTwoCopies ? '18mm' : '48mm'};">
-                        <div style="text-align: center; font-size: ${isTwoCopies ? '12.5px' : actualTitleSize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '3mm' : '6mm'};">
+                        <div style="text-align: center; font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '3mm' : '6mm'};">
                             للعلـم مع التقـدير
                         </div>
 
                         <table style="width: 100%; border-collapse: collapse; color: ${fontColor};">
                             <tr>
                                 <td style="width: 78%;"></td>
-                                <td style="width: 22%; text-align: right; font-size: ${isTwoCopies ? '12px' : tableSize}; line-height: 1.3; padding-right: 5px;">
+                                <td style="width: 22%; text-align: right; font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; line-height: 1.3; padding-right: 5px;">
                                     <b>${managerName}</b><br>
                                     مدير المدرسة
                                 </td>
