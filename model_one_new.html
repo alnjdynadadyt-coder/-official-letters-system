@@ -248,7 +248,7 @@
 
                 <div style="display: flex; gap: 10px; margin-bottom: 8px;">
                     <div class="form-group" style="flex: 1;">
-                        <label>نوع الخط (النص الأساسي + التوقيع):</label>
+                        <label>نوع الخط (النص الأساسي فقط):</label>
                         <select id="fontFamilyInput">
                             <option value="'Traditional Arabic', serif">Traditional Arabic (التقليدي الرسمي)</option>
                             <option value="'Amiri', serif">أميري (Amiri - أصيل)</option>
@@ -262,7 +262,7 @@
                         </select>
                     </div>
                     <div class="form-group" style="flex: 1;">
-                        <label>حجم الخط (النص الأساسي + التوقيع):</label>
+                        <label>حجم الخط (النص الأساسي فقط):</label>
                         <select id="fontSizeInput">
                             <option value="14px">14</option>
                             <option value="15px">15</option>
@@ -280,7 +280,7 @@
 
                 <div style="display: flex; gap: 10px;">
                     <div class="form-group" style="flex: 1;">
-                        <label>نوع خط العناوين:</label>
+                        <label>نوع خط العناوين (الترويسة، المدرسة، اسم المدير):</label>
                         <select id="titleFontFamilyInput">
                             <option value="inherit">نفس خط النص الأساسي</option>
                             <option value="'Amiri', serif" selected>أميري (Amiri)</option>
@@ -290,7 +290,7 @@
                         </select>
                     </div>
                     <div class="form-group" style="flex: 1;">
-                        <label>حجم خط العناوين:</label>
+                        <label>حجم خط العناوين (الترويسة، المدرسة، اسم المدير):</label>
                         <select id="titleFontSizeInput">
                             <option value="matched">تلقائي متناسق</option>
                             <option value="16px">16px</option>
@@ -591,17 +591,20 @@
                         </div>
                     </div>
 
-                    <div style="margin-bottom: ${isTwoCopies ? '12mm' : '28mm'};">
-                        <div style="text-align: center; font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '6mm' : '16mm'};">
+                    <!-- التوقيع والإطار الدائري لاسم المدير مرتبط بخط العناوين -->
+                    <div style="margin-bottom: ${isTwoCopies ? '10mm' : '22mm'};">
+                        <div style="text-align: center; font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '5mm' : '12mm'};">
                             للعلـم مع التقـدير
                         </div>
 
                         <table style="width: 100%; border-collapse: collapse; color: ${fontColor};">
                             <tr>
-                                <td style="width: 45%;"></td>
-                                <td style="width: 55%; text-align: left; font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; line-height: 1.3; padding-left: 10mm;">
-                                    <b>${managerName}</b><br>
-                                    <span style="display: inline-block; margin-right: 18px;">مدير المدرسة</span>
+                                <td style="width: 50%;"></td>
+                                <td style="width: 50%; text-align: left; padding-left: 5mm;">
+                                    <div style="display: inline-block; border: 2px solid ${fontColor}; border-radius: 18px; padding: ${isTwoCopies ? '4px 14px' : '8px 22px'}; text-align: center; min-width: 180px;">
+                                        <div style="font-family: ${actualTitleFont}; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; font-weight: bold; margin-bottom: 2px;">${managerName}</div>
+                                        <div style="font-family: ${actualTitleFont}; font-size: ${isTwoCopies ? (parseInt(twoCopiesTitleSize)-2)+'px' : (parseInt(actualTitleSize)-2)+'px'}; font-weight: normal;">مدير المدرسة</div>
+                                    </div>
                                 </td>
                             </tr>
                         </table>
