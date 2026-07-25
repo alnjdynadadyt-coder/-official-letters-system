@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نموذج مخاطبة ثاني</title>
+    <title>نموذج مخاطبة ثاني - إصدار تلقائي</title>
+    <!-- استيراد خطوط عربية متنوعة من جوجل فونتس -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&family=Lateef&family=Scheherazade+New:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Tajawal', sans-serif;
             padding: 10px;
             direction: rtl;
             color: #2d3748;
@@ -35,7 +37,6 @@
             font-size: 19px;
             font-weight: 700;
         }
-        
         .section-box {
             border: 1px solid rgba(0,0,0,0.07);
             border-radius: 8px;
@@ -43,7 +44,6 @@
             margin-bottom: 10px;
             transition: all 0.3s ease;
         }
-
         .sec-print { background: #f0f9ff; border-color: #bae6fd; }
         .sec-admin { background: #fdf4ff; border-color: #f5d0fe; }
         .sec-person { background: #f0fdf4; border-color: #bbf7d0; }
@@ -128,7 +128,6 @@
             text-align: center;
             margin-top: 12px;
         }
-
         #printArea {
             display: none;
         }
@@ -166,12 +165,13 @@
 
     <div class="form-container no-print">
         <div class="form-header-flex">
-            <h2>نموذج مخاطبة ثاني</h2>
+            <h2>نموذج مخاطبة ثاني (إصدار تلقائي)</h2>
             <a href="namatj_mukhataba.html" class="back-link">← العودة للنماذج</a>
         </div>
 
         <form id="modelTwoForm" onsubmit="generatePDF(event)">
             
+            <!-- خيارات الطباعة والخطوط -->
             <div class="section-box sec-print">
                 <div class="section-title">⚙️ خيارات وتنسيق الخط والطباعة</div>
                 <div style="display: flex; gap: 10px; margin-bottom: 8px;">
@@ -185,41 +185,48 @@
                     <div class="form-group" style="flex: 1;">
                         <label>نوع الخط للطباعة:</label>
                         <select id="fontFamilyInput">
-                            <option value="'Traditional Arabic', serif">Traditional Arabic (التقليدي الرسمي)</option>
-                            <option value="'Amiri', serif">Amiri (أميري)</option>
-                            <option value="'Simplified Arabic', sans-serif">Simplified Arabic (المبسط)</option>
-                            <option value="'Arial', sans-serif">Arial (أريال)</option>
+                            <option value="'Amiri', serif">أميري (Amiri - رسمى أصيل)</option>
+                            <option value="'Scheherazade New', serif">شهرزاد (Scheherazade - كلاسيكي أنيق)</option>
+                            <option value="'Tajawal', sans-serif">تجوال (Tajawal - حديث واضح)</option>
+                            <option value="'Cairo', sans-serif">كايرو (Cairo - عريض بارز)</option>
+                            <option value="'Lateef', serif">لطيف (Lateef - خط قريب للنسخ)</option>
+                            <option value="'Traditional Arabic', serif">Traditional Arabic (التقليدي)</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label>حجم الخط للنص الأساسي:</label>
                     <select id="fontSizeInput">
+                        <option value="14px">14 (صغير)</option>
+                        <option value="15px">15</option>
                         <option value="16px">16 (مناسب)</option>
-                        <option value="17px">17 (واضح)</option>
-                        <option value="18px" selected>18 (رسمي وكبير ممتاز)</option>
-                        <option value="19px">19 (كبير جداً)</option>
-                        <option value="20px">20 (ضخم)</option>
+                        <option value="17px">17</option>
+                        <option value="18px" selected>18 (رسمي ممتاز)</option>
+                        <option value="19px">19</option>
+                        <option value="20px">20 (كبير)</option>
+                        <option value="22px">22 (كبير جداً)</option>
+                        <option value="24px">24 (ضخم)</option>
                     </select>
                 </div>
             </div>
 
+            <!-- المعلومات الإدارية -->
             <div class="section-box sec-admin">
                 <div class="section-title">📋 المعلومات الإدارية للكتاب</div>
                 <div style="display: flex; gap: 10px;">
                     <div class="form-group" style="flex: 1;">
                         <label>الترويسة العليا:</label>
-                        <input type="text" id="headerTitleInput" required placeholder="المديرية العامة لتربية القادسية - قسم تربية الحمزة">
+                        <input type="text" id="headerTitleInput" required value="المديرية العامة لتربية القادسية - قسم تربية الحمزة">
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>اسم المؤسسة:</label>
-                        <input type="text" id="schoolNameInput" required placeholder="اعدادية النجدين للبنين">
+                        <input type="text" id="schoolNameInput" required value="اعدادية النجدين للبنين">
                     </div>
                 </div>
                 <div style="display: flex; gap: 10px; margin-top: 8px;">
                     <div class="form-group" style="flex: 1;">
                         <label>رقم العدد:</label>
-                        <input type="text" id="bookNumberInput" required placeholder="مثال 106">
+                        <input type="text" id="bookNumberInput" required value="135">
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>التاريخ:</label>
@@ -229,25 +236,59 @@
                 <div style="display: flex; gap: 10px; margin-top: 8px;">
                     <div class="form-group" style="flex: 1;">
                         <label>إلى (الجهة الموجه لها الكتاب):</label>
-                        <input type="text" id="toInput" required placeholder="إلى / ...">
+                        <input type="text" id="toInput" required value="المديرية العامة لتربية القادسية - قسم الملاك">
                     </div>
                     <div class="form-group" style="flex: 1;">
-                        <label>موضوع الكتاب (عنوان المذكرة):</label>
-                        <input type="text" id="subjectTitleInput" required placeholder="م/ طلب...">
+                        <label>موضوع الكتاب:</label>
+                        <input type="text" id="subjectTitleInput" required value="مباشرة مدرس">
                     </div>
                 </div>
             </div>
 
+            <!-- تفاصيل الموضوع والمتغيرات (توليد تلقائي) -->
             <div class="section-box sec-person">
-                <div class="section-title">📄 نص الموضوع والمحتوى</div>
+                <div class="section-title">📄 تفاصيل أمر المباشرة والمنتسب</div>
+                <div style="display: flex; gap: 10px; margin-bottom: 8px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>رقم الكتاب السند (المرجع):</label>
+                        <input type="text" id="refBookNum" required value="11354">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>تاريخ كتاب السند:</label>
+                        <input type="text" id="refBookDate" required value="2026-6-1">
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 10px; margin-bottom: 8px;">
+                    <div class="form-group" style="flex: 2;">
+                        <label>اسم الموظف / المدرس:</label>
+                        <input type="text" id="employeeName" required value="علي علي علي">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>الصفة الوظيفية:</label>
+                        <input type="text" id="jobTitle" required value="مدرس">
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-bottom: 8px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>الاختصاص:</label>
+                        <input type="text" id="specialization" required value="التربية الإسلامية">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>يوم الانفكاك:</label>
+                        <input type="text" id="leaveDay" required value="الخميس">
+                    </div>
+                </div>
+
                 <div class="form-group">
-                    <label>نص الكتاب (مضمون المخاطبة):</label>
-                    <textarea id="bookBodyInput" rows="4" required placeholder="اكتب نص المخاطبة أو التفاصيل هنا..."></textarea>
+                    <label>تاريخ الانفكاك والمباشرة الفعلي:</label>
+                    <input type="date" id="effectiveDate" required>
                 </div>
 
                 <div class="form-group" style="margin-top: 8px;">
                     <label>اسم مدير المدرسة:</label>
-                    <input type="text" id="managerNameInput" required placeholder="اسم المدير">
+                    <input type="text" id="managerName" required value="عصام الاسدي">
                 </div>
             </div>
 
@@ -267,6 +308,7 @@
         window.onload = function() {
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('dateInput').value = today;
+            document.getElementById('effectiveDate').value = today;
         };
 
         function formatDateToDMY(dateString) {
@@ -285,9 +327,20 @@
             const dateVal = formatDateToDMY(document.getElementById('dateInput').value);
             const toVal = document.getElementById('toInput').value;
             const subjectTitle = document.getElementById('subjectTitleInput').value;
-            const bookBody = document.getElementById('bookBodyInput').value;
             
-            const managerName = document.getElementById('managerNameInput').value;
+            // جلب متغيرات التوليد التلقائي
+            const refNum = document.getElementById('refBookNum').value;
+            const refDate = document.getElementById('refBookDate').value;
+            const empName = document.getElementById('employeeName').value;
+            const jTitle = document.getElementById('jobTitle').value;
+            const spec = document.getElementById('specialization').value;
+            const lDay = document.getElementById('leaveDay').value;
+            const effDateVal = formatDateToDMY(document.getElementById('effectiveDate').value);
+            const managerName = document.getElementById('managerName').value;
+
+            // صياغة نص الكتاب تلقائياً بناءً على الحقول
+            const generatedBody = `كتابكم المرقم (${refNum}) في ( ${refDate} ) والمتضمن تنسيب مدرسين\nانفك السيد ( ${empName} ) ${jTitle} اختصاص ${spec} يوم ${lDay} الموافق ${effDateVal}`;
+
             const layoutMode = document.getElementById('copiesLayout').value;
             const selectedFont = document.getElementById('fontFamilyInput').value;
             const baseFontSize = parseInt(document.getElementById('fontSizeInput').value);
@@ -324,13 +377,13 @@
                         </div>
 
                         <div style="font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; line-height: ${isTwoCopies ? '1.8' : '2.3'}; text-align: justify; padding: 0 2mm; white-space: pre-line;">
-                            ${bookBody}
+                            ${generatedBody}
                         </div>
                     </div>
 
                     <div style="margin-bottom: ${isTwoCopies ? '12mm' : '35mm'};">
                         <div style="text-align: center; font-size: ${isTwoCopies ? '13.5px' : subTitleSize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '3mm' : '8mm'};">
-                            للعلـم مع التقـدير
+                            للعلم مع التقدير
                         </div>
 
                         <table style="width: 100%; border-collapse: collapse;">
