@@ -62,12 +62,8 @@
         .sec-admin .section-title { color: #c084fc; }
         .sec-person .section-title { color: #16a34a; }
 
-        .form-group {
-            margin-bottom: 8px;
-        }
-        .form-group:last-child {
-            margin-bottom: 0;
-        }
+        .form-group { margin-bottom: 8px; }
+        .form-group:last-child { margin-bottom: 0; }
         label {
             display: block;
             margin-bottom: 3px;
@@ -157,20 +153,12 @@
         }
         .btn-clear-cache:hover { background-color: #c53030; }
 
-        #printArea {
-            display: none;
-        }
+        #printArea { display: none; }
+
         @media print {
-            @page {
-                size: A4;
-                margin: 0mm;
-            }
-            body * {
-                visibility: hidden;
-            }
-            #printArea, #printArea * {
-                visibility: visible;
-            }
+            @page { size: A4; margin: 0mm; }
+            body * { visibility: hidden; }
+            #printArea, #printArea * { visibility: visible; }
             #printArea {
                 display: block;
                 position: absolute;
@@ -182,9 +170,7 @@
                 background: white;
                 box-sizing: border-box;
             }
-            .no-print {
-                display: none !important;
-            }
+            .no-print { display: none !important; }
         }
     </style>
 </head>
@@ -196,7 +182,7 @@
             <a href="index.html" class="back-link">← العودة للرئيسية</a>
         </div>
 
-        <div id="taayeedGradesForm">
+        <form id="taayeedGradesForm" onsubmit="generatePDF(event)">
             
             <div class="section-box sec-print">
                 <div class="section-title">⚙️ خيارات وتنسيق الطباعة، الإطارات والخطوط المتقدمة</div>
@@ -253,15 +239,20 @@
                     <div class="form-group" style="flex: 1;">
                         <label>حجم الخط (النص الأساسي فقط):</label>
                         <select id="fontSizeInput">
-                            <option value="12px">12</option>
-                            <option value="13px" selected>13</option>
                             <option value="14px">14</option>
                             <option value="15px">15</option>
                             <option value="16px">16</option>
+                            <option value="17px">17</option>
+                            <option value="18px">18</option>
+                            <option value="19px">19</option>
+                            <option value="20px">20</option>
+                            <option value="22px" selected>22</option>
+                            <option value="24px">24</option>
+                            <option value="26px">26</option>
                         </select>
                     </div>
                     <div class="form-group" style="flex: 1;">
-                        <label>نوع خط العناوين:</label>
+                        <label>نوع خط العناوين (الترويسة، المدرسة، اسم المدير):</label>
                         <select id="titleFontFamilyInput">
                             <option value="inherit">نفس خط النص الأساسي</option>
                             <option value="'Amiri', serif" selected>أميري (Amiri)</option>
@@ -271,6 +262,18 @@
                         </select>
                     </div>
                 </div>
+
+                <div class="form-group" style="margin-top: 8px;">
+                    <label>حجم خط العناوين:</label>
+                    <select id="titleFontSizeInput">
+                        <option value="matched">تلقائي متناسق</option>
+                        <option value="16px">16px</option>
+                        <option value="18px" selected>18px</option>
+                        <option value="20px">20px</option>
+                        <option value="22px">22px</option>
+                        <option value="24px">24px</option>
+                    </select>
+                </div>
             </div>
 
             <div class="section-box sec-admin">
@@ -278,26 +281,26 @@
                 <div style="display: flex; gap: 10px;">
                     <div class="form-group" style="flex: 1;">
                         <label>الترويسة العليا (المديرية):</label>
-                        <input type="text" id="headerTitleInput" placeholder="مثال: المديرية العامة لتربية القادسية - قسم تربية الحمزة">
+                        <input type="text" id="headerTitleInput" required placeholder="مثال: المديرية العامة لتربية القادسية - قسم تربية الحمزة">
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>اسم المدرسة:</label>
-                        <input type="text" id="schoolNameInput" placeholder="مثال: اعدادية النجدين للبنين">
+                        <input type="text" id="schoolNameInput" required placeholder="مثال: اعدادية النجدين للبنين">
                     </div>
                 </div>
                 <div style="display: flex; gap: 10px; margin-top: 8px;">
                     <div class="form-group" style="flex: 1;">
                         <label>رقم العدد:</label>
-                        <input type="text" id="bookNumberInput" placeholder="مثال: 1333">
+                        <input type="text" id="bookNumberInput" required placeholder="مثال: 1333">
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>التاريخ:</label>
-                        <input type="date" id="dateInput">
+                        <input type="date" id="dateInput" required>
                     </div>
                 </div>
                 <div class="form-group" style="margin-top: 8px;">
                     <label>إلى / (الجهة المطلوبة):</label>
-                    <input type="text" id="targetEntity" placeholder="مثال: جامعة او مدرسة">
+                    <input type="text" id="targetEntity" required placeholder="مثال: جامعة او مدرسة">
                 </div>
             </div>
 
@@ -323,21 +326,21 @@
                 <div style="display: flex; gap: 8px; margin-top: 8px;">
                     <div class="form-group" style="flex: 2;">
                         <label>اسم الطالب الثلاثي:</label>
-                        <input type="text" id="studentName" placeholder="أدخل اسم الطالب كاملاً">
+                        <input type="text" id="studentName" required placeholder="أدخل اسم الطالب كاملاً">
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>التولد:</label>
-                        <input type="text" id="studentBirth" placeholder="مثال: 2000">
+                        <input type="text" id="studentBirth" required placeholder="مثال: 2000">
                     </div>
                 </div>
                 <div style="display: flex; gap: 8px; margin-top: 8px;">
                     <div class="form-group" style="flex: 1;">
                         <label>الرقم الامتحاني:</label>
-                        <input type="text" id="examNumber" oninput="this.value = this.value.replace(/[^0-9٠-٩]/g, '')" placeholder="أرقام فقط">
+                        <input type="text" id="examNumber" required oninput="this.value = this.value.replace(/[^0-9٠-٩]/g, '')" placeholder="أرقام فقط">
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>العام الدراسي:</label>
-                        <input type="text" id="academicYear" placeholder="مثال: 2025 - 2026">
+                        <input type="text" id="academicYear" required placeholder="مثال: 2025 - 2026">
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>الدور:</label>
@@ -348,11 +351,9 @@
                         </select>
                     </div>
                 </div>
-                <div style="display: flex; gap: 8px; margin-top: 8px;">
-                    <div class="form-group" style="flex: 1;">
-                        <label>اسم مدير المدرسة:</label>
-                        <input type="text" id="managerName" placeholder="أدخل اسم المدير">
-                    </div>
+                <div class="form-group" style="margin-top: 8px;">
+                    <label>اسم مدير المدرسة:</label>
+                    <input type="text" id="managerName" required placeholder="أدخل اسم المدير">
                 </div>
                 <div class="form-group" style="margin-top: 8px;">
                     <label>اضافة نص، اختياري (يظهر أسفل النص الأساسي):</label>
@@ -365,8 +366,8 @@
                 <div id="dynamicInputsContainer"></div>
             </div>
 
-            <button type="button" class="btn-submit" onclick="generatePDF()">عرض وطباعة كتاب التأييد (PDF)</button>
-        </div>
+            <button type="submit" class="btn-submit">عرض وطباعة كتاب التأييد (PDF)</button>
+        </form>
 
         <div class="back-link-bottom">
             <a href="index.html" class="back-link">← العودة للرئيسية</a>
@@ -380,13 +381,15 @@
     </div>
 
     <script>
+        // إعدادات الحفظ المؤقت الخاصة بنسخة الدرجات
         function manualSaveSettings() {
             localStorage.setItem('saved_headerTitle_grades', document.getElementById('headerTitleInput').value);
             localStorage.setItem('saved_schoolName_grades', document.getElementById('schoolNameInput').value);
-            localStorage.setItem('saved_managerName_grades', document.getElementById('managerNameInput').value);
+            localStorage.setItem('saved_managerName_grades', document.getElementById('managerName').value);
             localStorage.setItem('saved_fontFamily_grades', document.getElementById('fontFamilyInput').value);
             localStorage.setItem('saved_fontSize_grades', document.getElementById('fontSizeInput').value);
             localStorage.setItem('saved_titleFontFamily_grades', document.getElementById('titleFontFamilyInput').value);
+            localStorage.setItem('saved_titleFontSize_grades', document.getElementById('titleFontSizeInput').value);
             localStorage.setItem('saved_borderStyle_grades', document.getElementById('borderStyleInput').value);
             localStorage.setItem('saved_fontColor_grades', document.getElementById('fontColorInput').value);
             alert('تم حفظ الإعدادات والترويسة مؤقتاً بنجاح!');
@@ -399,9 +402,10 @@
             localStorage.removeItem('saved_fontFamily_grades');
             localStorage.removeItem('saved_fontSize_grades');
             localStorage.removeItem('saved_titleFontFamily_grades');
+            localStorage.removeItem('saved_titleFontSize_grades');
             localStorage.removeItem('saved_borderStyle_grades');
             localStorage.removeItem('saved_fontColor_grades');
-            alert('تم إلغاء وحذف كافة البيانات المحفوظة مؤقتاً.');
+            alert('تم إلغاء وحذف كافة البيانات المحفوظة مؤقتاً وعودتها للأصل.');
             location.reload();
         }
 
@@ -409,10 +413,11 @@
             if(localStorage.getItem('saved_headerTitle_grades')) {
                 document.getElementById('headerTitleInput').value = localStorage.getItem('saved_headerTitle_grades');
                 document.getElementById('schoolNameInput').value = localStorage.getItem('saved_schoolName_grades');
-                document.getElementById('managerNameInput').value = localStorage.getItem('saved_managerName_grades');
+                document.getElementById('managerName').value = localStorage.getItem('saved_managerName_grades');
                 document.getElementById('fontFamilyInput').value = localStorage.getItem('saved_fontFamily_grades');
                 document.getElementById('fontSizeInput').value = localStorage.getItem('saved_fontSize_grades');
                 document.getElementById('titleFontFamilyInput').value = localStorage.getItem('saved_titleFontFamily_grades');
+                document.getElementById('titleFontSizeInput').value = localStorage.getItem('saved_titleFontSize_grades');
                 document.getElementById('borderStyleInput').value = localStorage.getItem('saved_borderStyle_grades');
                 document.getElementById('fontColorInput').value = localStorage.getItem('saved_fontColor_grades');
             }
@@ -503,7 +508,9 @@
             return `${parts[2]} / ${parts[1]} / ${parts[0]}م`;
         }
 
-        function generatePDF() {
+        function generatePDF(e) {
+            e.preventDefault();
+
             const headerTitle = document.getElementById('headerTitleInput').value;
             const schoolName = document.getElementById('schoolNameInput').value;
             const bookNum = document.getElementById('bookNumberInput').value;
@@ -526,7 +533,9 @@
             const baseFontSize = parseInt(document.getElementById('fontSizeInput').value);
             const borderStyleChoice = document.getElementById('borderStyleInput').value;
             const fontColor = document.getElementById('fontColorInput').value;
+            
             const titleFont = document.getElementById('titleFontFamilyInput').value;
+            const titleSizeChoice = document.getElementById('titleFontSizeInput').value;
 
             let line1 = "";
             let line2 = "";
@@ -543,23 +552,28 @@
             }
 
             if (optionalText) {
-                line3 += `<br><br>${optionalText}`;
+                line3 += `<br>${optionalText}`;
             }
 
-            let borderCSS = "2px solid #1a202c";
-            let borderRadiusCSS = "6px";
+            let borderCSS = "2.5px solid #1a202c";
+            let borderRadiusCSS = "8px";
             if (borderStyleChoice === 'solid-thick') borderCSS = "4px solid #1a202c";
             if (borderStyleChoice === 'double') borderCSS = "4px double #1a202c";
             if (borderStyleChoice === 'fancy-double') borderCSS = "1px solid #1a202c; outline: 2px solid #1a202c; outline-offset: 3px;";
-            if (borderStyleChoice === 'rounded') { borderCSS = "2px solid #1a202c"; borderRadiusCSS = "16px"; }
+            if (borderStyleChoice === 'rounded') { borderCSS = "2.5px solid #1a202c"; borderRadiusCSS = "20px"; }
             if (borderStyleChoice === 'dashed') borderCSS = "2px dashed #1a202c";
             if (borderStyleChoice === 'none') borderCSS = "none";
 
             const bodySize = baseFontSize + 'px';
-            const twoCopiesBodySize = (baseFontSize - 2.5) + 'px';
+            const twoCopiesBodySize = (baseFontSize - 3) + 'px';
+
             const actualTitleFont = titleFont === 'inherit' ? selectedFont : titleFont;
-            const titleSize = (baseFontSize + 1) + 'px';
-            const twoCopiesTitleSize = (baseFontSize - 1) + 'px';
+            const actualTitleSize = titleSizeChoice === 'matched' ? (baseFontSize + 2) + 'px' : titleSizeChoice;
+            const twoCopiesTitleSize = titleSizeChoice === 'matched' ? '12.5px' : (parseInt(titleSizeChoice) - 3) + 'px';
+            
+            // تصغير خط الجدول بشكل متناسق مع خط النص الأساسي
+            const tableFontSize = (baseFontSize - 4) + 'px';
+            const twoCopiesTableFontSize = (baseFontSize - 6) + 'px';
 
             const subs = subjectsData[stage];
             let tableRows = "";
@@ -567,73 +581,72 @@
                 const sName = document.getElementById(`sub_name_${index}`).value;
                 const nVal = document.getElementById(`sub_num_${index}`).value;
                 const tVal = document.getElementById(`sub_text_${index}`).value;
-                tableRows += `<tr><td style="border: 1px solid ${fontColor}; padding: 1.5px 4px; text-align: right;">${sName}</td><td style="border: 1px solid ${fontColor}; padding: 1.5px 4px; text-align: center; width: 18%;"><b>${nVal}</b></td><td style="border: 1px solid ${fontColor}; padding: 1.5px 4px; text-align: center; width: 28%;"><b>${tVal}</b></td></tr>`;
+                tableRows += `<tr><td style="border: 1px solid ${fontColor}; padding: 2px 6px; text-align: right;">${sName}</td><td style="border: 1px solid ${fontColor}; padding: 2px 6px; text-align: center; width: 18%;"><b>${nVal}</b></td><td style="border: 1px solid ${fontColor}; padding: 2px 6px; text-align: center; width: 28%;"><b>${tVal}</b></td></tr>`;
             });
 
             const extraName = document.getElementById('extra_sub_name').value.trim();
             const extraNum = document.getElementById('extra_sub_num').value.trim();
             const extraText = document.getElementById('extra_sub_text').value.trim();
             if (extraName !== "" || extraNum !== "") {
-                tableRows += `<tr><td style="border: 1px solid ${fontColor}; padding: 1.5px 4px; text-align: right;">${extraName}</td><td style="border: 1px solid ${fontColor}; padding: 1.5px 4px; text-align: center;"><b>${extraNum}</b></td><td style="border: 1px solid ${fontColor}; padding: 1.5px 4px; text-align: center;"><b>${extraText}</b></td></tr>`;
+                tableRows += `<tr><td style="border: 1px solid ${fontColor}; padding: 2px 6px; text-align: right;">${extraName}</td><td style="border: 1px solid ${fontColor}; padding: 2px 6px; text-align: center;"><b>${extraNum}</b></td><td style="border: 1px solid ${fontColor}; padding: 2px 6px; text-align: center;"><b>${extraText}</b></td></tr>`;
             }
 
             const totalNum = document.getElementById('totalNum').value;
             const totalText = document.getElementById('totalText').value;
-            tableRows += `<tr><td style="border: 1px solid ${fontColor}; padding: 1.5px 4px; font-weight: bold; text-align: right;">المجموع</td><td style="border: 1px solid ${fontColor}; padding: 1.5px 4px; text-align: center; font-weight: bold;">${totalNum}</td><td style="border: 1px solid ${fontColor}; padding: 1.5px 4px; text-align: center; font-weight: bold;">${totalText}</td></tr>`;
+            tableRows += `<tr><td style="border: 1px solid ${fontColor}; padding: 2px 6px; font-weight: bold; text-align: right;">المجموع</td><td style="border: 1px solid ${fontColor}; padding: 2px 6px; text-align: center; font-weight: bold;">${totalNum}</td><td style="border: 1px solid ${fontColor}; padding: 2px 6px; text-align: center; font-weight: bold;">${totalText}</td></tr>`;
 
             if (stage !== 'third') {
                 const avgVal = document.getElementById('averageVal').value;
                 if(avgVal) {
-                    tableRows += `<tr><td style="border: 1px solid ${fontColor}; padding: 1.5px 4px; font-weight: bold; text-align: right;">المعدل</td><td colspan="2" style="border: 1px solid ${fontColor}; padding: 1.5px 4px; text-align: center; font-weight: bold;">${avgVal}</td></tr>`;
+                    tableRows += `<tr><td style="border: 1px solid ${fontColor}; padding: 2px 6px; font-weight: bold; text-align: right;">المعدل</td><td colspan="2" style="border: 1px solid ${fontColor}; padding: 2px 6px; text-align: center; font-weight: bold;">${avgVal}</td></tr>`;
                 }
             }
 
             const createCardHTML = (isTwoCopies) => `
-                <div style="font-family: ${selectedFont}; color: ${fontColor}; width: 175mm; margin: ${isTwoCopies ? '0.5mm auto' : '4mm auto'}; border: ${borderCSS}; border-radius: ${borderRadiusCSS}; padding: ${isTwoCopies ? '3mm 8mm' : '6mm 12mm'}; background: #fff; height: ${isTwoCopies ? '141mm' : '286mm'}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
+                <div style="font-family: ${selectedFont}; color: ${fontColor}; margin: ${isTwoCopies ? '2mm 6mm' : '5mm 8mm'}; border: ${borderCSS}; border-radius: ${borderRadiusCSS}; padding: ${isTwoCopies ? '4mm 6mm' : '6mm 10mm'}; background: #fff; height: ${isTwoCopies ? '142mm' : '286mm'}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
                     <div>
-                        <!-- الترويسة العليا -->
-                        <div style="font-family: ${actualTitleFont}; text-align: center; font-weight: bold; font-size: ${isTwoCopies ? twoCopiesTitleSize : titleSize}; margin-bottom: 1mm; line-height: 1.2;">
+                        <div style="font-family: ${actualTitleFont}; text-align: center; font-weight: bold; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; margin-bottom: ${isTwoCopies ? '1.5mm' : '3mm'}; line-height: 1.3;">
                             ${headerTitle}
                         </div>
 
-                        <!-- اسم المدرسة يمين، العدد يعلو التاريخ، ومكان الصورة يسار -->
-                        <table style="width: 100%; border-collapse: collapse; margin-bottom: 1.5mm; font-weight: bold; font-family: ${actualTitleFont}; font-size: ${isTwoCopies ? twoCopiesTitleSize : titleSize}; color: ${fontColor};">
+                        <!-- دمج أسلوب الترتيب للرقم والتاريخ مع صورة الطالب -->
+                        <table style="width: 100%; border-collapse: collapse; margin-bottom: ${isTwoCopies ? '2mm' : '4mm'}; font-weight: bold; font-family: ${actualTitleFont}; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; color: ${fontColor};">
                             <tr>
                                 <td style="width: 50%; vertical-align: top; text-align: right;">
                                     <div>إدارة / ${schoolName}</div>
                                 </td>
                                 <td style="width: 50%; text-align: left; vertical-align: top;">
-                                    <div style="display: inline-block; text-align: right; min-width: 120px;">
-                                        العدد: ${bookNum}<br>
-                                        التاريخ: ${dateVal}
+                                    <div style="display: inline-flex; flex-direction: column; align-items: flex-end;">
+                                        <div style="text-align: right; min-width: 130px;">
+                                            العدد: ${bookNum}<br>
+                                            التاريخ: ${dateVal}
+                                        </div>
+                                        <div style="margin-top: 3px; width: 17mm; height: 21mm; border: 1px dashed ${fontColor}; display: flex; align-items: center; justify-content: center; font-size: 8px; opacity: 0.65; background: #fafafa;">مكان الصورة</div>
                                     </div>
-                                    <div style="margin-top: 2px; width: 15mm; height: 18mm; border: 1px dashed ${fontColor}; display: inline-flex; align-items: center; justify-content: center; font-size: 7px; color: #a0aec0; background: #fafafa; float: left;">مكان الصورة</div>
                                 </td>
                             </tr>
                         </table>
 
-                        <div style="font-family: ${actualTitleFont}; text-align: center; font-size: ${isTwoCopies ? twoCopiesTitleSize : titleSize}; font-weight: bold; margin-bottom: 1mm;">
+                        <div style="font-family: ${actualTitleFont}; text-align: center; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '1.5mm' : '3mm'};">
                             إلى / ${target}
                         </div>
 
-                        <div style="font-family: ${actualTitleFont}; text-align: center; font-size: ${isTwoCopies ? twoCopiesTitleSize : titleSize}; font-weight: bold; margin-bottom: 2mm;">
+                        <div style="font-family: ${actualTitleFont}; text-align: center; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '2mm' : '4mm'};">
                             م / تأييد طالب بالدرجات
                         </div>
 
-                        <!-- نص التأييد -->
-                        <div style="font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; line-height: ${isTwoCopies ? '1.3' : '1.45'}; margin-bottom: 2mm; text-align: justify;">
-                            <div>${line1}</div>
-                            <div style="margin-top: 2px;">${line2}</div>
-                            <div style="margin-top: 2px;">${line3}</div>
+                        <div style="font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; line-height: ${isTwoCopies ? '1.4' : '1.7'}; text-align: justify; padding: 0 2mm; margin-bottom: ${isTwoCopies ? '2mm' : '4mm'};">
+                            <div style="margin-bottom: 2px;">${line1}</div>
+                            <div style="margin-bottom: 2px;">${line2}</div>
+                            <div style="margin-bottom: 2px;">${line3}</div>
                         </div>
 
-                        <!-- الجدول -->
-                        <table style="width: 65%; margin: 0 auto; border-collapse: collapse; font-size: ${isTwoCopies ? '9px' : '10.5px'}; margin-bottom: 2mm;">
+                        <table style="width: 80%; margin: 0 auto; border-collapse: collapse; font-size: ${isTwoCopies ? twoCopiesTableFontSize : tableFontSize}; margin-bottom: 2mm; color: ${fontColor};">
                             <thead>
-                                <tr style="background: #f1f5f9;">
-                                    <th style="border: 1px solid ${fontColor}; padding: 1.5px 4px; text-align: right;">المادة</th>
-                                    <th style="border: 1px solid ${fontColor}; padding: 1.5px 4px; text-align: center; width: 22%;">الدرجة رقماً</th>
-                                    <th style="border: 1px solid ${fontColor}; padding: 1.5px 4px; text-align: center; width: 32%;">الدرجة كتابةً</th>
+                                <tr style="background: rgba(0,0,0,0.03);">
+                                    <th style="border: 1px solid ${fontColor}; padding: 2px 5px; text-align: right;">المادة</th>
+                                    <th style="border: 1px solid ${fontColor}; padding: 2px 5px; text-align: center; width: 22%;">الدرجة رقماً</th>
+                                    <th style="border: 1px solid ${fontColor}; padding: 2px 5px; text-align: center; width: 32%;">الدرجة كتابةً</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -643,18 +656,18 @@
                     </div>
 
                     <!-- التوقيع والإطار الدائري لاسم المدير في الجهة اليسرى تماماً -->
-                    <div style="margin-bottom: ${isTwoCopies ? '5mm' : '12mm'};">
-                        <div style="text-align: center; font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; font-weight: bold; margin-bottom: 3mm;">
-                            للعلـم مع التقـدير
+                    <div style="margin-bottom: ${isTwoCopies ? '2mm' : '6mm'};">
+                        <div style="text-align: center; font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '3mm' : '6mm'};">
+                            للعـلم مع التقـدير
                         </div>
 
                         <table style="width: 100%; border-collapse: collapse; color: ${fontColor};">
                             <tr>
                                 <td style="width: 50%;"></td>
                                 <td style="width: 50%; text-align: left; padding-left: 5mm;">
-                                    <div style="display: inline-block; border: 1.5px solid ${fontColor}; border-radius: 12px; padding: ${isTwoCopies ? '3px 12px' : '6px 18px'}; text-align: center; min-width: 160px;">
-                                        <div style="font-family: ${actualTitleFont}; font-size: ${isTwoCopies ? twoCopiesTitleSize : titleSize}; font-weight: bold; margin-bottom: 2px;">${manager}</div>
-                                        <div style="font-family: ${actualTitleFont}; font-size: ${isTwoCopies ? '9px' : '11px'}; font-weight: normal;">مدير المدرسة</div>
+                                    <div style="display: inline-block; border: 1.5px solid ${fontColor}; border-radius: 12px; padding: ${isTwoCopies ? '4px 14px' : '8px 22px'}; text-align: center; min-width: 170px;">
+                                        <div style="font-family: ${actualTitleFont}; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; font-weight: bold; margin-bottom: 2px;">${manager}</div>
+                                        <div style="font-family: ${actualTitleFont}; font-size: ${isTwoCopies ? (parseInt(twoCopiesTitleSize)-2)+'px' : (parseInt(actualTitleSize)-2)+'px'}; font-weight: normal;">مدير المدرسة</div>
                                     </div>
                                 </td>
                             </tr>
@@ -666,10 +679,10 @@
             const wrapper = document.getElementById('documentWrapper');
             if (layoutMode === 'two') {
                 wrapper.innerHTML = `
-                    <div style="height: 148.5mm; display: flex; flex-direction: column; justify-content: center;">
+                    <div style="height: 148.5mm; display: flex; flex-direction: column; justify-content: flex-start;">
                         ${createCardHTML(true)}
                     </div>
-                    <div style="height: 148.5mm; display: flex; flex-direction: column; justify-content: center;">
+                    <div style="height: 148.5mm; display: flex; flex-direction: column; justify-content: flex-end;">
                         ${createCardHTML(true)}
                     </div>
                 `;
