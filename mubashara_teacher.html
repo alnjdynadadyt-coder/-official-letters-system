@@ -79,7 +79,7 @@
             color: #4a5568;
             font-size: 12.5px;
         }
-        input, select {
+        input, select, textarea {
             width: 100%;
             padding: 8px 10px;
             border: 1px solid #cbd5e0;
@@ -90,7 +90,7 @@
             transition: all 0.2s;
             font-family: inherit;
         }
-        input:focus, select:focus {
+        input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: #3182ce;
             box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.15);
@@ -110,7 +110,7 @@
             transition: all 0.2s;
         }
         .btn-submit:hover {
-            background: linear-gradient(135deg, #2b6cb0 100%, #2c5282 100%);
+            background: linear-gradient(135deg, #2b6cb0 0%, #2c5282 100%);
             box-shadow: 0 6px 15px rgba(49, 130, 206, 0.35);
         }
         .back-link {
@@ -355,45 +355,34 @@
                 <div class="section-title">👤 بيانات المعني بالأمر</div>
                 <div style="display: flex; gap: 10px;">
                     <div class="form-group" style="flex: 1;">
-                        <label>نوع الفئة:</label>
-                        <select id="categoryInput" onchange="toggleCategoryFields()">
-                            <option value="teacher">مدرس / مدرسة</option>
-                            <option value="employee">موظف / موظفة</option>
+                        <label>الجنس:</label>
+                        <select id="genderInput">
+                            <option value="male">ذكر (مدرس)</option>
+                            <option value="female">أنثى (مدرسة)</option>
                         </select>
                     </div>
                     <div class="form-group" style="flex: 2;">
-                        <label>الجنس:</label>
-                        <select id="genderInput">
-                            <option value="male">ذكر</option>
-                            <option value="female">أنثى</option>
-                        </select>
+                        <label>اسم المدرس / المدرسة:</label>
+                        <input type="text" id="teacherNameInput" required placeholder="علي علي علي">
                     </div>
                 </div>
-
-                <div class="form-group" style="margin-top: 8px;">
-                    <label>الاسم الكامل:</label>
-                    <input type="text" id="teacherNameInput" required placeholder="علي علي علي">
-                </div>
-                
-                <div class="form-group" style="margin-top: 8px;" id="teacherFields">
-                    <label>الاختصاص:</label>
-                    <input type="text" id="subjectInput" placeholder="التربية الاسلامية">
-                </div>
-
-                <div class="form-group" style="margin-top: 8px; display: none;" id="employeeFields">
-                    <label>العنوان الوظيفي:</label>
-                    <input type="text" id="jobTitleInput" placeholder="موظف خدمة / كاتب / ملاحظ...">
-                </div>
-
                 <div style="display: flex; gap: 10px; margin-top: 8px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>الاختصاص:</label>
+                        <input type="text" id="subjectInput" required placeholder="التربية الاسلامية">
+                    </div>
                     <div class="form-group" style="flex: 1;">
                         <label>تاريخ التنفيذ الفعلي:</label>
                         <input type="date" id="actionDateInput" required>
                     </div>
-                    <div class="form-group" style="flex: 1;">
-                        <label>اسم مدير المدرسة:</label>
-                        <input type="text" id="managerNameInput" required placeholder="اسم المدير">
-                    </div>
+                </div>
+                <div class="form-group" style="margin-top: 8px;">
+                    <label>اسم مدير المدرسة:</label>
+                    <input type="text" id="managerNameInput" required placeholder="اسم المدير ">
+                </div>
+                <div class="form-group" style="margin-top: 8px;">
+                    <label>اضافة نص، اختياري (يظهر أسفل النص الأساسي بدون كلمة ملاحظة):</label>
+                    <input type="text" id="optionalTextInput" placeholder="اكتب النص الإضافي هنا مباشرة إن وجد...">
                 </div>
             </div>
 
@@ -412,24 +401,6 @@
     </div>
 
     <script>
-        function toggleCategoryFields() {
-            const category = document.getElementById('categoryInput').value;
-            const teacherFields = document.getElementById('teacherFields');
-            const employeeFields = document.getElementById('employeeFields');
-            
-            if (category === 'teacher') {
-                teacherFields.style.display = 'block';
-                employeeFields.style.display = 'none';
-                document.getElementById('subjectInput').required = true;
-                document.getElementById('jobTitleInput').required = false;
-            } else {
-                teacherFields.style.display = 'none';
-                employeeFields.style.display = 'block';
-                document.getElementById('subjectInput').required = false;
-                document.getElementById('jobTitleInput').required = true;
-            }
-        }
-
         function manualSaveSettings() {
             localStorage.setItem('saved_headerTitle_teacher', document.getElementById('headerTitleInput').value);
             localStorage.setItem('saved_schoolName_teacher', document.getElementById('schoolNameInput').value);
@@ -472,7 +443,6 @@
         }
 
         window.onload = function() {
-            toggleCategoryFields();
             loadSettingsIfSaved();
             const today = new Date().toISOString().split('T')[0];
             if(!document.getElementById('dateInput').value) document.getElementById('dateInput').value = today;
@@ -501,7 +471,6 @@
             e.preventDefault();
             
             const orderType = document.getElementById('orderTypeInput').value;
-            const category = document.getElementById('categoryInput').value;
             const headerTitle = document.getElementById('headerTitleInput').value;
             const schoolName = document.getElementById('schoolNameInput').value;
             const bookNum = document.getElementById('bookNumberInput').value;
@@ -513,18 +482,10 @@
             
             const gender = document.getElementById('genderInput').value;
             const teacherName = document.getElementById('teacherNameInput').value;
-            
-            let professionDetail = "";
-            if (category === 'teacher') {
-                const subject = document.getElementById('subjectInput').value;
-                professionDetail = `اختصاص (${subject})`;
-            } else {
-                const jobTitle = document.getElementById('jobTitleInput').value;
-                professionDetail = `بعنوان (${jobTitle})`;
-            }
-
+            const subject = document.getElementById('subjectInput').value;
             const actionDate = formatDateToDMY(document.getElementById('actionDateInput').value, true);
             const managerName = document.getElementById('managerNameInput').value;
+            const optionalText = document.getElementById('optionalTextInput').value.trim();
             const layoutMode = document.getElementById('copiesLayout').value;
 
             const selectedFont = document.getElementById('fontFamilyInput').value;
@@ -539,15 +500,19 @@
             let actionText = "";
 
             if (orderType === 'infikak') {
-                subjectTitle = category === 'teacher' ? "انفكاك مدرس" : "انفكاك موظف";
+                subjectTitle = "انفكاك مدرس";
                 actionText = gender === 'female' ? 
-                    `انفكت السيدة (<b>${teacherName}</b>) ${category === 'teacher' ? 'مدرسة' : 'موظفة'} ${professionDetail} من مدرستنا يوم (${actionDate}) استناداً لأمركم الاداري اعلاه.` : 
-                    `انفك السيد (<b>${teacherName}</b>) ${category === 'teacher' ? 'مدرس' : 'موظف'} ${professionDetail} من مدرستنا يوم (${actionDate}) استناداً لأمركم الاداري اعلاه.`;
+                    `انفكت السيدة (<b>${teacherName}</b>) مدرسة اختصاص (${subject}) من مدرستنا يوم (${actionDate}) استناداً لأمركم الاداري اعلاه.` : 
+                    `انفك السيد (<b>${teacherName}</b>) مدرس اختصاص (${subject}) من مدرستنا يوم (${actionDate}) استناداً لأمركم الاداري اعلاه.`;
             } else {
-                subjectTitle = category === 'teacher' ? "مباشرة مدرس" : "مباشرة موظف";
+                subjectTitle = "مباشرة مدرس";
                 actionText = gender === 'female' ? 
-                    `باشرت السيدة (<b>${teacherName}</b>) ${category === 'teacher' ? 'مدرسة' : 'موظفة'} ${professionDetail} في مدرستنا يوم (${actionDate}) استناداً لأمركم الاداري اعلاه.` : 
-                    `باشر السيد (<b>${teacherName}</b>) ${category === 'teacher' ? 'مدرس' : 'موظف'} ${professionDetail} في مدرستنا يوم (${actionDate}) استناداً لأمركم الاداري اعلاه.`;
+                    `باشرت السيدة (<b>${teacherName}</b>) مدرسة اختصاص (${subject}) في مدرستنا يوم (${actionDate}) استناداً لأمركم الاداري اعلاه.` : 
+                    `باشر السيد (<b>${teacherName}</b>) مدرس اختصاص (${subject}) في مدرستنا يوم (${actionDate}) استناداً لأمركم الاداري اعلاه.`;
+            }
+
+            if (optionalText) {
+                actionText += `<br><br>${optionalText}`;
             }
 
             let borderCSS = "2.5px solid #1a202c";
