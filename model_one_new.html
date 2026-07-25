@@ -308,7 +308,7 @@
                 <div style="display: flex; gap: 10px;">
                     <div class="form-group" style="flex: 1;">
                         <label>الترويسة العليا:</label>
-                        <input type="text" id="headerTitleInput" required placeholder="المديرية العامة لتربية القادسية - قسم تربية الحمزة">
+                        <input type="text" id="headerTitleInput" required placeholder="المديرية العامة لتربية القادسية - قسم تربية الشامية">
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>اسم المؤسسة:</label>
@@ -366,28 +366,28 @@
                 <div style="display: flex; gap: 10px; margin-top: 8px;">
                     <div class="form-group" style="flex: 1;">
                         <label>تاريخ التعيين (كتابة):</label>
-                        <input type="text" id="hireDateInput" required placeholder="مثال: 2015/06/10">
+                        <input type="text" id="hireDateInput" required placeholder="مثال: 2023-01-01">
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>الملاك (نوع الملاك):</label>
-                        <input type="text" id="makanInput" required placeholder="دائم / ملاك ثانوي...">
+                        <input type="text" id="makanInput" required placeholder="ملاك (جديد)">
                     </div>
                 </div>
 
                 <div style="display: flex; gap: 10px; margin-top: 8px;">
                     <div class="form-group" style="flex: 1;">
                         <label>تاريخ المباشرة (كتابة):</label>
-                        <input type="text" id="mubasharaDateInput" required placeholder="مثال: 2015/09/15">
+                        <input type="text" id="mubasharaDateInput" required placeholder="مثال: 2023-01-01">
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>العنوان الوظيفي الدقيق:</label>
-                        <input type="text" id="exactJobTitleInput" required placeholder="مدرس أقدم / ملاحظ فني...">
+                        <input type="text" id="exactJobTitleInput" required placeholder="مدرس رابع">
                     </div>
                 </div>
 
                 <div class="form-group" style="margin-top: 8px;">
                     <label>الغرض من التأييد:</label>
-                    <input type="text" id="purposeInput" required placeholder="لغرض المعاملة التقاعدية / لغرض القرض...">
+                    <input type="text" id="purposeInput" required placeholder="الكفالة">
                 </div>
 
                 <div class="form-group" style="margin-top: 8px;">
@@ -587,7 +587,7 @@
                         </div>
                     </div>
 
-                    <!-- التوقيع والإطار المطابق للصورة تماماً -->
+                    <!-- التوقيع والإطار الدائري لاسم المدير في الجهة اليسرى تماماً -->
                     <div style="margin-bottom: ${isTwoCopies ? '10mm' : '22mm'};">
                         <div style="text-align: center; font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '5mm' : '12mm'};">
                             للعلـم مع التقـدير
@@ -595,13 +595,13 @@
 
                         <table style="width: 100%; border-collapse: collapse; color: ${fontColor};">
                             <tr>
-                                <td style="width: 50%; text-align: right; padding-right: 5mm;">
+                                <td style="width: 50%;"></td>
+                                <td style="width: 50%; text-align: left; padding-left: 5mm;">
                                     <div style="display: inline-block; border: 1.5px solid ${fontColor}; border-radius: 12px; padding: ${isTwoCopies ? '4px 14px' : '8px 22px'}; text-align: center; min-width: 170px;">
                                         <div style="font-family: ${actualTitleFont}; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; font-weight: bold; margin-bottom: 2px;">${managerName}</div>
                                         <div style="font-family: ${actualTitleFont}; font-size: ${isTwoCopies ? (parseInt(twoCopiesTitleSize)-2)+'px' : (parseInt(actualTitleSize)-2)+'px'}; font-weight: normal;">مدير المدرسة</div>
                                     </div>
                                 </td>
-                                <td style="width: 50%;"></td>
                             </tr>
                         </table>
                     </div>
