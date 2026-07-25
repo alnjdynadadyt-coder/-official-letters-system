@@ -341,8 +341,8 @@
                 </div>
 
                 <div class="form-group" style="margin-top: 8px;">
-                    <label>ملاحظات إضافية (اختياري - تظهر أسفل النص الأساسي):</label>
-                    <textarea id="notesInput" rows="2" placeholder="مثال: مُنح هذا التأييد بناءً على طلبه لتقديمه إلى الجهات المختصة..."></textarea>
+                    <label>إضافة نص اختياري (يظهر أسفل النص الأساسي بدون كلمة ملاحظة):</label>
+                    <textarea id="notesInput" rows="2" placeholder="اكتب النص الإضافي هنا مباشرة إن وجد..."></textarea>
                 </div>
             </div>
 
@@ -377,17 +377,25 @@
             }
         }
 
-        // حفظ ثوابت الإدارة محلياً لجهازك اللوحي لتوفير الوقت
+        // الحفظ المؤقت الشامل (الترويسة، المدرسة، المدير، الخطوط والأحجام)
         function saveSettings() {
             localStorage.setItem('headerTitle', document.getElementById('headerTitleInput').value);
             localStorage.setItem('schoolName', document.getElementById('schoolNameInput').value);
             localStorage.setItem('managerName', document.getElementById('managerNameInput').value);
+            localStorage.setItem('fontFamily', document.getElementById('fontFamilyInput').value);
+            localStorage.setItem('fontSize', document.getElementById('fontSizeInput').value);
+            localStorage.setItem('titleFontFamily', document.getElementById('titleFontFamilyInput').value);
+            localStorage.setItem('titleFontSize', document.getElementById('titleFontSizeInput').value);
         }
 
         function loadSettings() {
             if(localStorage.getItem('headerTitle')) document.getElementById('headerTitleInput').value = localStorage.getItem('headerTitle');
             if(localStorage.getItem('schoolName')) document.getElementById('schoolNameInput').value = localStorage.getItem('schoolName');
             if(localStorage.getItem('managerName')) document.getElementById('managerNameInput').value = localStorage.getItem('managerName');
+            if(localStorage.getItem('fontFamily')) document.getElementById('fontFamilyInput').value = localStorage.getItem('fontFamily');
+            if(localStorage.getItem('fontSize')) document.getElementById('fontSizeInput').value = localStorage.getItem('fontSize');
+            if(localStorage.getItem('titleFontFamily')) document.getElementById('titleFontFamilyInput').value = localStorage.getItem('titleFontFamily');
+            if(localStorage.getItem('titleFontSize')) document.getElementById('titleFontSizeInput').value = localStorage.getItem('titleFontSize');
         }
 
         window.onload = function() {
@@ -406,7 +414,7 @@
 
         function generatePDF(e) {
             e.preventDefault();
-            saveSettings(); // حفظ الثوابت تلقائياً في الأيباد
+            saveSettings(); // حفظ الخيارات والترويسة والخطوط محلياً
             
             const category = document.getElementById('categoryInput').value;
             const headerTitle = document.getElementById('headerTitleInput').value;
@@ -449,7 +457,7 @@
             }
 
             if(notes.trim() !== "") {
-                bodyText += `<br><span style="font-size: 0.95em; margin-top: 5px; display: block;">ملاحظة: ${notes}</span>`;
+                bodyText += `<br><span style="font-size: 0.95em; margin-top: 5px; display: block;">${notes}</span>`;
             }
 
             let borderCSS = "2.5px solid #1a202c";
@@ -477,8 +485,9 @@
 
                         <table style="width: 100%; border-collapse: collapse; margin-bottom: ${isTwoCopies ? '2.5mm' : '6mm'}; font-weight: bold; font-family: ${actualTitleFont}; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; color: ${fontColor};">
                             <tr>
-                                <td style="width: 50%; text-align: right;">إدارة / ${schoolName}</td>
-                                <td style="width: 50%; text-align: left;">
+                                <td style="width: 45%; text-align: right; vertical-align: top;">إدارة / ${schoolName}</td>
+                                <td style="width: 10%;"></td>
+                                <td style="width: 45%; text-align: left; vertical-align: top; white-space: nowrap;">
                                     العدد: ${bookNum}<br>
                                     التاريخ: ${dateVal}
                                 </td>
@@ -505,8 +514,8 @@
 
                         <table style="width: 100%; border-collapse: collapse; color: ${fontColor};">
                             <tr>
-                                <td style="width: 78%;"></td>
-                                <td style="width: 22%; text-align: right; font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; line-height: 1.3; padding-right: 5px;">
+                                <td style="width: 60%;"></td>
+                                <td style="width: 40%; text-align: right; font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; line-height: 1.3; padding-right: 5px;">
                                     <b>${managerName}</b><br>
                                     مدير المدرسة
                                 </td>
