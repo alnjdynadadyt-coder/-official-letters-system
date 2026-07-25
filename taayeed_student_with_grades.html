@@ -349,7 +349,7 @@
                 </div>
                 <div class="form-group" style="margin-top: 8px;">
                     <label>اضافة نص، اختياري (يظهر في سطر جديد أسفل التأييد):</label>
-                    <input type="text" id="optionalTextInput" placeholder="مثال: علما انها مجازة مرضيا...">
+                    <input type="text" id="optionalTextInput" placeholder="">
                 </div>
             </div>
 
@@ -416,7 +416,7 @@
 
         const subjectsData = {
             third: ["التربية الإسلامية واللغة العربية", "اللغة الانكليزية", "الرياضيات", "الاجتماعيات", "الأحياء", "الكيمياء", "الفيزياء"],
-            sci: ["التربية الإسلامية", "اللغة العربية", "اللغة الانكليزية", "الأحياء", "الرياضيات", "الكيمياء", "الفيزياء", "الفرنسيه"],
+            sci: ["التربية الإسلامية", "اللغة العربية", "اللغة الانكليزية", "الأحياء", "الرياضيات", "الكيمياء", "الفيزياء", ""],
             art: ["التربية الإسلامية", "اللغة العربية", "اللغة الانكليزية", "التاريخ", "الرياضيات", "الجغرافية", "الاقتصاد"]
         };
 
@@ -453,7 +453,7 @@
             subs.forEach((sub, index) => {
                 container.innerHTML += `
                     <div style="display: flex; gap: 6px; margin-bottom: 5px; align-items: center;">
-                        <input type="text" value="${sub}" id="sub_name_${index}" style="flex: 1.5; font-size: 12px; padding: 5px 8px;">
+                        <input type="text" value="${sub}" id="sub_name_${index}" placeholder="اسم المادة" style="flex: 1.5; font-size: 12px; padding: 5px 8px;">
                         <input type="text" placeholder="الدرجة رقماً" id="sub_num_${index}" oninput="handleNumberInput(this, 'sub_text_${index}')" style="flex: 1; padding: 5px 8px;">
                         <input type="text" placeholder="الدرجة كتابةً" id="sub_text_${index}" style="flex: 1.5; padding: 5px 8px;">
                     </div>
@@ -524,17 +524,15 @@
             let line3 = "";
 
             if (gender === 'male') {
-                line1 = `نؤيد لكم أن الطالب (<b>${name}</b>) تولد (${birth}) أحد طلاب الصف (${stageNames[stage]}) ذو الرقم الامتحاني (${examNum}).`;
-                line2 = `قد دخل الامتحان الوزاري للعام الدراسي (${year}) وكان ناجحاً من الدور (${round}).`;
-                line3 = `وبناءً على طلبه زود بهذا التأييد.`;
+                line1 = `نؤيد لكم أن الطالب (<b>${name}</b>) تولد (${birth}) أحد طلاب الصف (${stageNames[stage]}) ذو الرقم الامتحاني (${examNum}) وقد دخل الامتحان الوزاري للعام الدراسي (${year}) وكان ناجحاً من الدور (${round}).`;
             } else {
-                line1 = `نؤيد لكم أن الطالبة (<b>${name}</b>) تولد (${birth}) إحدى طالبات الصف (${stageNames[stage]}) ذات الرقم الامتحاني (${examNum}).`;
-                line2 = `وقد دخلت الامتحان الوزاري للعام الدراسي (${year}) وكانت ناجحة من الدور (${round}).`;
-                line3 = `وبناءً على طلبها زودت بهذا التأييد.`;
+                line1 = `نؤيد لكم أن الطالبة (<b>${name}</b>) تولد (${birth}) إحدى طالبات الصف (${stageNames[stage]}) ذات الرقم الامتحاني (${examNum}) وقد دخلت الامتحان الوزاري للعام الدراسي (${year}) وكانت ناجحة من الدور (${round}).`;
             }
+            
+            line2 = `وبناءً على ${gender === 'male' ? 'طلبه' : 'طلبها'} زود بهذا التأييد.`;
 
             if (optionalText) {
-                line3 += `<br>${optionalText}`;
+                line3 = optionalText;
             }
 
             let borderCSS = "2.5px solid #1a202c";
@@ -557,7 +555,9 @@
                 const sName = document.getElementById(`sub_name_${index}`).value;
                 const nVal = document.getElementById(`sub_num_${index}`).value;
                 const tVal = document.getElementById(`sub_text_${index}`).value;
-                tableRows += `<tr><td style="border: 1px solid ${fontColor}; padding: 1.5px 6px; text-align: right;">${sName}</td><td style="border: 1px solid ${fontColor}; padding: 1.5px 6px; text-align: center; width: 18%;"><b>${nVal}</b></td><td style="border: 1px solid ${fontColor}; padding: 1.5px 6px; text-align: center; width: 28%;"><b>${tVal}</b></td></tr>`;
+                if(sName.trim() !== "" || nVal.trim() !== "" || tVal.trim() !== "") {
+                    tableRows += `<tr><td style="border: 1px solid ${fontColor}; padding: 1.5px 6px; text-align: right;">${sName}</td><td style="border: 1px solid ${fontColor}; padding: 1.5px 6px; text-align: center; width: 18%;"><b>${nVal}</b></td><td style="border: 1px solid ${fontColor}; padding: 1.5px 6px; text-align: center; width: 28%;"><b>${tVal}</b></td></tr>`;
+                }
             });
 
             const totalNum = document.getElementById('totalNum').value;
@@ -599,7 +599,7 @@
                                 </tr>
                             </table>
 
-                            <!-- إلى والموضوع (تم رفعها قليلاً لتكون متناسقة) -->
+                            <!-- إلى والموضوع -->
                             <div style="margin-bottom: 3mm; margin-top: -2mm;">
                                 <div style="font-family: ${actualTitleFont}; text-align: center; font-size: ${actualTitleSize}; font-weight: bold; margin-bottom: 1.5mm;">
                                     إلى / ${target}
@@ -609,11 +609,11 @@
                                 </div>
                             </div>
 
-                            <!-- نص التأييد -->
+                            <!-- نص التأييد بأسطر مستقلة -->
                             <div style="font-size: ${bodySize}; line-height: 1.6; text-align: justify; padding: 0 2mm; margin-bottom: 3mm;">
                                 <div style="margin-bottom: 2px;">${line1}</div>
                                 <div style="margin-bottom: 2px;">${line2}</div>
-                                <div style="margin-bottom: 2px;">${line3}</div>
+                                ${line3 ? `<div style="margin-bottom: 2px;">${line3}</div>` : ''}
                             </div>
 
                             <!-- جدول الدرجات -->
