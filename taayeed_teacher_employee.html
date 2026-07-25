@@ -197,7 +197,7 @@
     <div class="form-container no-print">
         <div class="form-header-flex">
             <h2>إصدار تأييد استمرار (مدرس / موظف)</h2>
-            <a href="namatj_mukhataba.html" class="back-link">← العودة للنماذج</a>
+            <a href="index.html" class="back-link">← العودة للرئيسية</a>
         </div>
 
         <form id="taiyidForm" onsubmit="generatePDF(event)">
@@ -378,7 +378,7 @@
         </form>
 
         <div class="back-link-bottom">
-            <a href="namatj_mukhataba.html" class="back-link">← العودة للنماذج</a>
+            <a href="index.html" class="back-link">← العودة للرئيسية</a>
             <button type="button" class="btn-save-cache" onclick="manualSaveSettings()">حفظ مؤقت للإعدادات والترويسة</button>
             <button type="button" class="btn-clear-cache" onclick="manualClearSettings()">إلغاء وحذف الحفظ المؤقت</button>
         </div>
@@ -407,7 +407,6 @@
             }
         }
 
-        // الحفظ اليدوي المؤقت بناءً على طلب المستخدم
         function manualSaveSettings() {
             localStorage.setItem('saved_headerTitle', document.getElementById('headerTitleInput').value);
             localStorage.setItem('saved_schoolName', document.getElementById('schoolNameInput').value);
@@ -421,7 +420,6 @@
             alert('تم حفظ الإعدادات والترويسة مؤقتاً بنجاح!');
         }
 
-        // إلغاء وحذف الحفظ المؤقت بالكامل
         function manualClearSettings() {
             localStorage.removeItem('saved_headerTitle');
             localStorage.removeItem('saved_schoolName');
@@ -436,7 +434,6 @@
             location.reload();
         }
 
-        // استرجاع الإعدادات فقط إذا كان هناك حفظ مؤقت سابق مسجل
         function loadSettingsIfSaved() {
             if(localStorage.getItem('saved_headerTitle')) {
                 document.getElementById('headerTitleInput').value = localStorage.getItem('saved_headerTitle');
@@ -501,8 +498,8 @@
                 } else {
                     line1 = `نؤيد لكم ان السيد (<b>${personName}</b>) مدرس اختصاص (${subject})`;
                 }
-                line2 = `في (${schoolName}) مستمرة بالدوام للعام الدراسي (${academicYear})`;
-                line3 = `وبناءً على طلبها زود بهذا التأييد..`;
+                line2 = `في (${schoolName}) مستمر  بالدوام للعام الدراسي (${academicYear})`;
+                line3 = `وبناءً على طلبه زود  بهذا التأييد..`;
             } else {
                 const jobTitle = document.getElementById('jobTitleInput').value;
                 if (gender === 'female') {
@@ -510,8 +507,8 @@
                 } else {
                     line1 = `نؤيد لكم ان السيد (<b>${personName}</b>) موظف بعنوان (${jobTitle})`;
                 }
-                line2 = `في (${schoolName}) مستمر بالدوام للعام الدراسي (${academicYear})`;
-                line3 = `وبناءً على طلبه زود بهذا التأييد..`;
+                line2 = `في (${schoolName}) مستمر  بالدوام للعام الدراسي (${academicYear})`;
+                line3 = `وبناءً على طلبه زود  بهذا التأييد..`;
             }
 
             let bodyText = `<div style="margin-bottom: 6px;">${line1}</div><div style="margin-bottom: 6px;">${line2}</div><div>${line3}</div>`;
@@ -577,8 +574,8 @@
 
                         <table style="width: 100%; border-collapse: collapse; color: ${fontColor};">
                             <tr>
-                                <td style="width: 45%;"></td>
-                                <td style="width: 55%; text-align: left; font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; line-height: 1.3; padding-left: 10mm;">
+                                <td style="width: 50%;"></td>
+                                <td style="width: 50%; text-align: left; font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; line-height: 1.3; padding-left: 15mm;">
                                     <b>${managerName}</b><br>
                                     <span style="display: inline-block; margin-right: 18px;">مدير المدرسة</span>
                                 </td>
