@@ -495,20 +495,24 @@
                 const subject = document.getElementById('subjectInput').value;
                 if (gender === 'female') {
                     line1 = `نؤيد لكم ان السيدة (<b>${personName}</b>) مدرسة اختصاص (${subject})`;
+                    line2 = `في (${schoolName}) مستمرة بالدوام للعام الدراسي (${academicYear})`;
+                    line3 = `وبناءً على طلبها زودت بهذا التأييد..`;
                 } else {
                     line1 = `نؤيد لكم ان السيد (<b>${personName}</b>) مدرس اختصاص (${subject})`;
+                    line2 = `في (${schoolName}) مستمر بالدوام للعام الدراسي (${academicYear})`;
+                    line3 = `وبناءً على طلبه زود بهذا التأييد..`;
                 }
-                line2 = `في (${schoolName}) مستمر  بالدوام للعام الدراسي (${academicYear})`;
-                line3 = `وبناءً على طلبه زود  بهذا التأييد..`;
             } else {
                 const jobTitle = document.getElementById('jobTitleInput').value;
                 if (gender === 'female') {
                     line1 = `نؤيد لكم ان السيدة (<b>${personName}</b>) موظفة بعنوان (${jobTitle})`;
+                    line2 = `في (${schoolName}) مستمرة بالدوام للعام الدراسي (${academicYear})`;
+                    line3 = `وبناءً على طلبها زودت بهذا التأييد..`;
                 } else {
                     line1 = `نؤيد لكم ان السيد (<b>${personName}</b>) موظف بعنوان (${jobTitle})`;
+                    line2 = `في (${schoolName}) مستمر بالدوام للعام الدراسي (${academicYear})`;
+                    line3 = `وبناءً على طلبه زود بهذا التأييد..`;
                 }
-                line2 = `في (${schoolName}) مستمر  بالدوام للعام الدراسي (${academicYear})`;
-                line3 = `وبناءً على طلبه زود  بهذا التأييد..`;
             }
 
             let bodyText = `<div style="margin-bottom: 6px;">${line1}</div><div style="margin-bottom: 6px;">${line2}</div><div>${line3}</div>`;
@@ -566,18 +570,20 @@
                         </div>
                     </div>
 
-                    <!-- عبارة للعلم مع التقدير وتوقيع مدير المدرسة بالطريقة الإدارية الصحيحة على اليسار -->
-                    <div style="margin-bottom: ${isTwoCopies ? '12mm' : '28mm'};">
-                        <div style="text-align: center; font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '6mm' : '16mm'};">
+                    <!-- عبارة للعلم مع التقدير وإطار التوقيع في أقصى اليسار بالشكل الجديد -->
+                    <div style="margin-bottom: ${isTwoCopies ? '10mm' : '22mm'};">
+                        <div style="text-align: center; font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '5mm' : '12mm'};">
                             للعلـم مع التقـدير
                         </div>
 
                         <table style="width: 100%; border-collapse: collapse; color: ${fontColor};">
                             <tr>
                                 <td style="width: 50%;"></td>
-                                <td style="width: 50%; text-align: left; font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; line-height: 1.3; padding-left: 15mm;">
-                                    <b>${managerName}</b><br>
-                                    <span style="display: inline-block; margin-right: 18px;">مدير المدرسة</span>
+                                <td style="width: 50%; text-align: left; padding-left: 5mm;">
+                                    <div style="display: inline-block; border: 2px solid ${fontColor}; border-radius: 18px; padding: ${isTwoCopies ? '4px 14px' : '8px 22px'}; text-align: center; min-width: 180px;">
+                                        <div style="font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; font-weight: bold; margin-bottom: 2px;">${managerName}</div>
+                                        <div style="font-size: ${isTwoCopies ? (parseInt(twoCopiesBodySize)-2)+'px' : (parseInt(bodySize)-2)+'px'}; font-weight: normal;">مدير المدرسة</div>
+                                    </div>
                                 </td>
                             </tr>
                         </table>
@@ -606,3 +612,4 @@
 
 </body>
 </html>
+ 
