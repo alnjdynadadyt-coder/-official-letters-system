@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تأييد استمرار مدرس أو موظف</title>
-    <!-- استيراد باقة واسعة من الخطوط العربية المتنوعة -->
+    <!-- استيراد باقة أوسع من الخطوط العربية المتنوعة -->
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;700&family=Changa:wght@400;700&family=El+Messiri:wght@400;700&family=Lateef&family=Readex+Pro:wght@400;700&family=Reem+Kufi:wght@400;700&family=Scheherazade+New:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -174,7 +174,7 @@
         <form id="taiyidForm" onsubmit="generatePDF(event)">
             
             <div class="section-box sec-print">
-                <div class="section-title">⚙️ خيارات وتنسيق الطباعة، الإطارات والخطوط</div>
+                <div class="section-title">⚙️ خيارات وتنسيق الطباعة، الإطارات والخطوط المتقدمة</div>
                 
                 <div style="display: flex; gap: 10px; margin-bottom: 8px;">
                     <div class="form-group" style="flex: 1;">
@@ -195,12 +195,14 @@
 
                 <div style="display: flex; gap: 10px; margin-bottom: 8px;">
                     <div class="form-group" style="flex: 1;">
-                        <label>إطار الورقة:</label>
+                        <label>إطار الورقة الفني:</label>
                         <select id="borderStyleInput">
                             <option value="solid-normal">إطار رسمي أنيق (عادي)</option>
                             <option value="solid-thick">إطار سميك بارز</option>
                             <option value="double">إطار مزدوج كلاسيكي</option>
-                            <option value="dashed">إطار متقطع (مخصص)</option>
+                            <option value="fancy-double">إطار زخرفي مزدوج رفيع</option>
+                            <option value="rounded">إطار بزوايا منحنية أنيقة</option>
+                            <option value="dashed">إطار منقط رسمي</option>
                             <option value="none">بدون إطار</option>
                         </select>
                     </div>
@@ -233,14 +235,16 @@
                     <div class="form-group" style="flex: 1;">
                         <label>حجم الخط (النص الأساسي):</label>
                         <select id="fontSizeInput">
-                            <option value="14px">14 (صغير)</option>
+                            <option value="14px">14</option>
                             <option value="15px">15</option>
                             <option value="16px" selected>16 (مناسب)</option>
                             <option value="17px">17</option>
                             <option value="18px">18 (رسمي)</option>
                             <option value="19px">19</option>
-                            <option value="20px">20 (كبير)</option>
-                            <option value="22px">22 (كبير جداً)</option>
+                            <option value="20px">20</option>
+                            <option value="22px">22</option>
+                            <option value="24px">24</option>
+                            <option value="26px">26 (كبير جداً)</option>
                         </select>
                     </div>
                 </div>
@@ -264,7 +268,8 @@
                             <option value="18px">18px</option>
                             <option value="20px" selected>20px (مميز)</option>
                             <option value="22px">22px</option>
-                            <option value="24px">24px (كبير جداً)</option>
+                            <option value="24px">24px</option>
+                            <option value="26px">26px (كبير جداً)</option>
                         </select>
                     </div>
                 </div>
@@ -396,7 +401,6 @@
             const managerName = document.getElementById('managerNameInput').value;
             const layoutMode = document.getElementById('copiesLayout').value;
             
-            // خيارات التنسيق الجديدة
             const selectedFont = document.getElementById('fontFamilyInput').value;
             const baseFontSize = parseInt(document.getElementById('fontSizeInput').value);
             const borderStyleChoice = document.getElementById('borderStyleInput').value;
@@ -423,26 +427,26 @@
                 }
             }
 
-            // تحديد شكل إطار الورقة
+            // تحديد إطار الورقة بدقة وتصاميم متنوعة
             let borderCSS = "2.5px solid #1a202c";
+            let borderRadiusCSS = "8px";
             if (borderStyleChoice === 'solid-thick') borderCSS = "4px solid #1a202c";
             if (borderStyleChoice === 'double') borderCSS = "4px double #1a202c";
+            if (borderStyleChoice === 'fancy-double') borderCSS = "1px solid #1a202c; outline: 2px solid #1a202c; outline-offset: 3px;";
+            if (borderStyleChoice === 'rounded') { borderCSS = "2.5px solid #1a202c"; borderRadius = "20px"; }
             if (borderStyleChoice === 'dashed') borderCSS = "2px dashed #1a202c";
             if (borderStyleChoice === 'none') borderCSS = "none";
 
-            // تحديد أحجام الخطوط
-            const headerSize = (baseFontSize + 3) + 'px';
             const tableSize = (baseFontSize - 1) + 'px';
             const bodySize = baseFontSize + 'px';
             const twoCopiesBodySize = (baseFontSize - 3) + 'px';
 
-            // أحجام وخطوط العنوان المميزة
             const actualTitleFont = titleFont === 'inherit' ? selectedFont : titleFont;
             const actualTitleSize = titleSizeChoice === 'matched' ? (baseFontSize + 2) + 'px' : titleSizeChoice;
             const twoCopiesTitleSize = titleSizeChoice === 'matched' ? '12.5px' : (parseInt(titleSizeChoice) - 3) + 'px';
 
             const createCardHTML = (isTwoCopies) => `
-                <div style="font-family: ${selectedFont}; color: ${fontColor}; margin: ${isTwoCopies ? '2mm 6mm' : '5mm 8mm'}; border: ${borderCSS}; padding: ${isTwoCopies ? '4mm 6mm' : '8mm 14mm'}; border-radius: 8px; background: #fff; height: ${isTwoCopies ? '135mm' : '287mm'}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
+                <div style="font-family: ${selectedFont}; color: ${fontColor}; margin: ${isTwoCopies ? '2mm 6mm' : '5mm 8mm'}; border: ${borderCSS}; border-radius: ${borderRadiusCSS}; padding: ${isTwoCopies ? '4mm 6mm' : '8mm 14mm'}; background: #fff; height: ${isTwoCopies ? '135mm' : '287mm'}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
                     <div>
                         <div style="font-family: ${actualTitleFont}; text-align: center; font-weight: bold; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; margin-bottom: ${isTwoCopies ? '1.5mm' : '4mm'};">
                             ${headerTitle}
