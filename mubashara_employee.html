@@ -228,7 +228,7 @@
                     <div class="form-group" style="flex: 1;">
                         <label>إطار الورقة الفني:</label>
                         <select id="borderStyleInput">
-                            <option value="solid-normal" selected>إطار رسمي أنيق (عادي)</option>
+                            <option value="solid-normal">إطار رسمي أنيق (عادي)</option>
                             <option value="solid-thick">إطار سميك بارز</option>
                             <option value="double">إطار مزدوج كلاسيكي</option>
                             <option value="fancy-double">إطار زخرفي مزدوج رفيع</option>
@@ -240,7 +240,7 @@
                     <div class="form-group" style="flex: 1;">
                         <label>لون الخط العام:</label>
                         <select id="fontColorInput">
-                            <option value="#000000" selected>أسود داكن (أصلي)</option>
+                            <option value="#000000">أسود داكن (أصلي)</option>
                             <option value="#1e3a8a">أزرق ملكي إداري</option>
                             <option value="#991b1b">أحمر رسمي</option>
                             <option value="#334155">رمادي غامق احترافي</option>
@@ -266,10 +266,14 @@
                     <div class="form-group" style="flex: 1;">
                         <label>حجم الخط (النص الأساسي فقط):</label>
                         <select id="fontSizeInput">
+                            <option value="14px">14</option>
+                            <option value="15px">15</option>
                             <option value="16px">16</option>
+                            <option value="17px">17</option>
                             <option value="18px">18</option>
-                            <option value="20px" selected>20</option>
-                            <option value="22px">22</option>
+                            <option value="19px">19</option>
+                            <option value="20px">20</option>
+                            <option value="22px" selected>22</option>
                             <option value="24px">24</option>
                             <option value="26px">26</option>
                         </select>
@@ -531,18 +535,17 @@
             const twoCopiesTitleSize = titleSizeChoice === 'matched' ? '12.5px' : (parseInt(titleSizeChoice) - 3) + 'px';
 
             const createCardHTML = (isTwoCopies) => `
-                <div style="font-family: ${selectedFont}; color: ${fontColor}; margin: ${isTwoCopies ? '2mm 6mm' : '4mm 8mm'}; border: ${borderCSS}; border-radius: ${borderRadiusCSS}; padding: ${isTwoCopies ? '3mm 6mm' : '6mm 12mm'}; background: #fff; height: ${isTwoCopies ? '135mm' : '287mm'}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
+                <div style="font-family: ${selectedFont}; color: ${fontColor}; margin: ${isTwoCopies ? '2mm 6mm' : '5mm 8mm'}; border: ${borderCSS}; border-radius: ${borderRadiusCSS}; padding: ${isTwoCopies ? '4mm 6mm' : '8mm 14mm'}; background: #fff; height: ${isTwoCopies ? '135mm' : '287mm'}; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
                     <div>
-                        <!-- الترويسة العليا متوسطة مع ترحيل بسيط لليسار لضبط التوسيط البصري -->
-                        <div style="font-family: ${actualTitleFont}; text-align: center; font-weight: bold; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; margin-bottom: ${isTwoCopies ? '1mm' : '3mm'}; padding-right: 15px;">
+                        <div style="font-family: ${actualTitleFont}; text-align: center; font-weight: bold; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; margin-bottom: ${isTwoCopies ? '1.5mm' : '4mm'};">
                             ${headerTitle}
                         </div>
 
-                        <table style="width: 100%; border-collapse: collapse; margin-bottom: ${isTwoCopies ? '2mm' : '4mm'}; font-weight: bold; font-family: ${actualTitleFont}; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; color: ${fontColor};">
+                        <table style="width: 100%; border-collapse: collapse; margin-bottom: ${isTwoCopies ? '2.5mm' : '6mm'}; font-weight: bold; font-family: ${actualTitleFont}; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; color: ${fontColor};">
                             <tr>
                                 <td style="width: 50%; text-align: right; vertical-align: top;">إدارة / ${schoolName}</td>
                                 <td style="width: 50%; text-align: left; vertical-align: top;">
-                                    <div style="display: inline-block; text-align: right; min-width: 130px; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize};">
+                                    <div style="display: inline-block; text-align: right; min-width: 130px;">
                                         العدد: ${bookNum}<br>
                                         التاريخ: ${dateVal}
                                     </div>
@@ -550,24 +553,24 @@
                             </tr>
                         </table>
 
-                        <div style="font-family: ${actualTitleFont}; text-align: center; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '2mm' : '4mm'};">
+                        <div style="font-family: ${actualTitleFont}; text-align: center; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '2.5mm' : '5mm'};">
                             إلى / ${toVal}
                         </div>
 
-                        <div style="font-family: ${actualTitleFont}; text-align: center; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '3mm' : '6mm'};">
+                        <div style="font-family: ${actualTitleFont}; text-align: center; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '4mm' : '8mm'};">
                             م/ ${subjectTitle}
                         </div>
 
-                        <div style="font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; line-height: ${isTwoCopies ? '1.6' : '2.0'}; text-align: justify; padding: 0 2mm;">
+                        <div style="font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; line-height: ${isTwoCopies ? '1.7' : '2.2'}; text-align: justify; padding: 0 2mm;">
                             كتابكم المرقم (${refBookNum}) في (${refBookDate}) والمتضمن (${contentNature}).
                             <br><br>
                             ${actionText}
                         </div>
                     </div>
 
-                    <!-- التوقيع والإطار الدائري لاسم المدير في الجهة اليسرى تماماً ارتباطاً بخط وحجم الترويسة -->
-                    <div style="margin-bottom: ${isTwoCopies ? '6mm' : '14mm'};">
-                        <div style="text-align: center; font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '4mm' : '8mm'};">
+                    <!-- التوقيع والإطار الدائري لاسم المدير في الجهة اليسرى تماماً -->
+                    <div style="margin-bottom: ${isTwoCopies ? '10mm' : '22mm'};">
+                        <div style="text-align: center; font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '5mm' : '12mm'};">
                             للعلـم مع التقـدير
                         </div>
 
