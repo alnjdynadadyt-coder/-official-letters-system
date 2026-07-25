@@ -308,7 +308,7 @@
                 <div style="display: flex; gap: 10px;">
                     <div class="form-group" style="flex: 1;">
                         <label>الترويسة العليا:</label>
-                        <input type="text" id="headerTitleInput" required placeholder="المديرية العامة لتربية القادسية - قسم تربية الشامية">
+                        <input type="text" id="headerTitleInput" required placeholder="المديرية العامة لتربية القادسية - قسم تربية الحمزة">
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>اسم المؤسسة:</label>
@@ -318,7 +318,7 @@
                 <div style="display: flex; gap: 10px; margin-top: 8px;">
                     <div class="form-group" style="flex: 1;">
                         <label>رقم العدد:</label>
-                        <input type="text" id="bookNumberInput" required placeholder="مثال 105">
+                        <input type="text" id="bookNumberInput" required placeholder="مثال 1233">
                     </div>
                     <div class="form-group" style="flex: 1;">
                          <label>تاريخ الكتاب (تقويم):</label>
@@ -349,13 +349,13 @@
                     </div>
                     <div class="form-group" style="flex: 2;">
                         <label>الاسم الكامل:</label>
-                        <input type="text" id="personNameInput" required placeholder="علي علي حسن">
+                        <input type="text" id="personNameInput" required placeholder="علي علي علي">
                     </div>
                 </div>
                 
                 <div class="form-group" style="margin-top: 8px;" id="teacherFields">
                     <label>الاختصاص:</label>
-                    <input type="text" id="subjectInput" placeholder="التربية الإسلامية">
+                    <input type="text" id="subjectInput" placeholder="التربية الاسلامية">
                 </div>
 
                 <div class="form-group" style="margin-top: 8px; display: none;" id="employeeFields">
@@ -392,7 +392,7 @@
 
                 <div class="form-group" style="margin-top: 8px;">
                     <label>اسم مدير المدرسة:</label>
-                    <input type="text" id="managerNameInput" required placeholder="اسم المدير">
+                    <input type="text" id="managerNameInput" required placeholder="عصام جاسم تركي">
                 </div>
             </div>
 
@@ -429,7 +429,6 @@
             }
         }
 
-        // الحفظ اليدوي المؤقت بناءً على طلب المستخدم
         function manualSaveSettings() {
             localStorage.setItem('saved_headerTitle_v2', document.getElementById('headerTitleInput').value);
             localStorage.setItem('saved_schoolName_v2', document.getElementById('schoolNameInput').value);
@@ -443,7 +442,6 @@
             alert('تم حفظ الإعدادات والترويسة مؤقتاً بنجاح!');
         }
 
-        // إلغاء وحذف الحفظ المؤقت بالكامل
         function manualClearSettings() {
             localStorage.removeItem('saved_headerTitle_v2');
             localStorage.removeItem('saved_schoolName_v2');
@@ -458,7 +456,6 @@
             location.reload();
         }
 
-        // استرجاع الإعدادات فقط إذا كان هناك حفظ مؤقت سابق مسجل
         function loadSettingsIfSaved() {
             if(localStorage.getItem('saved_headerTitle_v2')) {
                 document.getElementById('headerTitleInput').value = localStorage.getItem('saved_headerTitle_v2');
@@ -564,7 +561,6 @@
                             ${headerTitle}
                         </div>
 
-                        <!-- جدول العدد والتاريخ في اليسار واسم المدرسة والإدارة في اليمين -->
                         <table style="width: 100%; border-collapse: collapse; margin-bottom: ${isTwoCopies ? '2.5mm' : '6mm'}; font-weight: bold; font-family: ${actualTitleFont}; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; color: ${fontColor};">
                             <tr>
                                 <td style="width: 50%; text-align: right; vertical-align: top;">إدارة / ${schoolName}</td>
@@ -591,7 +587,7 @@
                         </div>
                     </div>
 
-                    <!-- التوقيع والإطار الدائري لاسم المدير مرتبط بخط العناوين -->
+                    <!-- التوقيع والإطار المطابق للصورة تماماً -->
                     <div style="margin-bottom: ${isTwoCopies ? '10mm' : '22mm'};">
                         <div style="text-align: center; font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '5mm' : '12mm'};">
                             للعلـم مع التقـدير
@@ -599,13 +595,13 @@
 
                         <table style="width: 100%; border-collapse: collapse; color: ${fontColor};">
                             <tr>
-                                <td style="width: 50%;"></td>
-                                <td style="width: 50%; text-align: left; padding-left: 5mm;">
-                                    <div style="display: inline-block; border: 2px solid ${fontColor}; border-radius: 18px; padding: ${isTwoCopies ? '4px 14px' : '8px 22px'}; text-align: center; min-width: 180px;">
+                                <td style="width: 50%; text-align: right; padding-right: 5mm;">
+                                    <div style="display: inline-block; border: 1.5px solid ${fontColor}; border-radius: 12px; padding: ${isTwoCopies ? '4px 14px' : '8px 22px'}; text-align: center; min-width: 170px;">
                                         <div style="font-family: ${actualTitleFont}; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; font-weight: bold; margin-bottom: 2px;">${managerName}</div>
                                         <div style="font-family: ${actualTitleFont}; font-size: ${isTwoCopies ? (parseInt(twoCopiesTitleSize)-2)+'px' : (parseInt(actualTitleSize)-2)+'px'}; font-weight: normal;">مدير المدرسة</div>
                                     </div>
                                 </td>
+                                <td style="width: 50%;"></td>
                             </tr>
                         </table>
                     </div>
