@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تأييد استمرار (مدرس / موظف)</title>
+    <title>المخاطبات العامة والإجابة على البريد</title>
     <!-- استيراد باقة الخطوط العربية المتنوعة -->
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;700&family=Changa:wght@400;700&family=El+Messiri:wght@400;700&family=Lateef&family=Readex+Pro:wght@400;700&family=Reem+Kufi:wght@400;700&family=Scheherazade+New:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -196,23 +196,16 @@
 
     <div class="form-container no-print">
         <div class="form-header-flex">
-            <h2>إصدار تأييد استمرار (مدرس / موظف)</h2>
+            <h2>المخاطبات العامة والإجابة على البريد</h2>
             <a href="namatj_mukhataba.html" class="back-link">← العودة للنماذج</a>
         </div>
 
-        <form id="taiyidForm" onsubmit="generatePDF(event)">
+        <form id="generalLetterForm" onsubmit="generatePDF(event)">
             
             <div class="section-box sec-print">
                 <div class="section-title">⚙️ خيارات وتنسيق الطباعة، الإطارات والخطوط المتقدمة</div>
                 
                 <div style="display: flex; gap: 10px; margin-bottom: 8px;">
-                    <div class="form-group" style="flex: 1;">
-                        <label>نوع الفئة:</label>
-                        <select id="categoryInput" onchange="toggleCategoryFields()">
-                            <option value="teacher">مدرس / مدرسة</option>
-                            <option value="employee">موظف / موظفة</option>
-                        </select>
-                    </div>
                     <div class="form-group" style="flex: 1;">
                         <label>نظام النسخ:</label>
                         <select id="copiesLayout">
@@ -220,9 +213,6 @@
                             <option value="two">نسختان (نفس الورقة)</option>
                         </select>
                     </div>
-                </div>
-
-                <div style="display: flex; gap: 10px; margin-bottom: 8px;">
                     <div class="form-group" style="flex: 1;">
                         <label>إطار الورقة الفني:</label>
                         <select id="borderStyleInput">
@@ -235,6 +225,9 @@
                             <option value="none">بدون إطار</option>
                         </select>
                     </div>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-bottom: 8px;">
                     <div class="form-group" style="flex: 1;">
                         <label>لون الخط العام:</label>
                         <select id="fontColorInput">
@@ -244,9 +237,6 @@
                             <option value="#334155">رمادي غامق احترافي</option>
                         </select>
                     </div>
-                </div>
-
-                <div style="display: flex; gap: 10px; margin-bottom: 8px;">
                     <div class="form-group" style="flex: 1;">
                         <label>نوع الخط (النص الأساسي + التوقيع):</label>
                         <select id="fontFamilyInput">
@@ -261,6 +251,9 @@
                             <option value="'Changa', sans-serif">شنطة/شانجا (Changa)</option>
                         </select>
                     </div>
+                </div>
+
+                <div style="display: flex; gap: 10px;">
                     <div class="form-group" style="flex: 1;">
                         <label>حجم الخط (النص الأساسي + التوقيع):</label>
                         <select id="fontSizeInput">
@@ -276,9 +269,6 @@
                             <option value="26px">26</option>
                         </select>
                     </div>
-                </div>
-
-                <div style="display: flex; gap: 10px;">
                     <div class="form-group" style="flex: 1;">
                         <label>نوع خط العناوين:</label>
                         <select id="titleFontFamilyInput">
@@ -289,6 +279,9 @@
                             <option value="'Tajawal', sans-serif">تجوال (Tajawal)</option>
                         </select>
                     </div>
+                </div>
+
+                <div style="margin-top: 8px;">
                     <div class="form-group" style="flex: 1;">
                         <label>حجم خط العناوين:</label>
                         <select id="titleFontSizeInput">
@@ -328,53 +321,30 @@
                 <div style="display: flex; gap: 10px; margin-top: 8px;">
                     <div class="form-group" style="flex: 1;">
                         <label>إلى (الجهة الموجه لها الكتاب):</label>
-                        <input type="text" id="toInput" required placeholder="المديرية العامة لتربية القادسية - قسم الملاك الثانوي">
+                        <input type="text" id="toInput" required placeholder="الى / المديرية العامة لتربية القادسية...">
                     </div>
                     <div class="form-group" style="flex: 1;">
-                        <label>العام الدراسي:</label>
-                        <input type="text" id="academicYearInput" required value="2025 - 2026">
+                        <label>موضوع الكتاب (العنوان الرئيسي):</label>
+                        <input type="text" id="subjectTitleInput" required placeholder="م/ الإجابة على الكتاب المرقم...">
                     </div>
                 </div>
             </div>
 
             <div class="section-box sec-person">
-                <div class="section-title">👤 بيانات المعني بالأمر</div>
-                <div style="display: flex; gap: 10px;">
-                    <div class="form-group" style="flex: 1;">
-                        <label>الجنس:</label>
-                        <select id="genderInput">
-                            <option value="male">ذكر</option>
-                            <option value="female">أنثى</option>
-                        </select>
-                    </div>
-                    <div class="form-group" style="flex: 2;">
-                        <label>الاسم الكامل:</label>
-                        <input type="text" id="personNameInput" required placeholder="علي علي علي">
-                    </div>
-                </div>
+                <div class="section-title">✍️ نص المخاطبة أو الإجابة</div>
                 
-                <div class="form-group" style="margin-top: 8px;" id="teacherFields">
-                    <label>الاختصاص:</label>
-                    <input type="text" id="subjectInput" placeholder="التربية الاسلامية">
-                </div>
-
-                <div class="form-group" style="margin-top: 8px; display: none;" id="employeeFields">
-                    <label>العنوان الوظيفي:</label>
-                    <input type="text" id="jobTitleInput" placeholder="موظف خدمة / كاتب / ملاحظ...">
+                <div class="form-group">
+                    <label>النص الأساسي (يمكنك كتابة عدة أسطر أو فقرات بحرية):</label>
+                    <textarea id="mainContentInput" rows="6" required placeholder="اكتب نص المخاطبة أو الإجابة التفصيلية هنا..."></textarea>
                 </div>
 
                 <div class="form-group" style="margin-top: 8px;">
                     <label>اسم مدير المدرسة:</label>
                     <input type="text" id="managerNameInput" required placeholder="اسم المدير">
                 </div>
-
-                <div class="form-group" style="margin-top: 8px;">
-                    <label>إضافة نص اختياري (يظهر أسفل النص الأساسي بدون كلمة ملاحظة):</label>
-                    <textarea id="notesInput" rows="2" placeholder="اكتب النص الإضافي هنا مباشرة إن وجد..."></textarea>
-                </div>
             </div>
 
-            <button type="submit" class="btn-submit">عرض وطباعة كتاب التأييد (PDF)</button>
+            <button type="submit" class="btn-submit">عرض وطباعة المخاطبة (PDF)</button>
         </form>
 
         <div class="back-link-bottom">
@@ -389,70 +359,51 @@
     </div>
 
     <script>
-        function toggleCategoryFields() {
-            const category = document.getElementById('categoryInput').value;
-            const teacherFields = document.getElementById('teacherFields');
-            const employeeFields = document.getElementById('employeeFields');
-            
-            if (category === 'teacher') {
-                teacherFields.style.display = 'block';
-                employeeFields.style.display = 'none';
-                document.getElementById('subjectInput').required = true;
-                document.getElementById('jobTitleInput').required = false;
-            } else {
-                teacherFields.style.display = 'none';
-                employeeFields.style.display = 'block';
-                document.getElementById('subjectInput').required = false;
-                document.getElementById('jobTitleInput').required = true;
-            }
-        }
-
-        // الحفظ اليدوي المؤقت بناءً على طلب المستخدم
+        // الحفظ اليدوي المؤقت
         function manualSaveSettings() {
-            localStorage.setItem('saved_headerTitle', document.getElementById('headerTitleInput').value);
-            localStorage.setItem('saved_schoolName', document.getElementById('schoolNameInput').value);
-            localStorage.setItem('saved_managerName', document.getElementById('managerNameInput').value);
-            localStorage.setItem('saved_fontFamily', document.getElementById('fontFamilyInput').value);
-            localStorage.setItem('saved_fontSize', document.getElementById('fontSizeInput').value);
-            localStorage.setItem('saved_titleFontFamily', document.getElementById('titleFontFamilyInput').value);
-            localStorage.setItem('saved_titleFontSize', document.getElementById('titleFontSizeInput').value);
-            localStorage.setItem('saved_borderStyle', document.getElementById('borderStyleInput').value);
-            localStorage.setItem('saved_fontColor', document.getElementById('fontColorInput').value);
+            localStorage.setItem('saved_headerTitle_gen', document.getElementById('headerTitleInput').value);
+            localStorage.setItem('saved_schoolName_gen', document.getElementById('schoolNameInput').value);
+            localStorage.setItem('saved_managerName_gen', document.getElementById('managerNameInput').value);
+            localStorage.setItem('saved_fontFamily_gen', document.getElementById('fontFamilyInput').value);
+            localStorage.setItem('saved_fontSize_gen', document.getElementById('fontSizeInput').value);
+            localStorage.setItem('saved_titleFontFamily_gen', document.getElementById('titleFontFamilyInput').value);
+            localStorage.setItem('saved_titleFontSize_gen', document.getElementById('titleFontSizeInput').value);
+            localStorage.setItem('saved_borderStyle_gen', document.getElementById('borderStyleInput').value);
+            localStorage.setItem('saved_fontColor_gen', document.getElementById('fontColorInput').value);
             alert('تم حفظ الإعدادات والترويسة مؤقتاً بنجاح!');
         }
 
-        // إلغاء وحذف الحفظ المؤقت بالكامل
+        // إلغاء وحذف الحفظ المؤقت
         function manualClearSettings() {
-            localStorage.removeItem('saved_headerTitle');
-            localStorage.removeItem('saved_schoolName');
-            localStorage.removeItem('saved_managerName');
-            localStorage.removeItem('saved_fontFamily');
-            localStorage.removeItem('saved_fontSize');
-            localStorage.removeItem('saved_titleFontFamily');
-            localStorage.removeItem('saved_titleFontSize');
-            localStorage.removeItem('saved_borderStyle');
-            localStorage.removeItem('saved_fontColor');
+            localStorage.removeItem('saved_headerTitle_gen');
+            localStorage.removeItem('saved_schoolName_gen');
+            localStorage.removeItem('saved_managerName_gen');
+            localStorage.removeItem('saved_fontFamily_gen');
+            localStorage.removeItem('saved_fontSize_gen');
+            localStorage.removeItem('saved_titleFontFamily_gen');
+            localStorage.removeItem('saved_titleFontSize_gen');
+            localStorage.removeItem('saved_borderStyle_gen');
+            localStorage.removeItem('saved_fontColor_gen');
             alert('تم إلغاء وحذف كافة البيانات المحفوظة مؤقتاً وعودتها للأصل.');
             location.reload();
         }
 
-        // استرجاع الإعدادات فقط إذا كان هناك حفظ مؤقت سابق مسجل
+        // استرجاع الإعدادات المحفوظة مؤقتاً
         function loadSettingsIfSaved() {
-            if(localStorage.getItem('saved_headerTitle')) {
-                document.getElementById('headerTitleInput').value = localStorage.getItem('saved_headerTitle');
-                document.getElementById('schoolNameInput').value = localStorage.getItem('saved_schoolName');
-                document.getElementById('managerNameInput').value = localStorage.getItem('saved_managerName');
-                document.getElementById('fontFamilyInput').value = localStorage.getItem('saved_fontFamily');
-                document.getElementById('fontSizeInput').value = localStorage.getItem('saved_fontSize');
-                document.getElementById('titleFontFamilyInput').value = localStorage.getItem('saved_titleFontFamily');
-                document.getElementById('titleFontSizeInput').value = localStorage.getItem('saved_titleFontSize');
-                document.getElementById('borderStyleInput').value = localStorage.getItem('saved_borderStyle');
-                document.getElementById('fontColorInput').value = localStorage.getItem('saved_fontColor');
+            if(localStorage.getItem('saved_headerTitle_gen')) {
+                document.getElementById('headerTitleInput').value = localStorage.getItem('saved_headerTitle_gen');
+                document.getElementById('schoolNameInput').value = localStorage.getItem('saved_schoolName_gen');
+                document.getElementById('managerNameInput').value = localStorage.getItem('saved_managerName_gen');
+                document.getElementById('fontFamilyInput').value = localStorage.getItem('saved_fontFamily_gen');
+                document.getElementById('fontSizeInput').value = localStorage.getItem('saved_fontSize_gen');
+                document.getElementById('titleFontFamilyInput').value = localStorage.getItem('saved_titleFontFamily_gen');
+                document.getElementById('titleFontSizeInput').value = localStorage.getItem('saved_titleFontSize_gen');
+                document.getElementById('borderStyleInput').value = localStorage.getItem('saved_borderStyle_gen');
+                document.getElementById('fontColorInput').value = localStorage.getItem('saved_fontColor_gen');
             }
         }
 
         window.onload = function() {
-            toggleCategoryFields();
             loadSettingsIfSaved();
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('dateInput').value = today;
@@ -468,18 +419,18 @@
         function generatePDF(e) {
             e.preventDefault();
             
-            const category = document.getElementById('categoryInput').value;
             const headerTitle = document.getElementById('headerTitleInput').value;
             const schoolName = document.getElementById('schoolNameInput').value;
             const bookNum = document.getElementById('bookNumberInput').value;
             const dateVal = formatDateToDMY(document.getElementById('dateInput').value);
             const toVal = document.getElementById('toInput').value;
-            const academicYear = document.getElementById('academicYearInput').value;
+            const subjectTitle = document.getElementById('subjectTitleInput').value;
             
-            const gender = document.getElementById('genderInput').value;
-            const personName = document.getElementById('personNameInput').value;
+            const rawContent = document.getElementById('mainContentInput').value;
+            // دعم الانتقال للأسطر الجديدة بشكل صحيح في الطباعة
+            const formattedContent = rawContent.replace(/\n/g, '<br>');
+
             const managerName = document.getElementById('managerNameInput').value;
-            const notes = document.getElementById('notesInput').value;
             const layoutMode = document.getElementById('copiesLayout').value;
             
             const selectedFont = document.getElementById('fontFamilyInput').value;
@@ -489,28 +440,6 @@
             
             const titleFont = document.getElementById('titleFontFamilyInput').value;
             const titleSizeChoice = document.getElementById('titleFontSizeInput').value;
-
-            let bodyText = "";
-
-            if (category === 'teacher') {
-                const subject = document.getElementById('subjectInput').value;
-                if (gender === 'female') {
-                    bodyText = `نؤيد لكم ان السيدة (<b>${personName}</b>) مدرسة اختصاص (${subject}) في (${schoolName}) مستمرة بالدوام للعام الدراسي (${academicYear}) وبناءً على طلبها زود بهذا التأييد..`;
-                } else {
-                    bodyText = `نؤيد لكم ان السيد (<b>${personName}</b>) مدرس اختصاص (${subject}) في (${schoolName}) مستمر بالدوام للعام الدراسي (${academicYear}) وبناءً على طلبه زود بهذا التأييد..`;
-                }
-            } else {
-                const jobTitle = document.getElementById('jobTitleInput').value;
-                if (gender === 'female') {
-                    bodyText = `نؤيد لكم ان السيدة (<b>${personName}</b>) موظفة بعنوان (${jobTitle}) في (${schoolName}) مستمرة بالدوام للعام الدراسي (${academicYear}) وبناءً على طلبها زود بهذا التأييد..`;
-                } else {
-                    bodyText = `نؤيد لكم ان السيد (<b>${personName}</b>) موظف بعنوان (${jobTitle}) في (${schoolName}) مستمر بالدوام للعام الدراسي (${academicYear}) وبناءً على طلبه زود بهذا التأييد..`;
-                }
-            }
-
-            if(notes.trim() !== "") {
-                bodyText += `<br><span style="font-size: 0.95em; margin-top: 5px; display: block;">${notes}</span>`;
-            }
 
             let borderCSS = "2.5px solid #1a202c";
             let borderRadiusCSS = "8px";
@@ -549,19 +478,19 @@
                         </table>
 
                         <div style="font-family: ${actualTitleFont}; text-align: center; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '2.5mm' : '5mm'};">
-                            إلى / ${toVal}
+                            ${toVal}
                         </div>
 
                         <div style="font-family: ${actualTitleFont}; text-align: center; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '4mm' : '8mm'};">
-                            م/ تأييد استمرارية
+                            ${subjectTitle}
                         </div>
 
                         <div style="font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; line-height: ${isTwoCopies ? '1.8' : '2.3'}; text-align: justify; padding: 0 2mm;">
-                            ${bodyText}
+                            ${formattedContent}
                         </div>
                     </div>
 
-                    <!-- عبارة للعلم مع التقدير وتوقيع مدير المدرسة المزاح لليمين قليلاً -->
+                    <!-- عبارة للعلم مع التقدير وتوقيع مدير المدرسة -->
                     <div style="margin-bottom: ${isTwoCopies ? '12mm' : '28mm'};">
                         <div style="text-align: center; font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '6mm' : '16mm'};">
                             للعلـم مع التقـدير
@@ -572,7 +501,7 @@
                                 <td style="width: 45%;"></td>
                                 <td style="width: 55%; text-align: left; font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; line-height: 1.3; padding-left: 10mm;">
                                     <b>${managerName}</b><br>
-                                    <span style="display: inline-block; margin-right: 18px;">        </span>
+                                    <span style="display: inline-block; margin-right: 18px;">مدير المدرسة</span>
                                 </td>
                             </tr>
                         </table>
