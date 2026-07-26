@@ -334,8 +334,8 @@
                 <div class="section-title">✍️ نص المخاطبة أو الإجابة</div>
                 
                 <div class="form-group">
-                    <label>النص الأساسي (يمكنك كتابة عدة أسطر أو فقرات بحرية):</label>
-                    <textarea id="mainContentInput" rows="6" required placeholder="اكتب نص المخاطبة أو الإجابة التفصيلية هنا..."></textarea>
+                    <label>النص الأساسي (اختياري - يمكنك تركه فارغاً والطباعة):</label>
+                    <textarea id="mainContentInput" rows="6" placeholder="اكتب نص المخاطبة أو الإجابة التفصيلية هنا (اختياري)..."></textarea>
                 </div>
 
                 <div class="form-group" style="margin-top: 8px;">
@@ -435,7 +435,7 @@
             }
             
             const rawContent = document.getElementById('mainContentInput').value;
-            const formattedContent = rawContent.replace(/\n/g, '<br>');
+            const formattedContent = rawContent.trim() ? rawContent.replace(/\n/g, '<br>') : '';
 
             const managerName = document.getElementById('managerNameInput').value;
             const layoutMode = document.getElementById('copiesLayout').value;
