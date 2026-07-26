@@ -320,12 +320,12 @@
                 </div>
                 <div style="display: flex; gap: 10px; margin-top: 8px;">
                     <div class="form-group" style="flex: 1;">
-                        <label>إلى (الجهة الموجه لها الكتاب):</label>
-                        <input type="text" id="toInput" required placeholder="الى / المديرية العامة لتربية القادسية...">
+                        <label>إلى (الجهة الموجه لها الكتاب - يضاف حرفياً تلقائياً):</label>
+                        <input type="text" id="toInput" required placeholder="المديرية العامة لتربية القادسية / شعبة...">
                     </div>
                     <div class="form-group" style="flex: 1;">
-                        <label>موضوع الكتاب (العنوان الرئيسي):</label>
-                        <input type="text" id="subjectTitleInput" required placeholder="م/ الإجابة على الكتاب المرقم...">
+                        <label>موضوع الكتاب (العنوان الرئيسي - يضاف حرفياً تلقائياً):</label>
+                        <input type="text" id="subjectTitleInput" required placeholder="الإجابة على الكتاب المرقم...">
                     </div>
                 </div>
             </div>
@@ -423,11 +423,18 @@
             const schoolName = document.getElementById('schoolNameInput').value;
             const bookNum = document.getElementById('bookNumberInput').value;
             const dateVal = formatDateToDMY(document.getElementById('dateInput').value);
-            const toVal = document.getElementById('toInput').value;
-            const subjectTitle = document.getElementById('subjectTitleInput').value;
+            
+            let toVal = document.getElementById('toInput').value.trim();
+            if (!toVal.startsWith('الى /') && !toVal.startsWith('إلى /')) {
+                toVal = 'الى / ' + toVal;
+            }
+
+            let subjectTitle = document.getElementById('subjectTitleInput').value.trim();
+            if (!subjectTitle.startsWith('م /') && !subjectTitle.startsWith('م/')) {
+                subjectTitle = 'م / ' + subjectTitle;
+            }
             
             const rawContent = document.getElementById('mainContentInput').value;
-            // دعم الانتقال للأسطر الجديدة بشكل صحيح في الطباعة
             const formattedContent = rawContent.replace(/\n/g, '<br>');
 
             const managerName = document.getElementById('managerNameInput').value;
@@ -477,11 +484,11 @@
                             </tr>
                         </table>
 
-                        <div style="font-family: ${actualTitleFont}; text-align: center; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '2.5mm' : '5mm'};">
+                        <div style="font-family: ${actualTitleFont}; text-align: right; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '2.5mm' : '5mm'}; padding-right: 2mm;">
                             ${toVal}
                         </div>
 
-                        <div style="font-family: ${actualTitleFont}; text-align: center; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '4mm' : '8mm'};">
+                        <div style="font-family: ${actualTitleFont}; text-align: right; font-size: ${isTwoCopies ? twoCopiesTitleSize : actualTitleSize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '4mm' : '8mm'}; padding-right: 2mm;">
                             ${subjectTitle}
                         </div>
 
@@ -490,18 +497,20 @@
                         </div>
                     </div>
 
-                    <!-- عبارة للعلم مع التقدير وتوقيع مدير المدرسة -->
-                    <div style="margin-bottom: ${isTwoCopies ? '12mm' : '28mm'};">
-                        <div style="text-align: center; font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '6mm' : '16mm'};">
+                    <!-- عبارة للعلم مع التقدير وتوقيع مدير المدرسة في الجهة اليسرى داخل إطار منفصل -->
+                    <div style="margin-bottom: ${isTwoCopies ? '10mm' : '22mm'};">
+                        <div style="text-align: center; font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; font-weight: bold; margin-bottom: ${isTwoCopies ? '4mm' : '10mm'};">
                             للعلـم مع التقـدير
                         </div>
 
                         <table style="width: 100%; border-collapse: collapse; color: ${fontColor};">
                             <tr>
                                 <td style="width: 45%;"></td>
-                                <td style="width: 55%; text-align: left; font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; line-height: 1.3; padding-left: 10mm;">
-                                    <b>${managerName}</b><br>
-                                    <span style="display: inline-block; margin-right: 18px;">مدير المدرسة</span>
+                                <td style="width: 55%; text-align: left; padding-left: 5mm;">
+                                    <div style="display: inline-block; border: 1.5px solid #1a202c; border-radius: 6px; padding: 6px 14px; text-align: center; font-size: ${isTwoCopies ? twoCopiesBodySize : bodySize}; line-height: 1.4; background: #fff;">
+                                        <b>${managerName}</b><br>
+                                        <span>مدير المدرسة</span>
+                                    </div>
                                 </td>
                             </tr>
                         </table>
