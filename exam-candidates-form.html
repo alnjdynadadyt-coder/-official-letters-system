@@ -144,15 +144,17 @@
         
         #printArea { display: none; }
 
-        /* إجبار المتصفح على وضع الطباعة بالعرض (Landscape) وتعبئة كامل مساحة الورقة */
+        /* فرض تدوير الصفحة وعرضها Landscape تماماً في الطباعة */
         @media print {
             @page {
                 size: A4 landscape;
-                margin: 6mm;
+                margin: 5mm;
             }
             body {
                 width: 297mm;
                 height: 210mm;
+                margin: 0;
+                background: white !important;
             }
             body * { visibility: hidden; }
             #printArea, #printArea * { visibility: visible; }
@@ -160,9 +162,8 @@
                 display: block !important;
                 position: absolute;
                 top: 0;
-                right: 0;
-                width: 100% !important;
-                max-width: 100% !important;
+                left: 0;
+                width: 287mm !important;
                 background: white;
             }
             .no-print { display: none !important; }
@@ -198,10 +199,9 @@
                         <label>حجم خط خلايا الجدول (حتى 22px):</label>
                         <select id="fontSizeInput">
                             <option value="13px">13px</option>
-                            <option value="15px">15px</option>
-                            <option value="17px" selected>17px</option>
+                            <option value="16px">16px</option>
                             <option value="19px">19px</option>
-                            <option value="22px">22px (كبير جداً)</option>
+                            <option value="22px" selected>22px (كبير جداً)</option>
                         </select>
                     </div>
                 </div>
@@ -211,8 +211,8 @@
                         <label>حجم خط الترويسة العليا:</label>
                         <select id="titleSizeInput">
                             <option value="15px">15px</option>
-                            <option value="18px" selected>18px</option>
-                            <option value="21px">21px</option>
+                            <option value="18px">18px</option>
+                            <option value="21px" selected>21px</option>
                             <option value="24px">24px</option>
                         </select>
                     </div>
@@ -221,7 +221,7 @@
                         <select id="tableHeaderSizeInput">
                             <option value="13px">13px</option>
                             <option value="15px">15px</option>
-                            <option value="18px" selected>18px</option>
+                            <option value="18px" selected>18px (كبير)</option>
                         </select>
                     </div>
                 </div>
@@ -246,14 +246,14 @@
             </div>
 
             <div class="section-box">
-                <div class="section-title">👥 جدول إدخال بيانات الكادر المرشح</div>
+                <div class="section-title">👥 جدول إدخال بيانات الكادر المرشح (يمكن تركها فارغة أو كتابة لا يوجد)</div>
                 <div style="font-size: 11.5px; color: #78350f; margin-bottom: 8px;">
-                    أدخل بيانات المرشحين. الحقول الفارغة لن تطبع فيها كلمات افتراضية.
+                    تم إلغاء شرط كتابة الاسم إجبارياً. سيتم طباعة الحقول كما كتبتها تماماً.
                 </div>
                 
                 <div id="teachersContainer"></div>
 
-                <button type="button" class="btn-add" onclick="addTeacherRow()">➕ إضافة مرشح جديد</button>
+                <button type="button" class="btn-add" onclick="addTeacherRow()">➕ إضافة صف جديد</button>
             </div>
 
             <div class="section-box">
@@ -278,7 +278,7 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn-submit">عرض وطباعة الاستمارة بشكل عريض وثابت (Landscape)</button>
+            <button type="submit" class="btn-submit">عرض وطباعة الاستمارة بالعرض (Landscape)</button>
         </form>
 
         <div class="back-link-bottom">
@@ -288,32 +288,32 @@
 
     <!-- منطقة الطباعة الرسمية بالعرض الكامل -->
     <div id="printArea">
-        <div id="printableDocumentWrapper" style="padding: 2mm; direction: rtl; width: 100%;">
-            <div style="text-align: center; font-weight: bold; margin-bottom: 6px;" id="pHeaderTitle"></div>
-            <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 14px; padding: 0 4px;">
+        <div id="printableDocumentWrapper" style="padding: 4mm; direction: rtl; width: 100%;">
+            <div style="text-align: center; font-weight: bold; margin-bottom: 4px;" id="pHeaderTitle"></div>
+            <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 10px; padding: 0 4px;">
                 <span id="pFormTitle"></span>
                 <span id="pSchoolName"></span>
             </div>
 
-            <table style="width: 100%; border-collapse: collapse; text-align: center; margin-bottom: 25px;">
+            <table style="width: 100%; border-collapse: collapse; text-align: center; margin-bottom: 20px;">
                 <thead>
                     <tr id="pTableHeaderRow" style="background-color: #f3f4f6;">
-                        <th style="border: 1px solid #000; padding: 10px 6px; width: 4%;">ت</th>
-                        <th style="border: 1px solid #000; padding: 10px 6px; width: 22%;">الاسم الرباعي</th>
-                        <th style="border: 1px solid #000; padding: 10px 6px; width: 13%;">العنوان الوظيفي<br><span style="font-size: 11px; font-weight: normal;">(مدير-معاون-مدرس-مرشد)</span></th>
-                        <th style="border: 1px solid #000; padding: 10px 6px; width: 6%;">الجنس</th>
-                        <th style="border: 1px solid #000; padding: 10px 6px; width: 8%;">التولد</th>
-                        <th style="border: 1px solid #000; padding: 10px 6px; width: 10%;">تاريخ التعيين</th>
-                        <th style="border: 1px solid #000; padding: 10px 6px; width: 18%;">عنوان السكن</th>
-                        <th style="border: 1px solid #000; padding: 10px 6px; width: 8%;">عقوبة انضباطية</th>
-                        <th style="border: 1px solid #000; padding: 10px 6px; width: 11%;">رقم الموبايل</th>
+                        <th style="border: 1px solid #000; padding: 8px 4px; width: 4%;">ت</th>
+                        <th style="border: 1px solid #000; padding: 8px 4px; width: 22%;">الاسم الرباعي أو الملاحظة</th>
+                        <th style="border: 1px solid #000; padding: 8px 4px; width: 13%;">العنوان الوظيفي<br><span style="font-size: 11px; font-weight: normal;">(مدير-معاون-مدرس-مرشد)</span></th>
+                        <th style="border: 1px solid #000; padding: 8px 4px; width: 6%;">الجنس</th>
+                        <th style="border: 1px solid #000; padding: 8px 4px; width: 8%;">التولد</th>
+                        <th style="border: 1px solid #000; padding: 8px 4px; width: 10%;">تاريخ التعيين</th>
+                        <th style="border: 1px solid #000; padding: 8px 4px; width: 18%;">عنوان السكن</th>
+                        <th style="border: 1px solid #000; padding: 8px 4px; width: 8%;">عقوبة انضباطية</th>
+                        <th style="border: 1px solid #000; padding: 8px 4px; width: 11%;">رقم الموبايل</th>
                     </tr>
                 </thead>
                 <tbody id="pTableBody"></tbody>
             </table>
 
             <!-- التوقيعات السفلية موزعة على عرض الورقة الأفقية -->
-            <table style="width: 100%; border-collapse: collapse; margin-top: 40px; text-align: center; font-weight: bold; font-size: 15px;">
+            <table style="width: 100%; border-collapse: collapse; margin-top: 30px; text-align: center; font-weight: bold; font-size: 15px;">
                 <tr>
                     <td style="width: 25%; vertical-align: top;">
                         المعاون<br><br><br><br>
@@ -343,14 +343,14 @@
             }
         };
 
-        function addTeacherRow(name='', title='مدرس', gender='ذكر', birth='', hire='', address='', penalty='لا', phone='') {
+        function addTeacherRow(name='', title='', gender='', birth='', hire='', address='', penalty='', phone='') {
             const container = document.getElementById('teachersContainer');
             const rowDiv = document.createElement('div');
             rowDiv.className = 'teacher-row-input';
             rowDiv.innerHTML = `
-                <input type="text" placeholder="الاسم الرباعي (اتركه فارغاً إن لم يوجد)" class="in-name" value="${name}">
+                <input type="text" placeholder="الاسم أو (لا يوجد)" class="in-name" value="${name}">
                 <select class="in-title">
-                    <option value="" ${title===''?'selected':''}>اختر العنوان</option>
+                    <option value="" ${title===''?'selected':''}>- اختيار -</option>
                     <option value="مدرس" ${title==='مدرس'?'selected':''}>مدرس</option>
                     <option value="معاون" ${title==='معاون'?'selected':''}>معاون</option>
                     <option value="مدير" ${title==='مدير'?'selected':''}>مدير</option>
@@ -409,7 +409,7 @@
             document.getElementById('pManager').innerText = document.getElementById('managerInput').value;
             document.getElementById('pSupervisor').innerText = document.getElementById('supervisorInput').value;
 
-            // تجميع وتصفية صفوف الجدول (إظهار فقط الصفوف التي تحتوي على اسم مرشح فعلي)
+            // طباعة كافة الصفوف المضافة بغض النظر عن كونها فارغة أو تحتوي على (لا يوجد)
             const rows = document.querySelectorAll('.teacher-row-input');
             const tbody = document.getElementById('pTableBody');
             tbody.innerHTML = '';
@@ -417,39 +417,30 @@
             let validCount = 0;
 
             rows.forEach((row) => {
-                const name = row.querySelector('.in-name').value.trim();
-                
-                // شرط عدم إظهار الصف أو الكلمات الافتراضية إذا كان حقل الاسم فارغاً
-                if (name !== '') {
-                    validCount++;
-                    const title = row.querySelector('.in-title').value;
-                    const gender = row.querySelector('.in-gender').value;
-                    const birth = row.querySelector('.in-birth').value;
-                    const hire = row.querySelector('.in-hire').value;
-                    const address = row.querySelector('.in-address').value;
-                    const penalty = row.querySelector('.in-penalty').value;
-                    const phone = row.querySelector('.in-phone').value;
+                validCount++;
+                const name = row.querySelector('.in-name').value;
+                const title = row.querySelector('.in-title').value;
+                const gender = row.querySelector('.in-gender').value;
+                const birth = row.querySelector('.in-birth').value;
+                const hire = row.querySelector('.in-hire').value;
+                const address = row.querySelector('.in-address').value;
+                const penalty = row.querySelector('.in-penalty').value;
+                const phone = row.querySelector('.in-phone').value;
 
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td style="border: 1px solid #000; padding: 9px 5px;">${validCount}</td>
-                        <td style="border: 1px solid #000; padding: 9px 5px; text-align: right; padding-right: 8px; font-weight: bold;">${name}</td>
-                        <td style="border: 1px solid #000; padding: 9px 5px;">${title}</td>
-                        <td style="border: 1px solid #000; padding: 9px 5px;">${gender}</td>
-                        <td style="border: 1px solid #000; padding: 9px 5px;">${birth}</td>
-                        <td style="border: 1px solid #000; padding: 9px 5px;">${hire}</td>
-                        <td style="border: 1px solid #000; padding: 9px 5px;">${address}</td>
-                        <td style="border: 1px solid #000; padding: 9px 5px;">${penalty}</td>
-                        <td style="border: 1px solid #000; padding: 9px 5px;">${phone}</td>
-                    `;
-                    tbody.appendChild(tr);
-                }
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="border: 1px solid #000; padding: 10px 4px;">${validCount}</td>
+                    <td style="border: 1px solid #000; padding: 10px 4px; text-align: right; padding-right: 8px; font-weight: bold;">${name}</td>
+                    <td style="border: 1px solid #000; padding: 10px 4px;">${title}</td>
+                    <td style="border: 1px solid #000; padding: 10px 4px;">${gender}</td>
+                    <td style="border: 1px solid #000; padding: 10px 4px;">${birth}</td>
+                    <td style="border: 1px solid #000; padding: 10px 4px;">${hire}</td>
+                    <td style="border: 1px solid #000; padding: 10px 4px;">${address}</td>
+                    <td style="border: 1px solid #000; padding: 10px 4px;">${penalty}</td>
+                    <td style="border: 1px solid #000; padding: 10px 4px;">${phone}</td>
+                `;
+                tbody.appendChild(tr);
             });
-
-            if (validCount === 0) {
-                alert('الرجاء كتابة اسم مرشح واحد على الأقل لكي يتم طباعة الاستمارة بشكل صحيح.');
-                return;
-            }
 
             window.print();
         }
