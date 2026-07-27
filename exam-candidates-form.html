@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>استمارة المرشحين لأمور الامتحانات العامة</title>
-    <!-- استيراد الخطوط العربية المعتمدة -->
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;700&family=Changa:wght@400;700&family=El+Messiri:wght@400;700&family=Lateef&family=Readex+Pro:wght@400;700&family=Reem+Kufi:wght@400;700&family=Scheherazade+New:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -111,28 +110,6 @@
         }
         .btn-del:hover { background-color: #dc2626; }
 
-        .orientation-selector {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-        .orientation-btn {
-            flex: 1;
-            padding: 10px;
-            border: 2px solid #cbd5e0;
-            border-radius: 6px;
-            background: #fff;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 13px;
-            text-align: center;
-        }
-        .orientation-btn.active {
-            border-color: #d97706;
-            background: #fef3c7;
-            color: #b45309;
-        }
-
         .btn-submit {
             background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
             color: white;
@@ -166,8 +143,12 @@
         
         #printArea { display: none; }
 
-        /* الأنماط الديناميكية للطباعة حسب اختيار المستخدم */
+        /* إجبار المتصفح على الطباعة بالعرض (Landscape) وتثبيتها */
         @media print {
+            @page {
+                size: A4 landscape;
+                margin: 5mm;
+            }
             body * { visibility: hidden; }
             #printArea, #printArea * { visibility: visible; }
             #printArea {
@@ -193,15 +174,7 @@
         <form onsubmit="generateExamPDF(event)">
             
             <div class="section-box" style="background: #f0f9ff; border-color: #bae6fd;">
-                <div class="section-title" style="color: #0284c7;">⚙️ التحكم بالخطوط والأحجام واتجاه الطباعة</div>
-                
-                <div class="form-group" style="margin-bottom: 10px;">
-                    <label>اختر اتجاه الورقة عند الطباعة:</label>
-                    <div class="orientation-selector">
-                        <button type="button" id="btnLandscape" class="orientation-btn active" onclick="setOrientation('landscape')">📄 عرضي (Landscape) - موصى به</button>
-                        <button type="button" id="btnPortrait" class="orientation-btn" onclick="setOrientation('portrait')">📃 رأسي (Portrait)</button>
-                    </div>
-                </div>
+                <div class="section-title" style="color: #0284c7;">⚙️ إعدادات الخطوط والطباعة الأفقية</div>
 
                 <div style="display: flex; gap: 10px; margin-bottom: 8px;">
                     <div class="form-group" style="flex: 1;">
@@ -216,7 +189,7 @@
                         </select>
                     </div>
                     <div class="form-group" style="flex: 1;">
-                        <label>حجم خط خلايا الجدول (حتى 22px):</label>
+                        <label>حجم خط خلايا الجدول (وأسماء التوقيعات):</label>
                         <select id="fontSizeInput">
                             <option value="14px">14px</option>
                             <option value="17px">17px</option>
@@ -231,18 +204,16 @@
                         <label>حجم خط الترويسة العليا:</label>
                         <select id="titleSizeInput">
                             <option value="15px">15px</option>
-                            <option value="16px">16px</option>
                             <option value="18px">18px</option>
                             <option value="21px" selected>21px</option>
                             <option value="24px">24px</option>
                         </select>
                     </div>
                     <div class="form-group" style="flex: 1;">
-                        <label>حجم خط عناوين أعمدة الجدول (حتى 18px):</label>
+                        <label>حجم خط عناوين أعمدة الجدول:</label>
                         <select id="tableHeaderSizeInput">
                             <option value="13px">13px</option>
                             <option value="15px">15px</option>
-                            <option value="16px">16px</option> 
                             <option value="18px" selected>18px (كبير)</option>
                         </select>
                     </div>
@@ -256,18 +227,21 @@
                         <label>الترويسة العليا:</label>
                         <input type="text" id="headerTitleInput" value="المديرية العامة لتربية القادسية - قسم الامتحانات">
                     </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>اسم المدرسة / و الموقع (فارغ ليعمل لجميع المدارس):</label>
+                        <input type="text" id="schoolNameInput" placeholder="اكتب اسم المدرسة هنا...">
                     </div>
                 </div>
                 <div class="form-group">
                     <label>عنوان الاستمارة (العام الدراسي والدور):</label>
-                    <input type="text" id="formTitleInput" value="استمارة الراغبين بالمرشحين بأمور الامتحانات العامة ٢٠٢٥ - ٢٠٢٦ ( الدور الثاني ) ( مدير - معاون - مدرس - مرشد )">
+                    <input type="text" id="formTitleInput" value="استمارة الراغبين بالمراقبات الامتحانات العامة ٢٠٢٥ - ٢٠٢٦ ( الدور الثاني ) ( مدير - معاون - مدرس - مرشد )">
                 </div>
             </div>
 
             <div class="section-box">
                 <div class="section-title">👥 جدول إدخال بيانات الكادر المرشح</div>
                 <div style="font-size: 11.5px; color: #78350f; margin-bottom: 8px;">
-                    يمكنك ترك الحقول فارغة أو كتابة (لا يوجد). الكتابة ستظهر بخط أسود عريض وواضح داخل الجدول.
+                    الكتابة ستظهر بخط أسود عريض وواضح داخل الجدول والتوقيعات.
                 </div>
                 
                 <div id="teachersContainer"></div>
@@ -297,7 +271,7 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn-submit">عرض وطباعة الاستمارة فوراً</button>
+            <button type="submit" class="btn-submit">عرض وطباعة الاستمارة أفقيّاً فوراً</button>
         </form>
 
         <div class="back-link-bottom">
@@ -305,14 +279,8 @@
         </div>
     </div>
 
-    <!-- منطقة الطباعة الرسمية بمقاس واحد متناسق لصفحة واحدة دون صفحات فارغة -->
+    <!-- منطقة الطباعة الرسمية بمقاس واحد أفقي متناسق -->
     <div id="printArea">
-        <style id="dynamicPageStyle">
-            @page {
-                size: A4 landscape;
-                margin: 5mm;
-            }
-        </style>
         <div id="printableDocumentWrapper" style="padding: 2mm; direction: rtl; width: 100%; box-sizing: border-box;">
             <div style="text-align: center; font-weight: bold; margin-bottom: 2px;" id="pHeaderTitle"></div>
             <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 6px; padding: 0 4px;">
@@ -324,7 +292,7 @@
                 <thead>
                     <tr id="pTableHeaderRow" style="background-color: #f3f4f6;">
                         <th style="border: 1px solid #000; padding: 6px 3px; width: 4%;">ت</th>
-                        <th style="border: 1px solid #000; padding: 6px 3px; width: 22%;">الاسم الرباعي أو الملاحظة</th>
+                        <th style="border: 1px solid #000; padding: 6px 3px; width: 22%;">الاسم الرباعي</th>
                         <th style="border: 1px solid #000; padding: 6px 3px; width: 13%;">العنوان الوظيفي<br><span style="font-size: 10px; font-weight: normal;">(مدير-معاون-مدرس-مرشد)</span></th>
                         <th style="border: 1px solid #000; padding: 6px 3px; width: 6%;">الجنس</th>
                         <th style="border: 1px solid #000; padding: 6px 3px; width: 8%;">التولد</th>
@@ -337,24 +305,24 @@
                 <tbody id="pTableBody"></tbody>
             </table>
 
-            <!-- التوقيعات السفلية موزعة على عرض الورقة بدون ارتفاع زائد يولد صفحة ثانية -->
-            <table style="width: 100%; border-collapse: collapse; margin-top: 20px; text-align: center; font-weight: bold; font-size: 14px;">
+            <!-- التوقيعات السفلية مرتبطة بنفس الحجم واللون الأسود العريض -->
+            <table style="width: 100%; border-collapse: collapse; margin-top: 20px; text-align: center;">
                 <tr>
-                    <td style="width: 25%; vertical-align: top;">
+                    <td style="width: 25%; vertical-align: top; font-weight: bold; color: #000;">
                         المعاون<br><br><br>
-                        <span id="pDeputy1" style="font-weight: normal; font-size: 13px;"></span>
+                        <span id="pDeputy1"></span>
                     </td>
-                    <td style="width: 25%; vertical-align: top;">
+                    <td style="width: 25%; vertical-align: top; font-weight: bold; color: #000;">
                         المعاون<br><br><br>
-                        <span id="pDeputy2" style="font-weight: normal; font-size: 13px;"></span>
+                        <span id="pDeputy2"></span>
                     </td>
-                    <td style="width: 25%; vertical-align: top;">
+                    <td style="width: 25%; vertical-align: top; font-weight: bold; color: #000;">
                         مدير المدرسة<br><br><br>
-                        <span id="pManager" style="font-weight: normal; font-size: 13px;"></span>
+                        <span id="pManager"></span>
                     </td>
-                    <td style="width: 25%; vertical-align: top;">
+                    <td style="width: 25%; vertical-align: top; font-weight: bold; color: #000;">
                         المشرف المتابع<br><br><br>
-                        <span id="pSupervisor" style="font-weight: normal; font-size: 13px;"></span>
+                        <span id="pSupervisor"></span>
                     </td>
                 </tr>
             </table>
@@ -362,22 +330,6 @@
     </div>
 
     <script>
-        let currentOrientation = 'landscape';
-
-        function setOrientation(orientation) {
-            currentOrientation = orientation;
-            document.getElementById('btnLandscape').className = orientation === 'landscape' ? 'orientation-btn active' : 'orientation-btn';
-            document.getElementById('btnPortrait').className = orientation === 'portrait' ? 'orientation-btn active' : 'orientation-btn';
-            
-            // تحديث كود صفحات الـ CSS للطباعة بشكل مباشر
-            const styleTag = document.getElementById('dynamicPageStyle');
-            if (orientation === 'landscape') {
-                styleTag.innerHTML = '@page { size: A4 landscape; margin: 5mm; }';
-            } else {
-                styleTag.innerHTML = '@page { size: A4 portrait; margin: 5mm; }';
-            }
-        }
-
         window.onload = function() {
             for(let i=0; i<3; i++) {
                 addTeacherRow();
@@ -389,7 +341,7 @@
             const rowDiv = document.createElement('div');
             rowDiv.className = 'teacher-row-input';
             rowDiv.innerHTML = `
-                <input type="text" placeholder="الاسم أو (لا يوجد)" class="in-name" value="${name}">
+                <input type="text" placeholder="الاسم الرباعي" class="in-name" value="${name}">
                 <select class="in-title">
                     <option value="" ${title===''?'selected':''}>- اختيار -</option>
                     <option value="مدرس" ${title==='مدرس'?'selected':''}>مدرس</option>
@@ -419,13 +371,11 @@
         function generateExamPDF(e) {
             e.preventDefault();
 
-            // قراءة الخيارات
             const selectedFont = document.getElementById('fontFamilyInput').value;
             const bodyFontSize = document.getElementById('fontSizeInput').value;
             const titleFontSize = document.getElementById('titleSizeInput').value;
             const tableHeaderFontSize = document.getElementById('tableHeaderSizeInput').value;
 
-            // تطبيق الخطوط والأحجام وخط أسود عريض داخل الجدول
             const wrapper = document.getElementById('printableDocumentWrapper');
             wrapper.style.fontFamily = selectedFont;
             wrapper.style.fontSize = bodyFontSize;
@@ -443,6 +393,7 @@
             const schoolVal = document.getElementById('schoolNameInput').value.trim();
             document.getElementById('pSchoolName').innerText = schoolVal ? `موقع المدرسة : ${schoolVal}` : '';
 
+            // تعيين الأسماء وتوريث نفس الخط وحجمه ولونه الأسود العريض
             document.getElementById('pDeputy1').innerText = document.getElementById('deputy1Input').value;
             document.getElementById('pDeputy2').innerText = document.getElementById('deputy2Input').value;
             document.getElementById('pManager').innerText = document.getElementById('managerInput').value;
@@ -466,7 +417,6 @@
                 const phone = row.querySelector('.in-phone').value;
 
                 const tr = document.createElement('tr');
-                // تعيين اللون الأسود الغامق (font-weight: bold; color: #000;) للخلايا
                 tr.innerHTML = `
                     <td style="border: 1px solid #000; padding: 7px 3px; font-weight: bold; color: #000;">${validCount}</td>
                     <td style="border: 1px solid #000; padding: 7px 3px; text-align: right; padding-right: 6px; font-weight: bold; color: #000;">${name}</td>
