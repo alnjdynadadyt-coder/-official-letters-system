@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>استمارة المرشحين لأمور الامتحانات العامة</title>
-    <!-- استيراد باقة الخطوط العربية المتنوعة -->
+    <!-- استيراد الخطوط العربية المعتمدة في النظام -->
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;700&family=Changa:wght@400;700&family=El+Messiri:wght@400;700&family=Lateef&family=Readex+Pro:wght@400;700&family=Reem+Kufi:wght@400;700&family=Scheherazade+New:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -141,12 +141,14 @@
             align-items: center;
             margin-top: 12px;
         }
+        
         #printArea { display: none; }
 
+        /* إعدادات الطباعة الأفقية واستغلال كامل عرض الورقة */
         @media print {
             @page {
                 size: A4 landscape;
-                margin: 8mm;
+                margin: 10mm 12mm;
             }
             body * { visibility: hidden; }
             #printArea, #printArea * { visibility: visible; }
@@ -155,7 +157,8 @@
                 position: absolute;
                 top: 0;
                 right: 0;
-                width: 281mm;
+                width: 100% !important;
+                max-width: 100% !important;
                 background: white;
             }
             .no-print { display: none !important; }
@@ -173,11 +176,11 @@
         <form onsubmit="generateExamPDF(event)">
             
             <div class="section-box" style="background: #f0f9ff; border-color: #bae6fd;">
-                <div class="section-title" style="color: #0284c7;">⚙️ إعدادات الطباعة، الخطوط والأحجام</div>
+                <div class="section-title" style="color: #0284c7;">⚙️ التحكم بالخطوط والأحجام ومقاسات الطباعة</div>
                 
                 <div style="display: flex; gap: 10px; margin-bottom: 8px;">
                     <div class="form-group" style="flex: 1;">
-                        <label>نوع الخط العام للجدول والنصوص:</label>
+                        <label>نوع الخط العام:</label>
                         <select id="fontFamilyInput">
                             <option value="'Traditional Arabic', serif">Traditional Arabic (التقليدي الرسمي)</option>
                             <option value="'Amiri', serif" selected>أميري (Amiri - أصيل)</option>
@@ -190,31 +193,31 @@
                     <div class="form-group" style="flex: 1;">
                         <label>حجم خط خلايا الجدول:</label>
                         <select id="fontSizeInput">
-                            <option value="11px">11</option>
-                            <option value="12px" selected>12</option>
-                            <option value="13px">13</option>
-                            <option value="14px">14</option>
-                            <option value="15px">15</option>
+                            <option value="12px">12px</option>
+                            <option value="13px" selected>13px</option>
+                            <option value="14px">14px</option>
+                            <option value="15px">15px</option>
+                            <option value="16px">16px</option>
                         </select>
                     </div>
                 </div>
 
                 <div style="display: flex; gap: 10px;">
                     <div class="form-group" style="flex: 1;">
-                        <label>حجم خط الترويسة والعنوان الرئيسي:</label>
+                        <label>حجم خط الترويسة العليا:</label>
                         <select id="titleSizeInput">
-                            <option value="14px">14px</option>
                             <option value="15px">15px</option>
-                            <option value="16px" selected>16px</option>
-                            <option value="18px">18px</option>
+                            <option value="17px" selected>17px</option>
+                            <option value="19px">19px</option>
+                            <option value="21px">21px</option>
                         </select>
                     </div>
                     <div class="form-group" style="flex: 1;">
-                        <label>حجم خط ترويسة الجدول:</label>
+                        <label>حجم خط عناوين أعمدة الجدول:</label>
                         <select id="tableHeaderSizeInput">
-                            <option value="11px">11px</option>
-                            <option value="12px" selected>12px</option>
-                            <option value="13px">13px</option>
+                            <option value="12px">12px</option>
+                            <option value="13px" selected>13px</option>
+                            <option value="14px">14px</option>
                         </select>
                     </div>
                 </div>
@@ -228,7 +231,7 @@
                         <input type="text" id="headerTitleInput" value="المديرية العامة لتربية القادسية - قسم الامتحانات">
                     </div>
                     <div class="form-group" style="flex: 1;">
-                        <label>اسم المدرسة / الموقع (فارغ ليكون مرناً):</label>
+                        <label>اسم المدرسة / الموقع (فارغ ليعمل لجميع المدارس):</label>
                         <input type="text" id="schoolNameInput" placeholder="اكتب اسم المدرسة هنا...">
                     </div>
                 </div>
@@ -241,18 +244,16 @@
             <div class="section-box">
                 <div class="section-title">👥 جدول إدخال بيانات الكادر المرشح</div>
                 <div style="font-size: 11.5px; color: #78350f; margin-bottom: 8px;">
-                    أدخل بيانات المرشحين أدناه. يمكنك إضافة أي عدد من الأسماء باستخدام الزر الأخضر.
+                    أدخل بيانات المرشحين أدناه.
                 </div>
                 
-                <div id="teachersContainer">
-                    <!-- سيتم إضافة الصفوف هنا ديناميكياً -->
-                </div>
+                <div id="teachersContainer"></div>
 
                 <button type="button" class="btn-add" onclick="addTeacherRow()">➕ إضافة مرشح جديد</button>
             </div>
 
             <div class="section-box">
-                <div class="section-title">✍️ أسماء اللجان والمشرفين في التوقيعات السفليّة</div>
+                <div class="section-title">✍️ التوقيعات السفلية</div>
                 <div style="display: flex; gap: 10px;">
                     <div class="form-group" style="flex: 1;">
                         <label>المعاون (1):</label>
@@ -273,7 +274,7 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn-submit">عرض وطباعة الاستمارة الرسمية (PDF أفقي ثابت)</button>
+            <button type="submit" class="btn-submit">عرض وطباعة الاستمارة بعرض الورقة (Landscape)</button>
         </form>
 
         <div class="back-link-bottom">
@@ -281,52 +282,50 @@
         </div>
     </div>
 
-    <!-- منطقة الطباعة الرسمية المطابقة لصورة الاستمارة -->
+    <!-- منطقة الطباعة الرسمية بعرض الورقة الكامل -->
     <div id="printArea">
-        <div id="printableDocumentWrapper" style="padding: 5mm; direction: rtl;">
-            <div style="text-align: center; font-weight: bold; margin-bottom: 3px;" id="pHeaderTitle"></div>
-            <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 8px;">
+        <div id="printableDocumentWrapper" style="padding: 0; direction: rtl; width: 100%;">
+            <div style="text-align: center; font-weight: bold; margin-bottom: 5px;" id="pHeaderTitle"></div>
+            <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 12px; padding: 0 4px;">
                 <span id="pFormTitle"></span>
                 <span id="pSchoolName"></span>
             </div>
 
-            <table style="width: 100%; border-collapse: collapse; text-align: center; margin-bottom: 15px;">
+            <table style="width: 100%; border-collapse: collapse; text-align: center; margin-bottom: 25px;">
                 <thead>
                     <tr style="background-color: #f3f4f6;">
-                        <th style="border: 1px solid #000; padding: 5px; width: 4%;">ت</th>
-                        <th style="border: 1px solid #000; padding: 5px; width: 22%;">الاسم الرباعي</th>
-                        <th style="border: 1px solid #000; padding: 5px; width: 12%;">العنوان الوظيفي<br><span style="font-size: 10px; font-weight: normal;">(مدير-معاون-مدرس-مرشد)</span></th>
-                        <th style="border: 1px solid #000; padding: 5px; width: 6%;">الجنس</th>
-                        <th style="border: 1px solid #000; padding: 5px; width: 8%;">التولد</th>
-                        <th style="border: 1px solid #000; padding: 5px; width: 9%;">تاريخ التعيين</th>
-                        <th style="border: 1px solid #000; padding: 5px; width: 18%;">عنوان السكن</th>
-                        <th style="border: 1px solid #000; padding: 5px; width: 8%;">عقوبة انضباطية</th>
-                        <th style="border: 1px solid #000; padding: 5px; width: 13%;">رقم الموبايل</th>
+                        <th style="border: 1px solid #000; padding: 8px 4px; width: 4%;">ت</th>
+                        <th style="border: 1px solid #000; padding: 8px 4px; width: 22%;">الاسم الرباعي</th>
+                        <th style="border: 1px solid #000; padding: 8px 4px; width: 13%;">العنوان الوظيفي<br><span style="font-size: 10px; font-weight: normal;">(مدير-معاون-مدرس-مرشد)</span></th>
+                        <th style="border: 1px solid #000; padding: 8px 4px; width: 6%;">الجنس</th>
+                        <th style="border: 1px solid #000; padding: 8px 4px; width: 8%;">التولد</th>
+                        <th style="border: 1px solid #000; padding: 8px 4px; width: 10%;">تاريخ التعيين</th>
+                        <th style="border: 1px solid #000; padding: 8px 4px; width: 18%;">عنوان السكن</th>
+                        <th style="border: 1px solid #000; padding: 8px 4px; width: 8%;">عقوبة انضباطية</th>
+                        <th style="border: 1px solid #000; padding: 8px 4px; width: 11%;">رقم الموبايل</th>
                     </tr>
                 </thead>
-                <tbody id="pTableBody">
-                    <!-- سيتم تعبئة البيانات هنا تلقائياً عند الطباعة -->
-                </tbody>
+                <tbody id="pTableBody"></tbody>
             </table>
 
-            <!-- التوقيعات في أسفل الصفحة تماماً مثل الصورة -->
-            <table id="pSignaturesTable" style="width: 100%; border-collapse: collapse; margin-top: 25px; text-align: center; font-weight: bold;">
+            <!-- التوقيعات السفلية موزعة على عرض الورقة الأفقية -->
+            <table style="width: 100%; border-collapse: collapse; margin-top: 35px; text-align: center; font-weight: bold;">
                 <tr>
                     <td style="width: 25%; vertical-align: top;">
-                        المعاون<br><br><br>
-                        <span id="pDeputy1" style="font-weight: normal; font-size: 11px;"></span>
+                        المعاون<br><br><br><br>
+                        <span id="pDeputy1" style="font-weight: normal; font-size: 12px;"></span>
                     </td>
                     <td style="width: 25%; vertical-align: top;">
-                        المعاون<br><br><br>
-                        <span id="pDeputy2" style="font-weight: normal; font-size: 11px;"></span>
+                        المعاون<br><br><br><br>
+                        <span id="pDeputy2" style="font-weight: normal; font-size: 12px;"></span>
                     </td>
                     <td style="width: 25%; vertical-align: top;">
-                        مدير المدرسة<br><br><br>
-                        <span id="pManager" style="font-weight: normal; font-size: 11px;"></span>
+                        مدير المدرسة<br><br><br><br>
+                        <span id="pManager" style="font-weight: normal; font-size: 12px;"></span>
                     </td>
                     <td style="width: 25%; vertical-align: top;">
-                        المشرف المتابع<br><br><br>
-                        <span id="pSupervisor" style="font-weight: normal; font-size: 11px;"></span>
+                        المشرف المتابع<br><br><br><br>
+                        <span id="pSupervisor" style="font-weight: normal; font-size: 12px;"></span>
                     </td>
                 </tr>
             </table>
@@ -372,13 +371,13 @@
         function generateExamPDF(e) {
             e.preventDefault();
 
-            // جلب خيارات الخطوط والأحجام المحددة
+            // قراءة الخطوط والأحجام المباشرة من خيارات المستخدم
             const selectedFont = document.getElementById('fontFamilyInput').value;
             const bodyFontSize = document.getElementById('fontSizeInput').value;
             const titleFontSize = document.getElementById('titleSizeInput').value;
             const tableHeaderFontSize = document.getElementById('tableHeaderSizeInput').value;
 
-            // تطبيق الخطوط والأحجام على منطقة الطباعة
+            // تطبيق الخط والأحجام مباشرة وبدقة على التقرير المطبوع
             const wrapper = document.getElementById('printableDocumentWrapper');
             wrapper.style.fontFamily = selectedFont;
             wrapper.style.fontSize = bodyFontSize;
@@ -387,24 +386,22 @@
             document.getElementById('pFormTitle').style.fontSize = titleFontSize;
             document.getElementById('pSchoolName').style.fontSize = titleFontSize;
 
-            // تطبيق حجم الخط على ترويسة الجدول
             const tableHeader = document.querySelector('#printArea thead');
             tableHeader.style.fontSize = tableHeaderFontSize;
 
-            // تعبئة البيانات والترويسات
+            // تعبئة النصوص
             document.getElementById('pHeaderTitle').innerText = document.getElementById('headerTitleInput').value;
             document.getElementById('pFormTitle').innerText = document.getElementById('formTitleInput').value;
             
             const schoolVal = document.getElementById('schoolNameInput').value.trim();
             document.getElementById('pSchoolName').innerText = schoolVal ? `موقع المدرسة : ${schoolVal}` : '';
 
-            // تعبئة التوقيعات السفلية
             document.getElementById('pDeputy1').innerText = document.getElementById('deputy1Input').value;
             document.getElementById('pDeputy2').innerText = document.getElementById('deputy2Input').value;
             document.getElementById('pManager').innerText = document.getElementById('managerInput').value;
-            document.getElementById('pSupervisor').innerText = document.getElementById('supervisorInput').value;
+            document.getElementById('pSupervisor').innerText = document.getElementById('supervisorInput' ).value;
 
-            // تجميع بيانات الجدول الديناميكي
+            // تعبئة الجدول
             const rows = document.querySelectorAll('.teacher-row-input');
             const tbody = document.getElementById('pTableBody');
             tbody.innerHTML = '';
@@ -426,15 +423,15 @@
 
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td style="border: 1px solid #000; padding: 5px 3px;">${index + 1}</td>
-                    <td style="border: 1px solid #000; padding: 5px 3px; text-align: right; padding-right: 6px; font-weight: bold;">${name}</td>
-                    <td style="border: 1px solid #000; padding: 5px 3px;">${title}</td>
-                    <td style="border: 1px solid #000; padding: 5px 3px;">${gender}</td>
-                    <td style="border: 1px solid #000; padding: 5px 3px;">${birth}</td>
-                    <td style="border: 1px solid #000; padding: 5px 3px;">${hire}</td>
-                    <td style="border: 1px solid #000; padding: 5px 3px;">${address}</td>
-                    <td style="border: 1px solid #000; padding: 5px 3px;">${penalty}</td>
-                    <td style="border: 1px solid #000; padding: 5px 3px;">${phone}</td>
+                    <td style="border: 1px solid #000; padding: 7px 4px;">${index + 1}</td>
+                    <td style="border: 1px solid #000; padding: 7px 4px; text-align: right; padding-right: 8px; font-weight: bold;">${name}</td>
+                    <td style="border: 1px solid #000; padding: 7px 4px;">${title}</td>
+                    <td style="border: 1px solid #000; padding: 7px 4px;">${gender}</td>
+                    <td style="border: 1px solid #000; padding: 7px 4px;">${birth}</td>
+                    <td style="border: 1px solid #000; padding: 7px 4px;">${hire}</td>
+                    <td style="border: 1px solid #000; padding: 7px 4px;">${address}</td>
+                    <td style="border: 1px solid #000; padding: 7px 4px;">${penalty}</td>
+                    <td style="border: 1px solid #000; padding: 7px 4px;">${phone}</td>
                 `;
                 tbody.appendChild(tr);
             });
