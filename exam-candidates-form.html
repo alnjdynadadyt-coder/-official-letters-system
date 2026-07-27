@@ -123,6 +123,36 @@
             margin-top: 4px;
             box-shadow: 0 4px 12px rgba(217, 119, 6, 0.25);
         }
+        .actions-bar {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .btn-save-temp {
+            background-color: #0284c7;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12.5px;
+            font-weight: bold;
+            cursor: pointer;
+            flex: 1;
+        }
+        .btn-save-temp:hover { background-color: #0369a1; }
+        .btn-clear-temp {
+            background-color: #64748b;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12.5px;
+            font-weight: bold;
+            cursor: pointer;
+            flex: 1;
+        }
+        .btn-clear-temp:hover { background-color: #475569; }
+
         .back-link {
             display: inline-block;
             background-color: #edf2f7;
@@ -143,7 +173,6 @@
         
         #printArea { display: none; }
 
-        /* إجبار المتصفح على الطباعة بالعرض (Landscape) وتثبيتها */
         @media print {
             @page {
                 size: A4 landscape;
@@ -221,20 +250,20 @@
             </div>
 
             <div class="section-box">
-                <div class="section-title">📋 الترويسة والعام الدراسي</div>
+                <div class="section-title">📋 الترويسة والموقع</div>
                 <div style="display: flex; gap: 10px; margin-bottom: 8px;">
                     <div class="form-group" style="flex: 1;">
                         <label>الترويسة العليا:</label>
                         <input type="text" id="headerTitleInput" value="المديرية العامة لتربية القادسية - قسم الامتحانات">
                     </div>
                     <div class="form-group" style="flex: 1;">
-                        <label>اسم المدرسة / و الموقع (فارغ ليعمل لجميع المدارس):</label>
-                        <input type="text" id="schoolNameInput" placeholder="اكتب اسم المدرسة هنا...">
+                        <label>اسم المدرسة / الموقع (إجباري للطباعة):</label>
+                        <input type="text" id="schoolNameInput" placeholder="مثال: اعدادية التجدين للبنين - الحمزة">
                     </div>
                 </div>
                 <div class="form-group">
                     <label>عنوان الاستمارة (العام الدراسي والدور):</label>
-                    <input type="text" id="formTitleInput" value="استمارة الراغبين بالمراقبات الامتحانات العامة ٢٠٢٥ - ٢٠٢٦ ( الدور الثاني ) ( مدير - معاون - مدرس - مرشد )">
+                    <input type="text" id="formTitleInput" value="استمارة الراغبين بالمرشحين بأمور الامتحانات العامة ٢٠٢٥ - ٢٠٢٦ ( الدور الثاني ) ( مدير - معاون - مدرس - مرشد )">
                 </div>
             </div>
 
@@ -272,6 +301,11 @@
             </div>
 
             <button type="submit" class="btn-submit">عرض وطباعة الاستمارة أفقيّاً فوراً</button>
+            
+            <div class="actions-bar">
+                <button type="button" class="btn-save-temp" onclick="saveTemporaryData()">💾 حفظ مؤقت للبيانات</button>
+                <button type="button" class="btn-clear-temp" onclick="clearTemporaryData()">🗑️ حذف الحفظ المؤقت</button>
+            </div>
         </form>
 
         <div class="back-link-bottom">
@@ -279,14 +313,16 @@
         </div>
     </div>
 
-    <!-- منطقة الطباعة الرسمية بمقاس واحد أفقي متناسق -->
+    <!-- منطقة الطباعة الرسمية بمقاس أفقي متناسق -->
     <div id="printArea">
         <div id="printableDocumentWrapper" style="padding: 2mm; direction: rtl; width: 100%; box-sizing: border-box;">
-            <div style="text-align: center; font-weight: bold; margin-bottom: 2px;" id="pHeaderTitle"></div>
-            <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 6px; padding: 0 4px;">
-                <span id="pFormTitle"></span>
+            <!-- السطر الأول: يضم المديرية واسم المدرسة والموقع معاً -->
+            <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 4px; padding: 0 4px;" id="pTopHeaderRow">
+                <span id="pHeaderTitle"></span>
                 <span id="pSchoolName"></span>
             </div>
+            
+            <div style="font-weight: bold; margin-bottom: 6px; padding: 0 4px;" id="pFormTitle"></div>
 
             <table style="width: 100%; border-collapse: collapse; text-align: center; margin-bottom: 15px;">
                 <thead>
@@ -305,7 +341,6 @@
                 <tbody id="pTableBody"></tbody>
             </table>
 
-            <!-- التوقيعات السفلية مرتبطة بنفس الحجم واللون الأسود العريض -->
             <table style="width: 100%; border-collapse: collapse; margin-top: 20px; text-align: center;">
                 <tr>
                     <td style="width: 25%; vertical-align: top; font-weight: bold; color: #000;">
@@ -331,8 +366,11 @@
 
     <script>
         window.onload = function() {
-            for(let i=0; i<3; i++) {
-                addTeacherRow();
+            loadTemporaryData();
+            if(document.querySelectorAll('.teacher-row-input').length === 0) {
+                for(let i=0; i<3; i++) {
+                    addTeacherRow();
+                }
             }
         };
 
@@ -368,8 +406,84 @@
             container.appendChild(rowDiv);
         }
 
+        // حفظ البيانات مؤقتاً في المتصفح
+        function saveTemporaryData() {
+            const data = {
+                fontFamily: document.getElementById('fontFamilyInput').value,
+                fontSize: document.getElementById('fontSizeInput').value,
+                titleSize: document.getElementById('titleSizeInput').value,
+                tableHeaderSize: document.getElementById('tableHeaderSizeInput').value,
+                headerTitle: document.getElementById('headerTitleInput').value,
+                schoolName: document.getElementById('schoolNameInput').value,
+                formTitle: document.getElementById('formTitleInput').value,
+                deputy1: document.getElementById('deputy1Input').value,
+                deputy2: document.getElementById('deputy2Input').value,
+                manager: document.getElementById('managerInput').value,
+                supervisor: document.getElementById('supervisorInput').value,
+                teachers: []
+            };
+
+            document.querySelectorAll('.teacher-row-input').forEach(row => {
+                data.teachers.push({
+                    name: row.querySelector('.in-name').value,
+                    title: row.querySelector('.in-title').value,
+                    gender: row.querySelector('.in-gender').value,
+                    birth: row.querySelector('.in-birth').value,
+                    hire: row.querySelector('.in-hire').value,
+                    address: row.querySelector('.in-address').value,
+                    penalty: row.querySelector('.in-penalty').value,
+                    phone: row.querySelector('.in-phone').value
+                });
+            });
+
+            localStorage.setItem('examFormTempData', JSON.stringify(data));
+            alert('تم حفظ البيانات بشكل مؤقت بنجاح! ✓');
+        }
+
+        // استرجاع البيانات المحفوظة مؤقتاً
+        function loadTemporaryData() {
+            const saved = localStorage.getItem('examFormTempData');
+            if (!saved) return;
+            try {
+                const data = JSON.parse(saved);
+                if(data.fontFamily) document.getElementById('fontFamilyInput').value = data.fontFamily;
+                if(data.fontSize) document.getElementById('fontSizeInput').value = data.fontSize;
+                if(data.titleSize) document.getElementById('titleSizeInput').value = data.titleSize;
+                if(data.tableHeaderSize) document.getElementById('tableHeaderSizeInput').value = data.tableHeaderSize;
+                if(data.headerTitle) document.getElementById('headerTitleInput').value = data.headerTitle;
+                if(data.schoolName) document.getElementById('schoolNameInput').value = data.schoolName;
+                if(data.formTitle) document.getElementById('formTitleInput').value = data.formTitle;
+                if(data.deputy1) document.getElementById('deputy1Input').value = data.deputy1;
+                if(data.deputy2) document.getElementById('deputy2Input').value = data.deputy2;
+                if(data.manager) document.getElementById('managerInput').value = data.manager;
+                if(data.supervisor) document.getElementById('supervisorInput').value = data.supervisor;
+
+                if(data.teachers && data.teachers.length > 0) {
+                    document.getElementById('teachersContainer').innerHTML = '';
+                    data.teachers.forEach(t => {
+                        addTeacherRow(t.name, t.title, t.gender, t.birth, t.hire, t.address, t.penalty, t.phone);
+                    });
+                }
+            } catch(e) { console.error(e); }
+        }
+
+        // حذف الحفظ المؤقت
+        function clearTemporaryData() {
+            localStorage.removeItem('examFormTempData');
+            alert('تم حذف الحفظ المؤقت وإفراغ الذاكرة بنجاح!');
+            location.reload();
+        }
+
         function generateExamPDF(e) {
             e.preventDefault();
+
+            // شرط إجباري: التحقق من إدخال اسم المدرسة والموقع
+            const schoolVal = document.getElementById('schoolNameInput').value.trim();
+            if (!schoolVal) {
+                alert('⚠️ عذراً، لا يمكن الطباعة أو الحفظ!\nيجب كتابة "اسم المدرسة والموقع" في الحقل المخصص أولاً.');
+                document.getElementById('schoolNameInput').focus();
+                return;
+            }
 
             const selectedFont = document.getElementById('fontFamilyInput').value;
             const bodyFontSize = document.getElementById('fontSizeInput').value;
@@ -381,19 +495,17 @@
             wrapper.style.fontSize = bodyFontSize;
 
             document.getElementById('pHeaderTitle').style.fontSize = titleFontSize;
-            document.getElementById('pFormTitle').style.fontSize = titleFontSize;
             document.getElementById('pSchoolName').style.fontSize = titleFontSize;
+            document.getElementById('pFormTitle').style.fontSize = titleFontSize;
 
             const headerRow = document.getElementById('pTableHeaderRow');
             headerRow.style.fontSize = tableHeaderFontSize;
 
+            // إظهار المديرية واسم المدرسة والموقع معاً في السطر الأول
             document.getElementById('pHeaderTitle').innerText = document.getElementById('headerTitleInput').value;
+            document.getElementById('pSchoolName').innerText = `المدرسة والموقع : ${schoolVal}`;
             document.getElementById('pFormTitle').innerText = document.getElementById('formTitleInput').value;
-            
-            const schoolVal = document.getElementById('schoolNameInput').value.trim();
-            document.getElementById('pSchoolName').innerText = schoolVal ? `موقع المدرسة : ${schoolVal}` : '';
 
-            // تعيين الأسماء وتوريث نفس الخط وحجمه ولونه الأسود العريض
             document.getElementById('pDeputy1').innerText = document.getElementById('deputy1Input').value;
             document.getElementById('pDeputy2').innerText = document.getElementById('deputy2Input').value;
             document.getElementById('pManager').innerText = document.getElementById('managerInput').value;
