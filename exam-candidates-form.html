@@ -167,20 +167,69 @@
     <div class="form-container no-print">
         <div class="form-header-flex">
             <h2>إعداد استمارة مرشحي الامتحانات العامة</h2>
-            <a href="index.html" class="back-link">← العودة للرئيسية</a>
+            <a href="namatj_mukhataba.html" class="back-link">← العودة للنماذج</a>
         </div>
 
         <form onsubmit="generateExamPDF(event)">
+            
+            <div class="section-box" style="background: #f0f9ff; border-color: #bae6fd;">
+                <div class="section-title" style="color: #0284c7;">⚙️ إعدادات الطباعة، الخطوط والأحجام</div>
+                
+                <div style="display: flex; gap: 10px; margin-bottom: 8px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>نوع الخط العام للجدول والنصوص:</label>
+                        <select id="fontFamilyInput">
+                            <option value="'Traditional Arabic', serif">Traditional Arabic (التقليدي الرسمي)</option>
+                            <option value="'Amiri', serif" selected>أميري (Amiri - أصيل)</option>
+                            <option value="'Scheherazade New', serif">شهرزاد (Scheherazade)</option>
+                            <option value="'Reem Kufi', sans-serif">الخط الكوفي (Reem Kufi)</option>
+                            <option value="'Tajawal', sans-serif">تجوال (Tajawal - حديث)</option>
+                            <option value="'Cairo', sans-serif">كايرو (Cairo)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>حجم خط خلايا الجدول:</label>
+                        <select id="fontSizeInput">
+                            <option value="11px">11</option>
+                            <option value="12px" selected>12</option>
+                            <option value="13px">13</option>
+                            <option value="14px">14</option>
+                            <option value="15px">15</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>حجم خط الترويسة والعنوان الرئيسي:</label>
+                        <select id="titleSizeInput">
+                            <option value="14px">14px</option>
+                            <option value="15px">15px</option>
+                            <option value="16px" selected>16px</option>
+                            <option value="18px">18px</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>حجم خط ترويسة الجدول:</label>
+                        <select id="tableHeaderSizeInput">
+                            <option value="11px">11px</option>
+                            <option value="12px" selected>12px</option>
+                            <option value="13px">13px</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
             <div class="section-box">
-                <div class="section-title">⚙️ الترويسة والعام الدراسي</div>
+                <div class="section-title">📋 الترويسة والعام الدراسي</div>
                 <div style="display: flex; gap: 10px; margin-bottom: 8px;">
                     <div class="form-group" style="flex: 1;">
                         <label>الترويسة العليا:</label>
                         <input type="text" id="headerTitleInput" value="المديرية العامة لتربية القادسية - قسم الامتحانات">
                     </div>
                     <div class="form-group" style="flex: 1;">
-                        <label>اسم المدرسة / الموقع:</label>
-                        <input type="text" id="schoolNameInput" value="موقع المدرسة : اعدادية النجدين للبنين">
+                        <label>اسم المدرسة / الموقع (فارغ ليكون مرناً):</label>
+                        <input type="text" id="schoolNameInput" placeholder="اكتب اسم المدرسة هنا...">
                     </div>
                 </div>
                 <div class="form-group">
@@ -224,24 +273,24 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn-submit">عرض وطباعة الاستمارة الرسمية (PDF أفقي)</button>
+            <button type="submit" class="btn-submit">عرض وطباعة الاستمارة الرسمية (PDF أفقي ثابت)</button>
         </form>
 
         <div class="back-link-bottom">
-            <a href="index.html" class="back-link">← العودة للرئيسية</a>
+            <a href="namatj_mukhataba.html" class="back-link">← العودة للنماذج والمخاطبات</a>
         </div>
     </div>
 
     <!-- منطقة الطباعة الرسمية المطابقة لصورة الاستمارة -->
     <div id="printArea">
-        <div style="font-family: 'Amiri', 'Traditional Arabic', serif; color: #000; padding: 5mm; direction: rtl;">
-            <div style="text-align: center; font-weight: bold; font-size: 15px; margin-bottom: 3px;" id="pHeaderTitle"></div>
-            <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 13px; margin-bottom: 8px;">
+        <div id="printableDocumentWrapper" style="padding: 5mm; direction: rtl;">
+            <div style="text-align: center; font-weight: bold; margin-bottom: 3px;" id="pHeaderTitle"></div>
+            <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 8px;">
                 <span id="pFormTitle"></span>
                 <span id="pSchoolName"></span>
             </div>
 
-            <table style="width: 100%; border-collapse: collapse; text-align: center; font-size: 12px; margin-bottom: 15px;">
+            <table style="width: 100%; border-collapse: collapse; text-align: center; margin-bottom: 15px;">
                 <thead>
                     <tr style="background-color: #f3f4f6;">
                         <th style="border: 1px solid #000; padding: 5px; width: 4%;">ت</th>
@@ -261,7 +310,7 @@
             </table>
 
             <!-- التوقيعات في أسفل الصفحة تماماً مثل الصورة -->
-            <table style="width: 100%; border-collapse: collapse; margin-top: 25px; text-align: center; font-size: 12px; font-weight: bold;">
+            <table id="pSignaturesTable" style="width: 100%; border-collapse: collapse; margin-top: 25px; text-align: center; font-weight: bold;">
                 <tr>
                     <td style="width: 25%; vertical-align: top;">
                         المعاون<br><br><br>
@@ -285,7 +334,6 @@
     </div>
 
     <script>
-        // إضافة صف إدخال جديد عند فتح الصفحة افتراضياً (3 صفوف كمثال)
         window.onload = function() {
             for(let i=0; i<3; i++) {
                 addTeacherRow();
@@ -324,10 +372,31 @@
         function generateExamPDF(e) {
             e.preventDefault();
 
-            // تعبئة الترويسة العلوية
+            // جلب خيارات الخطوط والأحجام المحددة
+            const selectedFont = document.getElementById('fontFamilyInput').value;
+            const bodyFontSize = document.getElementById('fontSizeInput').value;
+            const titleFontSize = document.getElementById('titleSizeInput').value;
+            const tableHeaderFontSize = document.getElementById('tableHeaderSizeInput').value;
+
+            // تطبيق الخطوط والأحجام على منطقة الطباعة
+            const wrapper = document.getElementById('printableDocumentWrapper');
+            wrapper.style.fontFamily = selectedFont;
+            wrapper.style.fontSize = bodyFontSize;
+
+            document.getElementById('pHeaderTitle').style.fontSize = titleFontSize;
+            document.getElementById('pFormTitle').style.fontSize = titleFontSize;
+            document.getElementById('pSchoolName').style.fontSize = titleFontSize;
+
+            // تطبيق حجم الخط على ترويسة الجدول
+            const tableHeader = document.querySelector('#printArea thead');
+            tableHeader.style.fontSize = tableHeaderFontSize;
+
+            // تعبئة البيانات والترويسات
             document.getElementById('pHeaderTitle').innerText = document.getElementById('headerTitleInput').value;
             document.getElementById('pFormTitle').innerText = document.getElementById('formTitleInput').value;
-            document.getElementById('pSchoolName').innerText = document.getElementById('schoolNameInput').value;
+            
+            const schoolVal = document.getElementById('schoolNameInput').value.trim();
+            document.getElementById('pSchoolName').innerText = schoolVal ? `موقع المدرسة : ${schoolVal}` : '';
 
             // تعبئة التوقيعات السفلية
             document.getElementById('pDeputy1').innerText = document.getElementById('deputy1Input').value;
@@ -357,15 +426,15 @@
 
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td style="border: 1px solid #000; padding: 6px 4px;">${index + 1}</td>
-                    <td style="border: 1px solid #000; padding: 6px 4px; text-align: right; padding-right: 6px; font-weight: bold;">${name}</td>
-                    <td style="border: 1px solid #000; padding: 6px 4px;">${title}</td>
-                    <td style="border: 1px solid #000; padding: 6px 4px;">${gender}</td>
-                    <td style="border: 1px solid #000; padding: 6px 4px;">${birth}</td>
-                    <td style="border: 1px solid #000; padding: 6px 4px;">${hire}</td>
-                    <td style="border: 1px solid #000; padding: 6px 4px;">${address}</td>
-                    <td style="border: 1px solid #000; padding: 6px 4px;">${penalty}</td>
-                    <td style="border: 1px solid #000; padding: 6px 4px;">${phone}</td>
+                    <td style="border: 1px solid #000; padding: 5px 3px;">${index + 1}</td>
+                    <td style="border: 1px solid #000; padding: 5px 3px; text-align: right; padding-right: 6px; font-weight: bold;">${name}</td>
+                    <td style="border: 1px solid #000; padding: 5px 3px;">${title}</td>
+                    <td style="border: 1px solid #000; padding: 5px 3px;">${gender}</td>
+                    <td style="border: 1px solid #000; padding: 5px 3px;">${birth}</td>
+                    <td style="border: 1px solid #000; padding: 5px 3px;">${hire}</td>
+                    <td style="border: 1px solid #000; padding: 5px 3px;">${address}</td>
+                    <td style="border: 1px solid #000; padding: 5px 3px;">${penalty}</td>
+                    <td style="border: 1px solid #000; padding: 5px 3px;">${phone}</td>
                 `;
                 tbody.appendChild(tr);
             });
